@@ -257,8 +257,27 @@ vector<int> sortArrayByParity(vector<int>& A) {
         }
         return re;       
 }
-
-
+/**
+ *leecode  832
+ * 
+ **/
+vector<vector<int> > flipAndInvertImage(vector<vector<int> >& A) {
+        //vector<vector<int>> result;
+        int tmp;
+        int len=A.size(),len_in=(tmp=A[0].size())%2?(tmp+1)/2:tmp/2;
+        for(int i = 0; i < len; i++)
+        {       
+            for(int j = 0; j < len_in; j++)
+            {
+                int te=A[i][j];
+                A[i][j]=!A[i][tmp-j-1];
+                A[i][tmp-j-1]=!te;
+            }
+            
+        }
+        
+        return A;
+}
 
 /**
  * dayinarr 数组打印
@@ -343,9 +362,11 @@ int main()
     // sortedSquares(num);
     
 
-    int nu[] = {3,1,2,4};
-    vector<int> num(nu, nu +  4);
+    // int nu[] = {3,1,2,4};
+    // vector<int> num(nu, nu +  4);
     
-    vector<int> s=sortArrayByParity(num);
+    // vector<int> s=sortArrayByParity(num);
+    int tmp,s=(tmp=4)%2?(tmp+1)/2:tmp/2;
+    cout<<(!0)<<"   "<<s;
     return 0;
 }
