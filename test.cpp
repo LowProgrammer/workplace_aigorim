@@ -210,8 +210,35 @@ vector<int> sortedSquares(vector<int>& A) {
     print_arr(num,len);
     return reuslt;        
 }
-
-
+/**
+ * leecode 905
+ * 
+ * */
+vector<int> sortArrayByParity(vector<int>& A) {
+        int arr[5000],index=0; 
+        vector<int> result;
+        int len =A.size();
+        for(int i = 0; i < len; i++)
+        {
+            if(A[i]%2==0){
+                result.push_back(A[i]);
+            }else
+            {
+                arr[index++]=A[i];
+            }
+            
+        }
+        index--;
+        while(index>=0){
+            result.push_back(arr[index--]);
+        }
+        for(int i = 0; i < result.size(); i++)
+        {
+            cout<<result[i]<<endl;
+        }
+        
+        return result;       
+}
 
 
 
@@ -269,6 +296,7 @@ void sort_maopao(int arr[],int size){
     }
     
 }
+
 int main()
 {
     // char test[]="1234";
@@ -295,5 +323,9 @@ int main()
     // int nu[] = {-8,-6,-4,-2,0,1,3,5,7};
     // vector<int> num(nu, nu +  9);
     // sortedSquares(num);
+    
+    int nu[] = {3,1,2,4};
+    vector<int> num(nu, nu +  4);
+    vector<int> s=sortArrayByParity(num);
     return 0;
 }
