@@ -280,6 +280,21 @@ vector<vector<int> > flipAndInvertImage(vector<vector<int> >& A) {
 }
 
 /**
+ *  leecode 657 
+ * 
+ **/
+bool judgeCircle(string moves) {
+        int pos_x=0,pos_y=0;//U D L R
+        int len =moves.length();
+        for(int i=0;i<len;i++){
+            if(moves[i]=='U')pos_y++;
+            if(moves[i]=='D')pos_y--;
+            if(moves[i]=='L')pos_x--;
+            if(moves[i]=='R')pos_x++;
+        }
+        return (pos_x==0&&pos_y==0)?true:false;
+}
+/**
  * dayinarr 数组打印
  * 
  * */
@@ -368,5 +383,7 @@ int main()
     // vector<int> s=sortArrayByParity(num);
     int tmp,s=(tmp=4)%2?(tmp+1)/2:tmp/2;
     cout<<(!0)<<"   "<<s;
+
+    cout<<judgeCircle("LLLLRRUDDRR");
     return 0;
 }
