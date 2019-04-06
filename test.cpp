@@ -215,29 +215,47 @@ vector<int> sortedSquares(vector<int>& A) {
  * 
  * */
 vector<int> sortArrayByParity(vector<int>& A) {
-        int arr[5000],index=0; 
-        vector<int> result;
+        // int arr[5000]; 
+        // vector<int> result;
         int len =A.size();
+        int index_l=0,index_r=0;
+        // for(int i = 0; i < len; i++)
+        // {
+        //     if(A[i]%2==0){
+        //         result.push_back(A[i]);
+        //     }else
+        //     {
+        //         arr[index++]=A[i];
+        //     }
+            
+        // }
+        // index--;
+        // while(index>=0){
+        //     result.push_back(arr[index--]);
+        // }
+        // for(int i = 0; i < result.size(); i++)
+        // {
+        //     cout<<result[i]<<endl;
+        // }
+        /**
+         * 第二种
+         **/
+        vector<int> re(len);
         for(int i = 0; i < len; i++)
         {
             if(A[i]%2==0){
-                result.push_back(A[i]);
+                re[index_l++]=A[i];
             }else
             {
-                arr[index++]=A[i];
+                re[len-1-(index_r++)]=A[i];
             }
             
         }
-        index--;
-        while(index>=0){
-            result.push_back(arr[index--]);
-        }
-        for(int i = 0; i < result.size(); i++)
+        for(int i = 0; i < re.size(); i++)
         {
-            cout<<result[i]<<endl;
+            cout<<re[i]<<endl;
         }
-        
-        return result;       
+        return re;       
 }
 
 
@@ -324,8 +342,10 @@ int main()
     // vector<int> num(nu, nu +  9);
     // sortedSquares(num);
     
+
     int nu[] = {3,1,2,4};
     vector<int> num(nu, nu +  4);
+    
     vector<int> s=sortArrayByParity(num);
     return 0;
 }
