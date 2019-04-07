@@ -7,7 +7,7 @@
 #include <stack>
 #include <algorithm>
 #include <string>
-#include<algorithm>
+#include "aigorithm.cpp"
 
 using namespace std;
 
