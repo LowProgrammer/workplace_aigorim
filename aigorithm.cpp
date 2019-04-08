@@ -17,6 +17,19 @@ void print_arr(int a[], int size_arr)
         /* code */
     }
 }
+void print_arr(int *a,int rows,int cols){
+    for(int i = 0; i < rows; i++)
+    {
+        for(int  j = 0; j < cols; j++)
+        {
+            cout<<*(a+cols*i+j)<<"  ";
+            /* code */
+        }
+        cout<<endl;
+        /* code */
+    }
+    
+}
 /**
  * kuaipai 快排
  * 

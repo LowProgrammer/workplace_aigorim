@@ -13,6 +13,7 @@ using namespace std;
 
 void quick_sort(int arr[], int low, int heigh);
 void print_arr(int a[], int size_arr);
+void print_arr(int *a, int x,int y);
 int partition(int arr[], int low, int heigh);
 string removePar(string s, int x);
 /**
@@ -377,7 +378,7 @@ int maxIncreaseKeepingSkyline(vector<vector<int> >& grid) {
         for(int i = 0; i < len; i++)
         {
             for(int j = 0; j < len; j++)
-            {   
+            {   //
                 if(leftToRight[i]<topToBottom[j])
                     result+=(leftToRight[i]<topToBottom[j])?(leftToRight[i]-grid[i][j]):(topToBottom[j]-grid[i][j]);
                 else
@@ -437,12 +438,9 @@ int main()
         for(int j = 0; j < 4; j++)
         {
             ss[i].push_back(arr[i][j]);
-            /* code */
         }
-        
-        /* code */
     }
-    cout<<0<<endl;
+    print_arr(*arr,4,4);
     cout<<maxIncreaseKeepingSkyline(ss)<<endl;
     return 0;
 }
