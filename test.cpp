@@ -353,6 +353,43 @@ string removePar(string S, int size)
         return S.substr(1, size - 2);
     }
 }
+/**
+ * leecode 807 
+ * 
+ * */
+int maxIncreaseKeepingSkyline(vector<vector<int> >& grid) {
+        int len=grid.size();
+        int topToBottom[len],leftToRight[len];
+        int result=0;
+        for(int i = 0; i < len; i++)
+        {
+            int tmp_1=0,tmp_2=0;
+            for(int j = 0; j < len; j++)
+            {
+                if(grid[i][j]>tmp_1)tmp_1=grid[i][j];
+                if(grid[j][i]>tmp_2)tmp_2=grid[j][i];
+            }
+            topToBottom[i]=tmp_2;
+            leftToRight[i]=tmp_1;
+        }
+
+        //print_arr(topToBottom,4);print_arr(leftToRight,4);
+        for(int i = 0; i < len; i++)
+        {
+            for(int j = 0; j < len; j++)
+            {   
+                if(leftToRight[i]<topToBottom[j])
+                    result+=(leftToRight[i]<topToBottom[j])?(leftToRight[i]-grid[i][j]):(topToBottom[j]-grid[i][j]);
+                else
+                    result+=topToBottom[j]-grid[i][j];
+                // if(grid[i][j]<leftToRight[i]&&grid[i][j]<topToBottom[i])
+                //     result+=(leftToRight[i]<topToBottom[j])?(leftToRight[i]-grid[i][j]):(topToBottom[j]-grid[i][j]);
+                //cout<<result<<"  ";
+            }            
+        }
+        return result;
+
+}
 int main()
 {
     // char test[]="1234";
@@ -389,8 +426,23 @@ int main()
     // cout<<judgeCircle("LLLLRRUDDRR");
     
     // cout << removeOuterParentheses("()()") << endl;
-    string s = "asdfg";
-    cout<<myStrSub(s,1,3);
+    // string s = "asdfg";
+    // cout<<myStrSub(s,1,3);
     // cout << s.substr(1, 3);
+
+    int arr[4][4]={{3, 0, 8, 4}, {2, 4, 5, 7}, {9, 2, 6, 3}, {0, 3, 1, 0}};
+    vector <vector<int> > ss(4,vector<int>(0));
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < 4; j++)
+        {
+            ss[i].push_back(arr[i][j]);
+            /* code */
+        }
+        
+        /* code */
+    }
+    cout<<0<<endl;
+    cout<<maxIncreaseKeepingSkyline(ss)<<endl;
     return 0;
 }
