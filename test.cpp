@@ -11,10 +11,10 @@
 
 using namespace std;
 
-
-void quick_sort(int arr[],int low,int heigh);
-void print_arr(int a[],int size_arr);
-int partition(int arr[],int low,int heigh);
+void quick_sort(int arr[], int low, int heigh);
+void print_arr(int a[], int size_arr);
+int partition(int arr[], int low, int heigh);
+string removePar(string s, int x);
 /**
  * leecode 771
 **/
@@ -178,7 +178,8 @@ int repeatedNTimes(vector<int> &A)
                 }
                 else
                 {
-                    id = A[i+1];i++;
+                    id = A[i + 1];
+                    i++;
                     num = 1;
                 }
             }
@@ -193,110 +194,165 @@ int repeatedNTimes(vector<int> &A)
  * leecode 977
  * 
  * */
-vector<int> sortedSquares(vector<int>& A) {
+vector<int> sortedSquares(vector<int> &A)
+{
     vector<int> reuslt;
-    int len=A.size();
+    int len = A.size();
     int num[10000];
     //cout<<len<<endl;
-    for(int i = 0; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
-        num[i]=A[i]*A[i];
-      //  cout<<num[i]<<endl;
+        num[i] = A[i] * A[i];
+        //  cout<<num[i]<<endl;
     }
-    quick_sort(num,0,len-1);
-    for(int i = 0; i < len; i++)
+    quick_sort(num, 0, len - 1);
+    for (int i = 0; i < len; i++)
     {
         reuslt.push_back(num[i]);
     }
-    print_arr(num,len);
-    return reuslt;        
+    print_arr(num, len);
+    return reuslt;
 }
 /**
  * leecode 905
  * 
  * */
-vector<int> sortArrayByParity(vector<int>& A) {
-        // int arr[5000]; 
-        // vector<int> result;
-        int len =A.size();
-        int index_l=0,index_r=0;
-        // for(int i = 0; i < len; i++)
-        // {
-        //     if(A[i]%2==0){
-        //         result.push_back(A[i]);
-        //     }else
-        //     {
-        //         arr[index++]=A[i];
-        //     }
-            
-        // }
-        // index--;
-        // while(index>=0){
-        //     result.push_back(arr[index--]);
-        // }
-        // for(int i = 0; i < result.size(); i++)
-        // {
-        //     cout<<result[i]<<endl;
-        // }
-        /**
+vector<int> sortArrayByParity(vector<int> &A)
+{
+    // int arr[5000];
+    // vector<int> result;
+    int len = A.size();
+    int index_l = 0, index_r = 0;
+    // for(int i = 0; i < len; i++)
+    // {
+    //     if(A[i]%2==0){
+    //         result.push_back(A[i]);
+    //     }else
+    //     {
+    //         arr[index++]=A[i];
+    //     }
+
+    // }
+    // index--;
+    // while(index>=0){
+    //     result.push_back(arr[index--]);
+    // }
+    // for(int i = 0; i < result.size(); i++)
+    // {
+    //     cout<<result[i]<<endl;
+    // }
+    /**
          * 第二种
          **/
-        vector<int> re(len);
-        for(int i = 0; i < len; i++)
+    vector<int> re(len);
+    for (int i = 0; i < len; i++)
+    {
+        if (A[i] % 2 == 0)
         {
-            if(A[i]%2==0){
-                re[index_l++]=A[i];
-            }else
-            {
-                re[len-1-(index_r++)]=A[i];
-            }
-            
+            re[index_l++] = A[i];
         }
-        for(int i = 0; i < re.size(); i++)
+        else
         {
-            cout<<re[i]<<endl;
+            re[len - 1 - (index_r++)] = A[i];
         }
-        return re;       
+    }
+    for (int i = 0; i < re.size(); i++)
+    {
+        cout << re[i] << endl;
+    }
+    return re;
 }
 /**
  *leecode  832
  * 
  **/
-vector<vector<int> > flipAndInvertImage(vector<vector<int> >& A) {
-        //vector<vector<int>> result;
-        int tmp;
-        int len=A.size(),len_in=(tmp=A[0].size())%2?(tmp+1)/2:tmp/2;
-        for(int i = 0; i < len; i++)
-        {       
-            for(int j = 0; j < len_in; j++)
-            {
-                int te=A[i][j];
-                A[i][j]=!A[i][tmp-j-1];
-                A[i][tmp-j-1]=!te;
-            }
-            
+vector<vector<int> > flipAndInvertImage(vector<vector<int> > &A)
+{
+    //vector<vector<int>> result;
+    int tmp;
+    int len = A.size(), len_in = (tmp = A[0].size()) % 2 ? (tmp + 1) / 2 : tmp / 2;
+    for (int i = 0; i < len; i++)
+    {
+        for (int j = 0; j < len_in; j++)
+        {
+            int te = A[i][j];
+            A[i][j] = !A[i][tmp - j - 1];
+            A[i][tmp - j - 1] = !te;
         }
-        
-        return A;
+    }
+
+    return A;
 }
 
 /**
  *  leecode 657 
  * 
  **/
-bool judgeCircle(string moves) {
-        int pos_x=0,pos_y=0;//U D L R
-        int len =moves.length();
-        for(int i=0;i<len;i++){
-            if(moves[i]=='U')pos_y++;
-            if(moves[i]=='D')pos_y--;
-            if(moves[i]=='L')pos_x--;
-            if(moves[i]=='R')pos_x++;
-        }
-        return (pos_x==0&&pos_y==0)?true:false;
+bool judgeCircle(string moves)
+{
+    int pos_x = 0, pos_y = 0; //U D L R
+    int len = moves.length();
+    for (int i = 0; i < len; i++)
+    {
+        if (moves[i] == 'U')
+            pos_y++;
+        if (moves[i] == 'D')
+            pos_y--;
+        if (moves[i] == 'L')
+            pos_x--;
+        if (moves[i] == 'R')
+            pos_x++;
+    }
+    return (pos_x == 0 && pos_y == 0) ? true : false;
 }
-
-
+/**
+ * leecode 1021
+ * 这个题可以可以改成递归求字符串
+ * */
+string removeOuterParentheses(string S)
+{
+    //if(S.compare("()"))return "()";
+    //stack<char> str;
+    int len = S.length();
+    string result;
+    int index = 0, str_l = 0, str_r;
+    for (int i = 0; i < len; i++)
+    {
+        if (S[i] == '(')
+            index++;
+        if (S[i] == ')')
+            index--;
+        if (index == 0)
+        {
+            int tmp = str_l;
+            str_l = i;
+            int len_son = i - tmp;
+            //cout << result << " ->" << tmp << " len =" << len_son << endl;
+            
+            if (tmp == 0)
+            {
+                //cout<<S.substr(tmp, len_son + 1)<<endl;
+                result += removePar(S.substr(tmp, len_son + 1), len_son + 1);
+            }    
+            else
+            {
+                //cout<<S.substr(tmp+1, len_son )<<endl;
+                result += removePar(S.substr(tmp+1, len_son), len_son);
+            }
+        }
+    }
+    //cout<<result<<endl;
+    return result;
+}
+string removePar(string S, int size)
+{
+    if (S == "()")
+        return "";
+    else
+    {
+        return S.substr(1, size - 2);
+    }
+}
 int main()
 {
     // char test[]="1234";
@@ -319,19 +375,21 @@ int main()
     // vector<int> num(nu, nu +  4);
     // cout << repeatedNTimes(num);
 
-
     // int nu[] = {-8,-6,-4,-2,0,1,3,5,7};
     // vector<int> num(nu, nu +  9);
     // sortedSquares(num);
-    
 
     // int nu[] = {3,1,2,4};
     // vector<int> num(nu, nu +  4);
-    
-    // vector<int> s=sortArrayByParity(num);
-    int tmp,s=(tmp=4)%2?(tmp+1)/2:tmp/2;
-    cout<<(!0)<<"   "<<s;
 
-    cout<<judgeCircle("LLLLRRUDDRR");
+    // vector<int> s=sortArrayByParity(num);
+    // int tmp,s=(tmp=4)%2?(tmp+1)/2:tmp/2;
+    // cout<<(!0)<<"   "<<s;
+
+    // cout<<judgeCircle("LLLLRRUDDRR");
+    
+    // cout << removeOuterParentheses("()()") << endl;
+    // string s = "asdfg";
+    // cout << s.substr(1, 3);
     return 0;
 }
