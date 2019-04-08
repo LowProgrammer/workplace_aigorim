@@ -389,7 +389,8 @@ int main()
     // cout<<judgeCircle("LLLLRRUDDRR");
     
     // cout << removeOuterParentheses("()()") << endl;
-    // string s = "asdfg";
+    string s = "asdfg";
+    cout<<myStrSub(s,1,3);
     // cout << s.substr(1, 3);
     return 0;
 }
