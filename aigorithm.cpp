@@ -7,6 +7,12 @@
 using namespace std;
 
 #define max 100 //int2string 方法定义的树组最大值
+//forech 方法打印树组 vector
+template<typename T>
+void printer(const T& val)
+{
+    cout << val << endl;
+}
 /**
  * dayinarr 数组打印
  * 
@@ -96,7 +102,22 @@ string myStrSub(string s, int begin, int end)
         return s.substr(begin,end-begin);
     }
 }
+/**
+ * 字符串匹配分割
+ * */
+void mySplitString(const string &str,vector<string> &result,const string &mark){
+    string::size_type pos1,pos2;
+    pos2=str.find(mark);
+    pos1=0;
+    while(string::npos!=pos2){
+        result.push_back(str.substr(pos1,pos2-pos1));
 
+        pos1=pos2+mark.size();
+        pos2=str.find(mark,pos1);
+    }
+    if(pos1 != str.length())
+        result.push_back(str.substr(pos1));
+}
 /**
  * int2string 方法
  * 

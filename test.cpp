@@ -441,6 +441,74 @@ int rangeSumBST(TreeNode* root, int L, int R) {
         return total_num; 
 
 }
+/**
+ * leecode 535 Encode and Decode TinyURL
+ *  方法没有完善好
+ * */
+
+// Encodes a URL to a shortened URL.
+string encode(string longUrl) {
+    vector<string> result;
+   
+    mySplitString(longUrl, result, "//");
+    // for(vector<string>::iterator iter1=result.begin()+1;iter1!=result.end(); iter1++)
+    // {
+    //     url_web_com+=*(iter1);
+    // }
+    // cout<<url_web_com<<" 1 ";
+    string shortUrl=result[0]+"//",url_web_com;
+    url_web_com=result[1];
+    vector<string> url_web;
+    mySplitString(url_web_com, url_web, "/");
+    
+    for (vector<string>::iterator iter=url_web.begin();iter!=url_web.end(); iter++)
+    {
+        if(*(iter)=="leetcode.com"&&*(iter+1)=="problems")url_web.erase(iter);
+        if(*iter=="problems")*iter="pro";
+        //cout<<*iter<<" "; 
+    }
+    for(int i = 0; i < url_web.size(); i++)
+    {
+        shortUrl=shortUrl+url_web[i];
+        if(i!=url_web.size()-1)
+            shortUrl+="/";
+    }
+    
+    //for_each(url_web.begin(),url_web.end(),printer<string>);
+    return shortUrl;
+}
+
+// Decodes a shortened URL to its original URL.
+string decode(string shortUrl) {
+    vector<string> result_url;
+    mySplitString(shortUrl,result_url,"//");
+     string reLongUrl=result_url[0]+"//";
+    string long_url_web=result_url[1];
+    vector<string> url_web;
+    mySplitString(long_url_web,url_web,"/");
+    //cout<<"sdassdsadas"<<endl;
+    //for_each(url_web.begin(),url_web.end(),printer<string>);
+    int len=url_web.size();
+    for(int i=0;i<len;i++)
+    {
+        //cout<<" -->>"<<url_web[i]<<endl;
+        if(url_web[i]=="pro"){
+            url_web[i]="problems";
+            url_web.insert(url_web.begin()+i,"leetcode.com");
+        }
+    }
+
+    for(int i = 0; i < url_web.size(); i++)
+    {
+        reLongUrl+=url_web[i];
+        if(i!=url_web.size()-1)
+            reLongUrl+="/";
+        /* code */
+    }
+    
+    return reLongUrl;
+}
+
 
 int main()
 {
@@ -493,15 +561,20 @@ int main()
     // }
     // print_arr(*arr,4,4);
     // cout<<maxIncreaseKeepingSkyline(ss)<<endl;
-    TreeNode *root=new TreeNode(10);
-    root->left=new TreeNode(5);
-    root->right=new TreeNode(15);
-    root->left->left=new TreeNode(3);
-    root->left->right=new TreeNode(7);
-    // root->right->left=new TreeNode(5);
-    root->right->right=new TreeNode(18);
+    
+    // TreeNode *root=new TreeNode(10);
+    // root->left=new TreeNode(5);
+    // root->right=new TreeNode(15);
+    // root->left->left=new TreeNode(3);
+    // root->left->right=new TreeNode(7);
+    // // root->right->left=new TreeNode(5);
+    // root->right->right=new TreeNode(18);
 
-    //getMidSort(root);
-    cout<<rangeSumBST(root,7,15);
+    // //getMidSort(root);
+    // cout<<rangeSumBST(root,7,15);
+
+    string longurl="https://leetcode.com/problems/design-tinyurl";
+    cout<<decode(encode(longurl));
+    cout<<"over"<<endl;
     return 0;
 }
