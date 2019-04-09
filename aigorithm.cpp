@@ -5,6 +5,8 @@
  * this file include some methods used mostly
  * */
 using namespace std;
+
+#define max 100 //int2string 方法定义的树组最大值
 /**
  * dayinarr 数组打印
  * 
@@ -13,7 +15,8 @@ void print_arr(int a[], int size_arr)
 {
     for (int i = 0; i < size_arr; i++)
     {
-        cout << a[i] << endl;
+        if(a[i]==0)break;
+        cout << a[i] << "  ";
         /* code */
     }
 }
@@ -80,7 +83,7 @@ void sort_maopao(int arr[], int size)
 }
 /**
  * substr 改写字符串分割 因为C++自带的分割有些麻烦
- * 
+ * begin开始位置 end结束位置
  **/
 string myStrSub(string s, int begin, int end)
 {
@@ -92,4 +95,32 @@ string myStrSub(string s, int begin, int end)
     {
         return s.substr(begin,end-begin);
     }
+}
+
+/**
+ * int2string 方法
+ * 
+ **/
+
+string int2string(int n){
+    int m=n;
+    char s[max];
+    char ss[max];
+    int i=0,j=0;
+    if(n<0){
+        m=0-m;
+        j=1;
+        ss[0]='-';
+    }
+    while(m>0){
+        s[i++]=m%10+'0';
+        m=m/10;
+    }
+    s[i]='\0';
+    i=i-1;
+    while(i>=0){
+        ss[j++]=s[i--];
+    }
+    ss[j]='\0';
+    return ss;
 }

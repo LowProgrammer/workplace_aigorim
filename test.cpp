@@ -7,8 +7,9 @@
 #include <stack>
 #include <algorithm>
 #include <string>
-#include "aigorithm.cpp"
 
+#include "aigorithm.cpp"
+#include "tree.cpp"
 using namespace std;
 
 void quick_sort(int arr[], int low, int heigh);
@@ -391,6 +392,56 @@ int maxIncreaseKeepingSkyline(vector<vector<int> >& grid) {
         return result;
 
 }
+/**
+ * leecode 938 二叉搜索树的遍历
+ * 包括 中序遍历方法
+ * */
+/**
+ *中序遍历树 把结果放在vector中
+ * 
+ * */
+void getMidSort(Tree root,int l,int r,vector<int> &result_tree){
+     if(root){
+         getMidSort(root->left,l,r,result_tree);
+        //  s+=my_to_string(root->val);
+        //  cout<<i++<<" --  "<<s<<endl;
+        if(root->val>=l&&root->val<=r)
+            result_tree.push_back(root->val);
+        getMidSort(root->right,l,r,result_tree);
+     }
+ }
+ /**
+  * 中序遍历树组返回结果放在树组中
+  * */
+ int ind_node_num=0;
+ void getMidSortArr(Tree root,int* result_tree){
+     if(root){
+         getMidSortArr(root->left,result_tree);
+        //  s+=my_to_string(root->val);
+        //  cout<<i++<<" --  "<<s<<endl;
+        //result_tree.push_back(root->val);
+        result_tree[ind_node_num++]=root->val;
+        getMidSortArr(root->right,result_tree);
+     }
+ }
+int rangeSumBST(TreeNode* root, int L, int R) {
+        vector<int> result;//int num[10000];
+        getMidSort(root,L,R,result);//getMidSortArr(root,num);
+        //print_arr(num,ind_node_num);
+        int len=result.size();
+        int total_num=0;        
+
+        for(int i = 0; i < len; i++)
+        {
+            total_num+=result[i];
+            //cout<<result[i]<<endl;
+            /* code */
+        }
+        //cout<<total_num<<endl;
+        return total_num; 
+
+}
+
 int main()
 {
     // char test[]="1234";
@@ -431,16 +482,26 @@ int main()
     // cout<<myStrSub(s,1,3);
     // cout << s.substr(1, 3);
 
-    int arr[4][4]={{3, 0, 8, 4}, {2, 4, 5, 7}, {9, 2, 6, 3}, {0, 3, 1, 0}};
-    vector <vector<int> > ss(4,vector<int>(0));
-    for(int i = 0; i < 4; i++)
-    {
-        for(int j = 0; j < 4; j++)
-        {
-            ss[i].push_back(arr[i][j]);
-        }
-    }
-    print_arr(*arr,4,4);
-    cout<<maxIncreaseKeepingSkyline(ss)<<endl;
+    // int arr[4][4]={{3, 0, 8, 4}, {2, 4, 5, 7}, {9, 2, 6, 3}, {0, 3, 1, 0}};
+    // vector <vector<int> > ss(4,vector<int>(0));
+    // for(int i = 0; i < 4; i++)
+    // {
+    //     for(int j = 0; j < 4; j++)
+    //     {
+    //         ss[i].push_back(arr[i][j]);
+    //     }
+    // }
+    // print_arr(*arr,4,4);
+    // cout<<maxIncreaseKeepingSkyline(ss)<<endl;
+    TreeNode *root=new TreeNode(10);
+    root->left=new TreeNode(5);
+    root->right=new TreeNode(15);
+    root->left->left=new TreeNode(3);
+    root->left->right=new TreeNode(7);
+    // root->right->left=new TreeNode(5);
+    root->right->right=new TreeNode(18);
+
+    //getMidSort(root);
+    cout<<rangeSumBST(root,7,15);
     return 0;
 }
