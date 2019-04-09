@@ -26,6 +26,10 @@ void print_arr(int a[], int size_arr)
         /* code */
     }
 }
+/**
+ * 二维数组打印 
+ * 
+ * */
 void print_arr(int *a,int rows,int cols){
     for(int i = 0; i < rows; i++)
     {
@@ -38,6 +42,27 @@ void print_arr(int *a,int rows,int cols){
         /* code */
     }
     
+}
+/**
+ * 从数组中得到最大的值 begin to end
+ * 
+ * */
+int getMaxNumOfArr(int* arr,int begin,int end){
+    if(begin<=end){
+        int num=0, pos=begin;
+        for (int i = begin; i <= end; i++)
+        {
+            if (*(arr + i) > num)
+            {
+                pos = i;
+                num = *(arr + i);
+            }
+
+        }
+        //cout<<"  pos: "<<pos<<endl;
+        return pos;
+    }
+    return -1;
 }
 /**
  * kuaipai 快排

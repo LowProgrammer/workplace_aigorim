@@ -508,6 +508,37 @@ string decode(string shortUrl) {
     
     return reLongUrl;
 }
+/**
+ * leetcode 654 Maximum Binary Tree
+ * 选取数组中最大的数作为节点建立树
+ * */
+
+TreeNode* getTree(int* arr,int l,int r){
+    if (l<=r)
+    {
+        int pos = getMaxNumOfArr(arr, l, r);
+        TreeNode* root= new TreeNode(*(arr + pos));
+        //cout<<"l: "<<l<<" mid: "<<pos<<" r: "<<r;
+        //cout << " num: " << *(arr + pos) << " "<<endl;
+        root->left = getTree(arr, l, pos-1);
+        root->right = getTree(arr,pos+1, r);
+        return root;
+    }
+    return NULL;
+}
+
+TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+        //vector<int>::iterator iter;
+        int len=nums.size();
+        int arr[len];
+        for(int i = 0; i < len; i++)
+        {
+            arr[i]=nums[i];
+        }
+        TreeNode* root=getTree(arr,0,len-1);
+        getMidSort(root);
+        return root;
+}
 
 
 int main()
@@ -573,8 +604,13 @@ int main()
     // //getMidSort(root);
     // cout<<rangeSumBST(root,7,15);
 
-    string longurl="https://leetcode.com/problems/design-tinyurl";
-    cout<<decode(encode(longurl));
-    cout<<"over"<<endl;
+    // string longurl="https://leetcode.com/problems/design-tinyurl";
+    // cout<<decode(encode(longurl));
+    // cout<<"over"<<endl;
+
+    int nu[] = {3,2,1,6,0,5};
+    vector<int> num(nu, nu +  6);
+    constructMaximumBinaryTree(num);
+    //cout<<getMaxNumOfArr(nu,0,5);
     return 0;
 }
