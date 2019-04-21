@@ -540,9 +540,28 @@ TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
         return root;
 }
 /**
- * leetcode 701 Insert into a Binary Search Tree
+ * leetcode 701  Insert into a Binary Search Tree 
  * 
  * */
+TreeNode* insertIntoBST(TreeNode* root, int val) {
+    if (root->val < val)
+    {
+        if (!root->right)
+            root->right = new TreeNode(val);
+        else
+            insertIntoBST(root->right, val);
+    }
+    else
+    {
+        if (!root->left)
+            root->left = new TreeNode(val);
+        else
+            insertIntoBST(root->left, val);
+    }
+    return root;
+}
+
+
 
 int main()
 {
@@ -613,9 +632,20 @@ int main()
 
     //int nu[] = {3,2,1,6,0,5};
     //print_arr(nu,6);
-    cout<<123445<<endl;
     //vector<int> num(nu, nu +  6);
     //constructMaximumBinaryTree(num);
     //cout<<getMaxNumOfArr(nu,0,5);
+
+
+    TreeNode *root=new TreeNode(4);
+    root->left=new TreeNode(2);
+    root->right=new TreeNode(7);
+    root->left->left=new TreeNode(1);
+    root->left->right=new TreeNode(3);
+    // root->right->left=new TreeNode(5);
+    //root->right->right=new TreeNode(18);
+    getMidSort(root);cout<<endl;
+    
+    getMidSort(insertIntoBST(root,5));
     return 0;
 }
