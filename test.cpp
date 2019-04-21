@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <string>
 
+
 #include "aigorithm.cpp"
 #include "tree.cpp"
 using namespace std;
@@ -565,7 +566,9 @@ TreeNode* insertIntoBST(TreeNode* root, int val) {
  * 
  * */
 TreeNode* recoverFromPreorder(string S) {
+        TreeNode* root=new TreeNode((int)S[0]-'0');
         
+        return root;
 }
 
 int main()
@@ -642,15 +645,19 @@ int main()
     //cout<<getMaxNumOfArr(nu,0,5);
 
 
-    TreeNode *root=new TreeNode(4);
-    root->left=new TreeNode(2);
-    root->right=new TreeNode(7);
-    root->left->left=new TreeNode(1);
-    root->left->right=new TreeNode(3);
-    // root->right->left=new TreeNode(5);
-    //root->right->right=new TreeNode(18);
-    getMidSort(root);cout<<endl;
+    // TreeNode *root=new TreeNode(4);
+    // root->left=new TreeNode(2);
+    // root->right=new TreeNode(7);
+    // root->left->left=new TreeNode(1);
+    // root->left->right=new TreeNode(3);
+    // // root->right->left=new TreeNode(5);
+    // //root->right->right=new TreeNode(18);
+    // getMidSort(root);cout<<endl;
     
-    getMidSort(insertIntoBST(root,5));
+    // getMidSort(insertIntoBST(root,5));
+    string st="1258905676";
+    //int pos;
+    //char ss[3];strcpy(ss,st.c_str());
+    cout<<my_str2int(st);
     return 0;
 }
