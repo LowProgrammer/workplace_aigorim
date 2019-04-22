@@ -570,6 +570,72 @@ TreeNode* recoverFromPreorder(string S) {
         
         return root;
 }
+/**
+ *  leetcode   1008. Construct Binary Search Tree from Preorder Traversal 
+ *  构建二叉搜索树 迭代器和for循环遍历
+ * */
+TreeNode* createTreePre(TreeNode* root,vector<int>& preorder,vector<int>::iterator &it){
+    //cout<<*it<<" bb ";
+    if(*it>root->val&&it<preorder.end()){
+        if(root->right)
+            createTreePre(root->right,preorder,it);
+        else{
+            cout<<*it<<" ss ";
+            root->right=new TreeNode(*it);
+            //createTreePre(root,preorder,it);
+        }
+    }
+    if(*it<root->val&&it<preorder.end()){
+        if(root->left)
+            createTreePre(root->left,preorder,it);
+        else{
+            cout<<*it<<" ff ";
+            root->left=new TreeNode(*it);
+            //createTreePre(root,preorder,it);
+        }
+    }
+    return root;
+}
+TreeNode* createTreePre(TreeNode* root,vector<int>& preorder,int pos,int end){
+    //cout<<*it<<" bb ";
+    if(preorder[pos]>root->val&&pos<end){
+        if(root->right)
+            createTreePre(root->right,preorder,pos,end);
+        else{
+            //cout<<*it<<" ss ";
+            root->right=new TreeNode(preorder[pos]);
+            //createTreePre(root,preorder,it);
+        }
+    }
+    if(preorder[pos]<root->val&&pos<end){
+        if(root->left)
+            createTreePre(root->left,preorder,pos,end);
+        else{
+            //cout<<*it<<" ff ";
+            root->left=new TreeNode(preorder[pos]);
+            //createTreePre(root,preorder,it);
+        }
+    }
+    return root;
+}
+TreeNode* bstFromPreorder(vector<int>& preorder) {
+    TreeNode* root;
+    if(preorder.empty())return NULL;
+    vector<int>::iterator ite=preorder.begin();
+    root=new TreeNode(*ite++);
+    for (;ite<preorder.end();ite++)
+    {
+        createTreePre(root,preorder,ite);
+    }
+    //  int len=preorder.size();
+    // root=new TreeNode(preorder[0]);
+    // for (int i = 1; i <len; i++)
+    // {
+    //     createTreePre(root,preorder,i,len);
+    // }
+    return root;        
+}
+
 
 int main()
 {
@@ -658,6 +724,19 @@ int main()
     string st="1258905676";
     //int pos;
     //char ss[3];strcpy(ss,st.c_str());
-    cout<<my_str2int(st);
+    //cout<<my_str2int(st);
+
+    //1088
+    int nu[] = {8,5,1,7,10,12};
+    //print_arr(nu,6);
+    cout << endl;
+    vector<int> num(nu, nu + 6);
+    TreeNode *root = bstFromPreorder(num);
+    cout << root->val << " root ";
+    cout << " midsort ";
+    getMidSort(root);
+    cout << " presort ";
+    getPreSort(root);
+
     return 0;
 }
