@@ -7,7 +7,7 @@
 #include <stack>
 #include <algorithm>
 #include <string>
-
+#include <map>
 
 #include "aigorithm.cpp"
 #include "tree.cpp"
@@ -565,14 +565,103 @@ TreeNode* insertIntoBST(TreeNode* root, int val) {
  * leetcode 1028. Recover a Tree From Preorder Traversal
  * 
  * */
+TreeNode* createTree(TreeNode* root,vector<int> &index,vector<int> &num,vector<int>::iterator &ite_index,vector<int>::iterator &ite_num){
+    if(!root->left&&*ite_index==1){
+        cout<<" fil "<<*ite_num<<endl;
+        root->left=new TreeNode(*ite_num++);ite_index++;
+        createTree(root->left,index,num,ite_index,ite_num);
+    }else{
+        if(!root->left&&*ite_index==*(ite_index+1)){
+            cout<<" r_l: "<<*ite_num<<" :: "<<*(ite_num+1)<<endl;
+            root->left=new TreeNode(*ite_num);
+            root->right=new TreeNode(*(ite_num+1));
+            ite_index+=2;ite_num+=2;
+        }else{
+            cout<<" else:: "<<*ite_num<<endl;
+            root->left=new TreeNode(*ite_num++);ite_index++;
+            createTree(root->left,index,num,ite_index,ite_num);
+        }
+    }
+    if(root->left&&*ite_index==1){
+        cout<<" fir "<<*ite_num<<endl;
+        root->right=new TreeNode(*ite_num++);ite_index++;
+        createTree(root->right,index,num,ite_index,ite_num);
+    }
+    return root;
+}
+TreeNode* getDepthNode(TreeNode* root,int depth,int num){
+    //cout<<depth<<"->"<<num<<endl;
+    if(depth>1){
+        cout<<depth<<"->"<<num<<endl;
+        getDepthNode(root->left,depth-1,num);
+        cout<<" llll  "<<depth<<endl;
+        getDepthNode(root->right,depth-1,num);
+    }
+    if(depth==1){
+        if(!root->left)              return root->left=new TreeNode(num);
+        if(root->left&&!root->right) return root->right=new TreeNode(num);
+    }
+    if(depth==0)return NULL;
+    return root;
+}
 TreeNode* recoverFromPreorder(string S) {
-        TreeNode* root=new TreeNode((int)S[0]-'0');
+        //1-2--3--4-5--6--7
+        vector<int> index_nu,num;
+        TreeNode* root;
+        int pos_l=0,pos_r,fir_id=1,is_num=0,stage=0;//数字起始左 右 第一个数 是否是数 层数
+        int len=S.length();
+        for (int i = 0; i < len; i++)
+        {
+            if(S[i]=='-'&&fir_id){
+                //cout<<" first :";
+                pos_l=i;
+                //index_nu.push_back(0);
+                //cout<<S.substr(0,i)<<endl;
+                //num.push_back(my_str2int(S.substr(0,i)));
+                root=new TreeNode(my_str2int(S.substr(0,i)));
+                fir_id=0;
+            }
+            if(S[i]!='-'&&!is_num&&!fir_id){
+                //cout<<" s_index: ";
+                pos_r=i;
+                //cout<<pos_r-pos_l<<"  ";
+                index_nu.push_back(pos_r-pos_l);
+                pos_l=i;
+                is_num=1;
+            }
+            if(S[i]=='-'&&is_num&&!fir_id){
+                //cout<<" f_num: ";
+                pos_r=i;
+                //cout<<S.substr(pos_l,pos_r-pos_l)<<"";
+                num.push_back(my_str2int(S.substr(pos_l,pos_r-pos_l)));
+                pos_l=i;
+                is_num=0;
+                //cout<<endl;
+            }
+        }
+        num.push_back(my_str2int(S.substr(pos_l)));
+       // cout<<" last: "<<S.substr(pos_l)<<endl;
+        
+        
+        // vector<int>::iterator ite_index=index_nu.begin(),ite_num=num.begin();
+        // createTree(root,index_nu,num,ite_index,ite_num);
+        for (int i = 0; i < num.size(); i++)
+        {
+            cout<<i<<" ---> "<<num[i]<<endl;
+            getDepthNode(root,index_nu[i],num[i]);
+        }
+        getMidSort(root);getPreSort(root);
+        //cout<<root->right->left->val<<endl;
+        // for (int i = 0; i < num.size(); i++)
+        // {
+        //     cout<<index_nu[i]<<" :: "<<num[i]<<"  ";
+        // }
         
         return root;
 }
 /**
  *  leetcode   1008. Construct Binary Search Tree from Preorder Traversal 
- *  构建二叉搜索树 迭代器和for循环遍历
+ *  构建二叉搜索树 迭代器和for循环遍历  提交时for循环时间效率更高些
  * */
 TreeNode* createTreePre(TreeNode* root,vector<int>& preorder,vector<int>::iterator &it){
     //cout<<*it<<" bb ";
@@ -721,22 +810,27 @@ int main()
     // getMidSort(root);cout<<endl;
     
     // getMidSort(insertIntoBST(root,5));
-    string st="1258905676";
+    //string st="1258905676";
     //int pos;
     //char ss[3];strcpy(ss,st.c_str());
     //cout<<my_str2int(st);
 
     //1088
-    int nu[] = {8,5,1,7,10,12};
-    //print_arr(nu,6);
-    cout << endl;
-    vector<int> num(nu, nu + 6);
-    TreeNode *root = bstFromPreorder(num);
-    cout << root->val << " root ";
-    cout << " midsort ";
-    getMidSort(root);
-    cout << " presort ";
-    getPreSort(root);
+    // int nu[] = {8,5,1,7,10,12};
+    // //print_arr(nu,6);
+    // cout << endl;
+    // vector<int> num(nu, nu + 6);
+    // TreeNode *root = bstFromPreorder(num);
+    // cout << root->val << " root ";
+    // cout << " midsort ";
+    // getMidSort(root);
+    // cout << " presort ";
+    // getPreSort(root);
+
+    string str="1-2--3--4-5--6--7";
+    recoverFromPreorder(str);
+
+
 
     return 0;
 }

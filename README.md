@@ -1,4 +1,4 @@
-# test_aigor
+# test_aigorithm
 # from cqf
 #this practice begin at the 2019.4.1
 
