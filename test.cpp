@@ -599,6 +599,7 @@ TreeNode* createTree(TreeNode* root,int index_num[],int num[],int arr_l,int arr_
         }
         return root;
     }
+    return NULL;
 }
 TreeNode* recoverFromPreorder(string S) {
         //1-2--3--4-5--6--7
@@ -731,6 +732,73 @@ TreeNode* bstFromPreorder(vector<int>& preorder) {
 }
 
 
+/**
+ * leetcode 980. Unique Paths III
+ *
+ *  路径搜索问题 深度优先
+ * */
+
+bool isRoute(int *arr,int x,int y,int col){
+    if(*(arr+x*col+y)==1)return true;
+    return false;
+}
+void setRoute(int *arr,int x,int y,int col){
+    if(*(arr+x*col+y)==0){
+        *(arr+x*col+y)=1;
+    }
+}
+void getUniquePath(vector<vector<int>>& grid,int *arr,int &total_num,int &count,int start_x,int start_y,int end_x,int end_y,int len){
+    if(total_num==0){
+        count++;
+    }
+    if(start_x>=0&&!isRoute(arr,start_x-1,start_y,len)){
+        total_num--;setRoute(arr,start_x-1,start_y,len);
+        getUniquePath(grid,arr,total_num,count,start_x-1,start_y,end_x,end_y,len);
+    }
+    if(start_y<len&&!isRoute(arr,start_x,start_y+1,len)){
+        total_num--;setRoute(arr,start_x,start_y+1,len);
+        getUniquePath(grid,arr,total_num,count,start_x,start_y+1,end_x,end_y,len);
+    }
+    if(start_x<len&&!isRoute(arr,start_x+1,start_y,len)){
+        total_num--;setRoute(arr,start_x+1,start_y,len);
+        getUniquePath(grid,arr,total_num,count,start_x+1,start_y,end_x,end_y,len);
+    }
+    if(start_y>=0&&!isRoute(arr,start_x,start_y-1,len)){
+        total_num--;setRoute(arr,start_x,start_y-1,len);
+        getUniquePath(grid,arr,total_num,count,start_x,start_y-1,end_x,end_y,len);
+    }
+}
+
+
+int uniquePathsIII(vector<vector<int>>& grid) {
+        int len_col=grid.size(),len_cow=grid[0].size();//行 列
+        int total_num;//上》右》下》左 0总数
+        int map[len_col][len_cow]={0};
+        int start_x,start_y,end_x,end_y;
+        for (int i = 0; i < len_col; i++)
+        {
+            for (int j = 0; j < len_cow; j++)
+            {
+                if(grid[i][j]==0)total_num++;
+                //map[i][j]=grid[i][j];
+                if(grid[i][j]==1){
+                    start_x=i;
+                    start_y=j;
+                    map[i][j]=1;
+                }
+                if(grid[i][j]==2){
+                    end_x=i;
+                    end_y=j;
+                    map[i][j]=1;
+                }
+                if(grid[i][j]==-1)
+                    map[i][j]=1;
+            }
+        }
+        int count=0;
+        getUniquePath(grid,*map,total_num,count,start_x,start_y,end_x,end_y,len_col);
+        return count;
+}
 int main()
 {
     // char test[]="1234";
@@ -832,10 +900,21 @@ int main()
     // cout << " presort ";
     // getPreSort(root);
 
-    string str="1-2--3--4-5--6--7";
-    recoverFromPreorder(str);
+    //1008
+    // string str="1-2--3--4-5--6--7";
+    // recoverFromPreorder(str);
 
-
+     int arr[4][4]={{1,0,0,0},{0,0,0,0},{0,0,0,2}};
+    vector <vector<int> > ss(4,vector<int>(0));
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < 4; j++)
+        {
+            ss[i].push_back(arr[i][j]);
+        }
+    }
+    print_arr(*arr,4,4);
+    cout<<uniquePathsIII(ss)<<endl;
 
     return 0;
 }
