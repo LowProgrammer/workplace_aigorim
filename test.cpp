@@ -563,51 +563,51 @@ TreeNode* insertIntoBST(TreeNode* root, int val) {
 }
 /**
  * leetcode 1028. Recover a Tree From Preorder Traversal
+ * 采用递归的思想构建树  1-2--3--4-5--6--7
  * 
  * */
-TreeNode* createTree(TreeNode* root,vector<int> &index,vector<int> &num,vector<int>::iterator &ite_index,vector<int>::iterator &ite_num){
-    if(!root->left&&*ite_index==1){
-        cout<<" fil "<<*ite_num<<endl;
-        root->left=new TreeNode(*ite_num++);ite_index++;
-        createTree(root->left,index,num,ite_index,ite_num);
-    }else{
-        if(!root->left&&*ite_index==*(ite_index+1)){
-            cout<<" r_l: "<<*ite_num<<" :: "<<*(ite_num+1)<<endl;
-            root->left=new TreeNode(*ite_num);
-            root->right=new TreeNode(*(ite_num+1));
-            ite_index+=2;ite_num+=2;
-        }else{
-            cout<<" else:: "<<*ite_num<<endl;
-            root->left=new TreeNode(*ite_num++);ite_index++;
-            createTree(root->left,index,num,ite_index,ite_num);
+int getPos(int num[],int value,int begin,int end){
+    int pos=-1;
+    for(int i=begin;i<=end;i++){
+        if(num[i]==value){
+            pos=i;
+            break;
         }
     }
-    if(root->left&&*ite_index==1){
-        cout<<" fir "<<*ite_num<<endl;
-        root->right=new TreeNode(*ite_num++);ite_index++;
-        createTree(root->right,index,num,ite_index,ite_num);
-    }
-    return root;
+    return pos;
 }
-TreeNode* getDepthNode(TreeNode* root,int depth,int num){
-    //cout<<depth<<"->"<<num<<endl;
-    if(depth>1){
-        cout<<depth<<"->"<<num<<endl;
-        getDepthNode(root->left,depth-1,num);
-        cout<<" llll  "<<depth<<endl;
-        getDepthNode(root->right,depth-1,num);
+TreeNode* createTree(TreeNode* root,int index_num[],int num[],int arr_l,int arr_r){
+    while (arr_l <=arr_r)
+    {   
+        int i = index_num[arr_l];
+        int pos = getPos(index_num, i, arr_l+1, arr_r);
+        cout<<"  L ::"<<arr_l<<" R:: "<<arr_r<<"   ";cout<< " pos: "<<pos<<endl;
+        if (pos > 0)
+        {
+            root->left=new TreeNode(num[arr_l]);
+            root->right=new TreeNode(num[pos]);
+            createTree(root->left, index_num, num, arr_l+1, pos - 1);
+            createTree(root->right, index_num, num, pos+1, arr_r);
+        }
+        else
+        {
+            //root=new TreeNode(num[arr_l]);
+            // cout<<1234<<" s" ;
+            root->left=new TreeNode(num[arr_l]);
+            createTree(root->left,index_num,num,arr_l+1,arr_r);
+            // else root->right=new TreeNode(num[arr_l]);
+        }
+        return root;
     }
-    if(depth==1){
-        if(!root->left)              return root->left=new TreeNode(num);
-        if(root->left&&!root->right) return root->right=new TreeNode(num);
-    }
-    if(depth==0)return NULL;
-    return root;
 }
 TreeNode* recoverFromPreorder(string S) {
         //1-2--3--4-5--6--7
         vector<int> index_nu,num;
         TreeNode* root;
+        if(S.find('-')==-1){
+            root=new TreeNode(my_str2int(S));
+            return root;
+        }
         int pos_l=0,pos_r,fir_id=1,is_num=0,stage=0;//数字起始左 右 第一个数 是否是数 层数
         int len=S.length();
         for (int i = 0; i < len; i++)
@@ -645,12 +645,17 @@ TreeNode* recoverFromPreorder(string S) {
         
         // vector<int>::iterator ite_index=index_nu.begin(),ite_num=num.begin();
         // createTree(root,index_nu,num,ite_index,ite_num);
+        int index_num[num.size()],arr_num[num.size()];
         for (int i = 0; i < num.size(); i++)
         {
-            cout<<i<<" ---> "<<num[i]<<endl;
-            getDepthNode(root,index_nu[i],num[i]);
+            cout<<index_nu[i]<<" ---> "<<num[i]<<endl;
+            index_num[i]=index_nu[i];
+            arr_num[i]=num[i];
+        
         }
-        getMidSort(root);getPreSort(root);
+
+        createTree(root,index_num,arr_num,0,num.size()-1);
+        getMidSort(root);//getPreSort(root);
         //cout<<root->right->left->val<<endl;
         // for (int i = 0; i < num.size(); i++)
         // {
