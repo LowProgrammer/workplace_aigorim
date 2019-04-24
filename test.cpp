@@ -799,6 +799,43 @@ int uniquePathsIII(vector<vector<int>>& grid) {
         getUniquePath(grid,*map,total_num,count,start_x,start_y,end_x,end_y,len_col);
         return count;
 }
+
+/**
+ * leetcode 950. Reveal Cards In Increasing Order
+ * 
+ * */
+int getPoseOfC(vector<int> &arr,int begin,int end){
+    while(begin<end){
+        int tmp=arr[begin];
+      
+        while(arr[end]>tmp&&begin<end)end--;
+        arr[begin]=arr[end];
+        while (arr[begin]<tmp&&begin<end)begin++;
+        arr[end]=arr[begin];
+        
+        arr[begin]=tmp;
+        return begin;        
+    }
+}
+void card_sort(vector<int>& sort_arr,int begin,int end){
+    while(begin<end){
+        int pos=getPoseOfC(sort_arr,begin,end);
+        card_sort(sort_arr,begin,pos-1);
+        card_sort(sort_arr,pos+1,end);
+    }
+
+}
+//2,13,3,11,5,17,7
+void sortCard(int arr[],vector<int> &sort_ar){
+    
+       
+}
+vector<int> deckRevealedIncreasing(vector<int>& deck) {
+    int len=deck.size();
+    int result[len]={0};
+
+
+}
 int main()
 {
     // char test[]="1234";
