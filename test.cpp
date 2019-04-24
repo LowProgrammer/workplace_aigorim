@@ -735,7 +735,7 @@ TreeNode* bstFromPreorder(vector<int>& preorder) {
 /**
  * leetcode 980. Unique Paths III
  *
- *  路径搜索问题 深度优先
+ *  路径搜索问题 深度优先 未完成
  * */
 
 bool isRoute(int *arr,int x,int y,int col){
@@ -802,7 +802,7 @@ int uniquePathsIII(vector<vector<int>>& grid) {
 
 /**
  * leetcode 950. Reveal Cards In Increasing Order
- * 
+ *  未完成
  * */
 int getPoseOfC(vector<int> &arr,int begin,int end){
     while(begin<end){
