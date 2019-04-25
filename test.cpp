@@ -7,6 +7,7 @@
 #include <stack>
 #include <algorithm>
 #include <string>
+#include <map>
 
 #include "aigorithm.cpp"
 #include "tree.cpp"
@@ -560,9 +561,337 @@ TreeNode* insertIntoBST(TreeNode* root, int val) {
     }
     return root;
 }
+/**
+ * leetcode 1028. Recover a Tree From Preorder Traversal
+ * 采用递归的思想构建树  1-2--3--4-5--6--7
+ * 
+ * */
+int getPos(int num[],int value,int begin,int end){
+    int pos=-1;
+    for(int i=begin;i<=end;i++){
+        if(num[i]==value){
+            pos=i;
+            break;
+        }
+    }
+    return pos;
+}
+TreeNode* createTree(TreeNode* root,int index_num[],int num[],int arr_l,int arr_r){
+    while (arr_l <=arr_r)
+    {   
+        int i = index_num[arr_l];
+        int pos = getPos(index_num, i, arr_l+1, arr_r);
+        cout<<"  L ::"<<arr_l<<" R:: "<<arr_r<<"   ";cout<< " pos: "<<pos<<endl;
+        if (pos > 0)
+        {
+            root->left=new TreeNode(num[arr_l]);
+            root->right=new TreeNode(num[pos]);
+            createTree(root->left, index_num, num, arr_l+1, pos - 1);
+            createTree(root->right, index_num, num, pos+1, arr_r);
+        }
+        else
+        {
+            //root=new TreeNode(num[arr_l]);
+            // cout<<1234<<" s" ;
+            root->left=new TreeNode(num[arr_l]);
+            createTree(root->left,index_num,num,arr_l+1,arr_r);
+            // else root->right=new TreeNode(num[arr_l]);
+        }
+        return root;
+    }
+    return NULL;
+}
+TreeNode* recoverFromPreorder(string S) {
+        //1-2--3--4-5--6--7
+        vector<int> index_nu,num;
+        TreeNode* root;
+        if(S.find('-')==-1){
+            root=new TreeNode(my_str2int(S));
+            return root;
+        }
+        int pos_l=0,pos_r,fir_id=1,is_num=0,stage=0;//数字起始左 右 第一个数 是否是数 层数
+        int len=S.length();
+        for (int i = 0; i < len; i++)
+        {
+            if(S[i]=='-'&&fir_id){
+                //cout<<" first :";
+                pos_l=i;
+                //index_nu.push_back(0);
+                //cout<<S.substr(0,i)<<endl;
+                //num.push_back(my_str2int(S.substr(0,i)));
+                root=new TreeNode(my_str2int(S.substr(0,i)));
+                fir_id=0;
+            }
+            if(S[i]!='-'&&!is_num&&!fir_id){
+                //cout<<" s_index: ";
+                pos_r=i;
+                //cout<<pos_r-pos_l<<"  ";
+                index_nu.push_back(pos_r-pos_l);
+                pos_l=i;
+                is_num=1;
+            }
+            if(S[i]=='-'&&is_num&&!fir_id){
+                //cout<<" f_num: ";
+                pos_r=i;
+                //cout<<S.substr(pos_l,pos_r-pos_l)<<"";
+                num.push_back(my_str2int(S.substr(pos_l,pos_r-pos_l)));
+                pos_l=i;
+                is_num=0;
+                //cout<<endl;
+            }
+        }
+        num.push_back(my_str2int(S.substr(pos_l)));
+       // cout<<" last: "<<S.substr(pos_l)<<endl;
+        
+        
+        // vector<int>::iterator ite_index=index_nu.begin(),ite_num=num.begin();
+        // createTree(root,index_nu,num,ite_index,ite_num);
+        int index_num[num.size()],arr_num[num.size()];
+        for (int i = 0; i < num.size(); i++)
+        {
+            cout<<index_nu[i]<<" ---> "<<num[i]<<endl;
+            index_num[i]=index_nu[i];
+            arr_num[i]=num[i];
+        
+        }
+
+        createTree(root,index_num,arr_num,0,num.size()-1);
+        getMidSort(root);//getPreSort(root);
+        //cout<<root->right->left->val<<endl;
+        // for (int i = 0; i < num.size(); i++)
+        // {
+        //     cout<<index_nu[i]<<" :: "<<num[i]<<"  ";
+        // }
+        
+        return root;
+}
+/**
+ *  leetcode   1008. Construct Binary Search Tree from Preorder Traversal 
+ *  构建二叉搜索树 迭代器和for循环遍历  提交时for循环时间效率更高些
+ * */
+TreeNode* createTreePre(TreeNode* root,vector<int>& preorder,vector<int>::iterator &it){
+    //cout<<*it<<" bb ";
+    if(*it>root->val&&it<preorder.end()){
+        if(root->right)
+            createTreePre(root->right,preorder,it);
+        else{
+            cout<<*it<<" ss ";
+            root->right=new TreeNode(*it);
+            //createTreePre(root,preorder,it);
+        }
+    }
+    if(*it<root->val&&it<preorder.end()){
+        if(root->left)
+            createTreePre(root->left,preorder,it);
+        else{
+            cout<<*it<<" ff ";
+            root->left=new TreeNode(*it);
+            //createTreePre(root,preorder,it);
+        }
+    }
+    return root;
+}
+TreeNode* createTreePre(TreeNode* root,vector<int>& preorder,int pos,int end){
+    //cout<<*it<<" bb ";
+    if(preorder[pos]>root->val&&pos<end){
+        if(root->right)
+            createTreePre(root->right,preorder,pos,end);
+        else{
+            //cout<<*it<<" ss ";
+            root->right=new TreeNode(preorder[pos]);
+            //createTreePre(root,preorder,it);
+        }
+    }
+    if(preorder[pos]<root->val&&pos<end){
+        if(root->left)
+            createTreePre(root->left,preorder,pos,end);
+        else{
+            //cout<<*it<<" ff ";
+            root->left=new TreeNode(preorder[pos]);
+            //createTreePre(root,preorder,it);
+        }
+    }
+    return root;
+}
+TreeNode* bstFromPreorder(vector<int>& preorder) {
+    TreeNode* root;
+    if(preorder.empty())return NULL;
+    vector<int>::iterator ite=preorder.begin();
+    root=new TreeNode(*ite++);
+    for (;ite<preorder.end();ite++)
+    {
+        createTreePre(root,preorder,ite);
+    }
+    //  int len=preorder.size();
+    // root=new TreeNode(preorder[0]);
+    // for (int i = 1; i <len; i++)
+    // {
+    //     createTreePre(root,preorder,i,len);
+    // }
+    return root;        
+}
 
 
+/**
+ * leetcode 980. Unique Paths III
+ *
+ *  路径搜索问题 深度优先 未完成
+ * */
 
+bool isRoute(int *arr,int x,int y,int col){
+    if(*(arr+x*col+y)==1)return true;
+    return false;
+}
+void setRoute(int *arr,int x,int y,int col){
+    if(*(arr+x*col+y)==0){
+        *(arr+x*col+y)=1;
+    }
+}
+void getUniquePath(vector<vector<int>>& grid,int *arr,int &total_num,int &count,int start_x,int start_y,int end_x,int end_y,int len){
+    if(total_num==0){
+        count++;
+    }
+    if(start_x>=0&&!isRoute(arr,start_x-1,start_y,len)){
+        total_num--;setRoute(arr,start_x-1,start_y,len);
+        getUniquePath(grid,arr,total_num,count,start_x-1,start_y,end_x,end_y,len);
+    }
+    if(start_y<len&&!isRoute(arr,start_x,start_y+1,len)){
+        total_num--;setRoute(arr,start_x,start_y+1,len);
+        getUniquePath(grid,arr,total_num,count,start_x,start_y+1,end_x,end_y,len);
+    }
+    if(start_x<len&&!isRoute(arr,start_x+1,start_y,len)){
+        total_num--;setRoute(arr,start_x+1,start_y,len);
+        getUniquePath(grid,arr,total_num,count,start_x+1,start_y,end_x,end_y,len);
+    }
+    if(start_y>=0&&!isRoute(arr,start_x,start_y-1,len)){
+        total_num--;setRoute(arr,start_x,start_y-1,len);
+        getUniquePath(grid,arr,total_num,count,start_x,start_y-1,end_x,end_y,len);
+    }
+}
+
+
+int uniquePathsIII(vector<vector<int>>& grid) {
+        int len_col=grid.size(),len_cow=grid[0].size();//行 列
+        int total_num;//上》右》下》左 0总数
+        int map[len_col][len_cow]={0};
+        int start_x,start_y,end_x,end_y;
+        for (int i = 0; i < len_col; i++)
+        {
+            for (int j = 0; j < len_cow; j++)
+            {
+                if(grid[i][j]==0)total_num++;
+                //map[i][j]=grid[i][j];
+                if(grid[i][j]==1){
+                    start_x=i;
+                    start_y=j;
+                    map[i][j]=1;
+                }
+                if(grid[i][j]==2){
+                    end_x=i;
+                    end_y=j;
+                    map[i][j]=1;
+                }
+                if(grid[i][j]==-1)
+                    map[i][j]=1;
+            }
+        }
+        int count=0;
+        getUniquePath(grid,*map,total_num,count,start_x,start_y,end_x,end_y,len_col);
+        return count;
+}
+
+/**
+ * leetcode 950. Reveal Cards In Increasing Order
+ *  完成
+ * */
+int getPoseOfC(vector<int> &arr,int begin,int end){
+    int tmp=arr[begin];
+    while(begin<end){
+        while(arr[end]>tmp&&begin<end)end--;
+        arr[begin]=arr[end];
+        while (arr[begin]<tmp&&begin<end)begin++;
+        arr[end]=arr[begin];      
+    }
+    arr[begin]=tmp;
+    return begin;  
+}
+void card_sort(vector<int>& sort_arr,int begin,int end){
+    if(begin<end){
+        int pos=getPoseOfC(sort_arr,begin,end);
+        card_sort(sort_arr,begin,pos-1);
+        card_sort(sort_arr,pos+1,end);
+    }
+
+}
+void card_reverse(vector<int> &arr,int start,int end){
+    
+
+    int tmp=arr[end];
+    arr.pop_back();
+    arr.insert(arr.begin()+start,tmp);
+    // for (int i = end; i>start; i--)
+    // {
+    //     arr[i]=arr[i-1];
+    // }
+    // arr[start]=tmp;
+    
+}
+void prinrt_card_arr(int arr[],int start,int end){
+    
+    for (int i = start; i <=end; i++)
+    {
+        cout<<arr[i]<<"   ";
+        /* code */
+    }
+    cout<<endl;
+}
+//2,13,3,11,5,17,7  size=3
+void sortCard(vector<int> &arr,vector<int> &sort_ar,int start,int end,int mid){
+    
+    while (mid>=start)
+    {
+        //cout<<" mid:: "<<mid;
+        if (end == mid)//1
+        {
+            arr[end] = sort_ar[end];//cout<<"fir： "<<arr[end];
+        }
+        if (end - 1 == mid)//2
+        {
+            arr[end] = sort_ar[end];
+            arr[mid] = sort_ar[mid];//cout<<" sec: "<<arr[mid];
+        }
+        if(end-1>mid)
+        {   
+            arr[mid] = sort_ar[mid];//cout<<" ss： "<<arr[mid]<<"  "<<endl;
+            card_reverse(arr, mid+1, end); 
+            //prinrt_card_arr(arr,mid,end);
+            //sortCard(arr, sort_ar, start, end, --mid);
+        }
+        mid--;
+        //cout<<endl;
+    }
+}
+vector<int> deckRevealedIncreasing(vector<int>& deck) {
+    int len=deck.size();
+    int result[len]={0};
+    vector<int> result_ver(deck);
+    card_sort(deck,0,len-1);
+    // for (int i = 0; i < len; i++)
+    // {
+    //     cout<<deck[i]<<"  ";
+    //     /* code */
+    // }
+    
+    sortCard(result_ver,deck,0,len-1,len-1);
+    //cout<<"result::"<<endl;
+    // for (int i = 0; i < len; i++)
+    // {
+    //     //result_ver.push_back(result[i]);
+    //     cout<<result_ver[i]<<"  ";
+    //     /* code */
+    // }
+    return result_ver;
+}
 int main()
 {
     // char test[]="1234";
@@ -637,15 +966,60 @@ int main()
     //cout<<getMaxNumOfArr(nu,0,5);
 
 
-    TreeNode *root=new TreeNode(4);
-    root->left=new TreeNode(2);
-    root->right=new TreeNode(7);
-    root->left->left=new TreeNode(1);
-    root->left->right=new TreeNode(3);
-    // root->right->left=new TreeNode(5);
-    //root->right->right=new TreeNode(18);
-    getMidSort(root);cout<<endl;
+    // TreeNode *root=new TreeNode(4);
+    // root->left=new TreeNode(2);
+    // root->right=new TreeNode(7);
+    // root->left->left=new TreeNode(1);
+    // root->left->right=new TreeNode(3);
+    // // root->right->left=new TreeNode(5);
+    // //root->right->right=new TreeNode(18);
+    // getMidSort(root);cout<<endl;
     
-    getMidSort(insertIntoBST(root,5));
+    // getMidSort(insertIntoBST(root,5));
+    //string st="1258905676";
+    //int pos;
+    //char ss[3];strcpy(ss,st.c_str());
+    //cout<<my_str2int(st);
+
+    //1088
+    // int nu[] = {8,5,1,7,10,12};
+    // //print_arr(nu,6);
+    // cout << endl;
+    // vector<int> num(nu, nu + 6);
+    // TreeNode *root = bstFromPreorder(num);
+    // cout << root->val << " root ";
+    // cout << " midsort ";
+    // getMidSort(root);
+    // cout << " presort ";
+    // getPreSort(root);
+
+    //1008
+    // string str="1-2--3--4-5--6--7";
+    // recoverFromPreorder(str);
+
+
+    //980
+    //  int arr[4][4]={{1,0,0,0},{0,0,0,0},{0,0,0,2}};
+    // vector <vector<int> > ss(4,vector<int>(0));
+    // for(int i = 0; i < 4; i++)
+    // {
+    //     for(int j = 0; j < 4; j++)
+    //     {
+    //         ss[i].push_back(arr[i][j]);
+    //     }
+    // }
+    // print_arr(*arr,4,4);
+    // cout<<uniquePathsIII(ss)<<endl;
+
+    int nu[] = {17,13,11,7,5,3,2};
+    // for (int i = 1; i <= 7; i++)
+    // {
+    //     vector<int> num(nu, nu + i);
+    //     deckRevealedIncreasing(num);
+    //     cout<<endl;
+    // }
+    vector<int> num(nu, nu + 7);
+    deckRevealedIncreasing(num);
+    cout<<endl;
     return 0;
 }

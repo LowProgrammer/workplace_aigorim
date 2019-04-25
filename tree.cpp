@@ -25,8 +25,8 @@ void getMidSort(Tree root){
  * */
  void getPreSort(Tree root){
      if(root){
-         getPreSort(root->left);
          cout<<"  "<<root->val<<" ";
+         getPreSort(root->left);
          getPreSort(root->right);
      }
  }
@@ -36,7 +36,7 @@ void getMidSort(Tree root){
   void getPostSort(Tree root){
      if(root){
          getPostSort(root->left);
-         cout<<"  "<<root->val<<" ";
          getPostSort(root->right);
+         cout<<"  "<<root->val<<" ";
      }
  }

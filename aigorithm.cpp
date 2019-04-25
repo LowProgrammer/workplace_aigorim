@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <sstream>
 /**
  * this file include some methods used mostly
  * */
@@ -169,4 +170,45 @@ string int2string(int n){
     }
     ss[j]='\0';
     return ss;
+}
+
+/**
+ * 字符串转数字
+ * 
+ **/
+int str2int(string str){
+    stringstream sstr(str);
+    int num;
+    sstr>>num;
+    sstr.clear();
+    return num;
+}
+int str2int(const char* str){
+    return atoi(str);
+}
+int str2int(char str[]){
+    int x;
+    scanf(str,"%d",&x);
+    return x;
+}
+/**
+ * 字符串转int应该 不能超过int的范围
+ * */
+int my_str2int(string str){
+    if(str.empty())return 0;
+    int sign=0,len=str.length();
+    if(str[0]=='-'||str[0]=='+'){
+        if(str[0]=='-')
+            sign=1;
+        str=str.substr(1,len-1);
+    }
+    int po1=0,po2=0;
+    int len_num=str.length();
+    for(int i=0;i<len_num;i++){
+        po2=str[i]-'0';
+        po1=po1*10+po2;
+      //  cout<<po1<<"  ";
+    }
+    //cout<<po1;
+    return sign==1?-po1:po1;
 }
