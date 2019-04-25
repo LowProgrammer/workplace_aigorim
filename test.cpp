@@ -802,39 +802,95 @@ int uniquePathsIII(vector<vector<int>>& grid) {
 
 /**
  * leetcode 950. Reveal Cards In Increasing Order
- *  未完成
+ *  完成
  * */
 int getPoseOfC(vector<int> &arr,int begin,int end){
+    int tmp=arr[begin];
     while(begin<end){
-        int tmp=arr[begin];
-      
         while(arr[end]>tmp&&begin<end)end--;
         arr[begin]=arr[end];
         while (arr[begin]<tmp&&begin<end)begin++;
-        arr[end]=arr[begin];
-        
-        arr[begin]=tmp;
-        return begin;        
+        arr[end]=arr[begin];      
     }
+    arr[begin]=tmp;
+    return begin;  
 }
 void card_sort(vector<int>& sort_arr,int begin,int end){
-    while(begin<end){
+    if(begin<end){
         int pos=getPoseOfC(sort_arr,begin,end);
         card_sort(sort_arr,begin,pos-1);
         card_sort(sort_arr,pos+1,end);
     }
 
 }
-//2,13,3,11,5,17,7
-void sortCard(int arr[],vector<int> &sort_ar){
+void card_reverse(vector<int> &arr,int start,int end){
     
-       
+
+    int tmp=arr[end];
+    arr.pop_back();
+    arr.insert(arr.begin()+start,tmp);
+    // for (int i = end; i>start; i--)
+    // {
+    //     arr[i]=arr[i-1];
+    // }
+    // arr[start]=tmp;
+    
+}
+void prinrt_card_arr(int arr[],int start,int end){
+    
+    for (int i = start; i <=end; i++)
+    {
+        cout<<arr[i]<<"   ";
+        /* code */
+    }
+    cout<<endl;
+}
+//2,13,3,11,5,17,7  size=3
+void sortCard(vector<int> &arr,vector<int> &sort_ar,int start,int end,int mid){
+    
+    while (mid>=start)
+    {
+        //cout<<" mid:: "<<mid;
+        if (end == mid)//1
+        {
+            arr[end] = sort_ar[end];//cout<<"fir： "<<arr[end];
+        }
+        if (end - 1 == mid)//2
+        {
+            arr[end] = sort_ar[end];
+            arr[mid] = sort_ar[mid];//cout<<" sec: "<<arr[mid];
+        }
+        if(end-1>mid)
+        {   
+            arr[mid] = sort_ar[mid];//cout<<" ss： "<<arr[mid]<<"  "<<endl;
+            card_reverse(arr, mid+1, end); 
+            //prinrt_card_arr(arr,mid,end);
+            //sortCard(arr, sort_ar, start, end, --mid);
+        }
+        mid--;
+        //cout<<endl;
+    }
 }
 vector<int> deckRevealedIncreasing(vector<int>& deck) {
     int len=deck.size();
     int result[len]={0};
-
-
+    vector<int> result_ver(deck);
+    card_sort(deck,0,len-1);
+    // for (int i = 0; i < len; i++)
+    // {
+    //     cout<<deck[i]<<"  ";
+    //     /* code */
+    // }
+    
+    sortCard(result_ver,deck,0,len-1,len-1);
+    //cout<<"result::"<<endl;
+    // for (int i = 0; i < len; i++)
+    // {
+    //     //result_ver.push_back(result[i]);
+    //     cout<<result_ver[i]<<"  ";
+    //     /* code */
+    // }
+    return result_ver;
 }
 int main()
 {
@@ -941,17 +997,29 @@ int main()
     // string str="1-2--3--4-5--6--7";
     // recoverFromPreorder(str);
 
-     int arr[4][4]={{1,0,0,0},{0,0,0,0},{0,0,0,2}};
-    vector <vector<int> > ss(4,vector<int>(0));
-    for(int i = 0; i < 4; i++)
-    {
-        for(int j = 0; j < 4; j++)
-        {
-            ss[i].push_back(arr[i][j]);
-        }
-    }
-    print_arr(*arr,4,4);
-    cout<<uniquePathsIII(ss)<<endl;
 
+    //980
+    //  int arr[4][4]={{1,0,0,0},{0,0,0,0},{0,0,0,2}};
+    // vector <vector<int> > ss(4,vector<int>(0));
+    // for(int i = 0; i < 4; i++)
+    // {
+    //     for(int j = 0; j < 4; j++)
+    //     {
+    //         ss[i].push_back(arr[i][j]);
+    //     }
+    // }
+    // print_arr(*arr,4,4);
+    // cout<<uniquePathsIII(ss)<<endl;
+
+    int nu[] = {17,13,11,7,5,3,2};
+    // for (int i = 1; i <= 7; i++)
+    // {
+    //     vector<int> num(nu, nu + i);
+    //     deckRevealedIncreasing(num);
+    //     cout<<endl;
+    // }
+    vector<int> num(nu, nu + 7);
+    deckRevealedIncreasing(num);
+    cout<<endl;
     return 0;
 }
