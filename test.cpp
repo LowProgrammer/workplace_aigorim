@@ -12,8 +12,6 @@
 #include "aigorithm.cpp"
 #include "tree.cpp"
 using namespace std;
-using std::set;
-using std::map;
 
 void quick_sort(int arr[], int low, int heigh);
 void print_arr(int a[], int size_arr);
@@ -894,54 +892,6 @@ vector<int> deckRevealedIncreasing(vector<int>& deck) {
     // }
     return result_ver;
 }
-/**
- * leetcode 890. Find and Replace Pattern
- * 
- **/
-bool predictIsFit(string word,string pattern){
-    int len_1=word.length();
-    int len_2=pattern.length();
-    if(len_1!=len_2)return false;
-    //cout<<word<<"  :::   "<<pattern<<endl;
-    set<char> pair_index,pair_num;
-    //map<char,char> pairs;
-    char index[len_1],value[len_1];
-    int cout=0;
-    for(int i=0;i<len_1;i++){
-        if(pair_index.find(pattern[i])==pair_index.end()){
-            pair_index.insert(pattern[i]);
-            // pairs[pattern[i]]=word[i]; 
-            index[cout]=pattern[i];value[cout++]=word[i];    
-            pair_num.insert(word[i]);     
-        }else{
-            // if((*(pairs.find(pattern[i]))).second!=word[i]){
-            //     return false;
-            // }
-            int j;
-            for(j=0;j<cout;j++){
-                if(index[j]==pattern[i]&&value[j]!=word[i]){
-                    return false;
-                }
-            }
-        }
-    }
-    if(pair_index.size()!=pair_num.size()){
-        return false;
-    }
-    return true;
-}
-vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
-        vector<string> result_vec;
-        int len=words.size();
-        for(int i=0;i<len;i++){
-            if(predictIsFit(words[i],pattern)){
-                cout<<words[i]<<"  ";
-                result_vec.push_back(words[i]);
-            }
-                
-        }
-        return result_vec;
-}
 int main()
 {
     // char test[]="1234";
@@ -1061,22 +1011,15 @@ int main()
     // print_arr(*arr,4,4);
     // cout<<uniquePathsIII(ss)<<endl;
 
-    //950
-    // int nu[] = {17,13,11,7,5,3,2};
-    // // for (int i = 1; i <= 7; i++)
-    // // {
-    // //     vector<int> num(nu, nu + i);
-    // //     deckRevealedIncreasing(num);
-    // //     cout<<endl;
-    // // }
-    // vector<int> num(nu, nu + 7);
-    // deckRevealedIncreasing(num);
-    // cout<<endl;
-
-
-    string str_arr[]={"abc","deq","mee","aqq","dkd","ccc"};
-    string pattern="abb";
-    vector<string> arr_st(str_arr,str_arr+6);
-    findAndReplacePattern(arr_st,pattern);
+    int nu[] = {17,13,11,7,5,3,2};
+    // for (int i = 1; i <= 7; i++)
+    // {
+    //     vector<int> num(nu, nu + i);
+    //     deckRevealedIncreasing(num);
+    //     cout<<endl;
+    // }
+    vector<int> num(nu, nu + 7);
+    deckRevealedIncreasing(num);
+    cout<<endl;
     return 0;
 }
