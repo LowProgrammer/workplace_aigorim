@@ -954,11 +954,11 @@ bool getMostSubNodeTree(TreeNode* root){
     }
     return true;
 }
-int nnnnnn=0;
+//int nnnnnn=0;
 TreeNode* pruneTree(TreeNode* root) {
     if (getMostSubNodeTree(root))
     {
-        cout << " <---->" << nnnnnn++ << getMostSubNodeTree(root);
+        //cout << " <---->" << nnnnnn++ << getMostSubNodeTree(root);
         root = NULL;
     }
     else
@@ -968,6 +968,26 @@ TreeNode* pruneTree(TreeNode* root) {
     }
     return root;
 }
+/**
+ * leetcode  461 Hamming Distance
+ * 
+ * */
+int hammingDistance(int x, int y) {
+    int arr_x[32]={0},arr_y[32]={0};
+    int len_x,len_y;
+    int2byte(x,arr_x,len_x);
+    int2byte(y,arr_y,len_y);
+    int max_len=len_x>len_y?len_x:len_y;
+    int num=0;
+    for (int i = 0; i < max_len; i++)
+    {
+        if(arr_x[i]!=arr_y[i])num++;
+    }
+    
+    return num;
+
+}
+
 int main()
 {
     // char test[]="1234";
@@ -1105,7 +1125,9 @@ int main()
     // vector<string> arr_st(str_arr,str_arr+6);
     // findAndReplacePattern(arr_st,pattern);
 
-
-
+    int arr[32]={-1};int len;
+    int2byte(78,arr,len);
+    cout<<len;
+    //print_arr(arr,5);
     return 0;
 }

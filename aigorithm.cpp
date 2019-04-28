@@ -171,7 +171,21 @@ string int2string(int n){
     ss[j]='\0';
     return ss;
 }
-
+/**
+ * 十进制数字转为二进制
+ * */
+void int2byte(int value,int arr[],int &len){
+    int te=2;int i=0;
+    while(value!=0){
+        arr[i]=value%2;
+        cout<<arr[i]<<endl;
+        value=value/2;
+        i++;
+    }
+    len=i;
+    // arr[i]=value%2;
+    // cout<<arr[i]<<endl;
+}
 /**
  * 字符串转数字
  * 
@@ -193,6 +207,7 @@ int str2int(char str[]){
 }
 /**
  * 字符串转int应该 不能超过int的范围
+ * 字符串转数字
  * */
 int my_str2int(string str){
     if(str.empty())return 0;
