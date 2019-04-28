@@ -8,3 +8,5 @@ this pro mainly is used to learn cpp, aigorithm,
 
 the IDE used is vscode
 
+#I begin learning tf at 4.25
+there are two examples in the folder
