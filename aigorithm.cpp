@@ -172,7 +172,7 @@ string int2string(int n){
     return ss;
 }
 /**
- * 十进制数字转为二进制
+ * 十进制数字转为二进制 返回数组 和 二进制数的长度
  * */
 void int2byte(int value,int arr[],int &len){
     int te=2;int i=0;
