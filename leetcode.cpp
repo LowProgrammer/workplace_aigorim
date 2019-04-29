@@ -1055,11 +1055,13 @@ vector<TreeNode*> allPossibleFBT(int N) {
      }else{
          vector<TreeNode*> NodeList=allPossibleFBT(N-2);
          vector<TreeNode*> result;
-         for (int i = 0; i < NodeList.size(); i++)
+         int len=NodeList.size();
+         for (int i = 0; i < len; i++)
          {
              vector<TreeNode *> sdubTree;
              getTreeBleNode(NodeList[i], sdubTree);
-             for (int j = 0; j < sdubTree.size(); j++)
+             int nums=sdubTree.size();
+             for (int j = 0; j < nums; j++)
              {
                  result.push_back(addNode(NodeList[i],sdubTree[j]));
              }
@@ -1067,4 +1069,28 @@ vector<TreeNode*> allPossibleFBT(int N) {
          removeUnNeed(result);
          return result;
      }   
+}
+vector<TreeNode *> allPossibleFBT_2(int N)//参考优化代码
+{
+    N--;
+    vector<TreeNode *> res;
+    if (N == 0)
+    {
+        res.push_back(new TreeNode(0));
+        return res;
+    }
+    for (int i = 1; i < N; i += 2)
+    {
+        for (auto &left : allPossibleFBT(i))
+        {
+            for (auto &right : allPossibleFBT(N - i))
+            {
+                TreeNode *root = new TreeNode(0);
+                root->left = left;
+                root->right = right;
+                res.push_back(root);
+            }
+        }
+    }
+    return res;
 }
