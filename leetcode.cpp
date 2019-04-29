@@ -991,6 +991,80 @@ int hammingDistance(int x, int y) {
  * leetcode 894. All Possible Full Binary Trees
  * 
  * */
-vector<TreeNode*> allPossibleFBT(int N) {
+void getTreeBleNode(TreeNode* root,vector<TreeNode*> &blefNode){//获得叶节点
+    if(!root->left&&!root->right){
+        blefNode.push_back(root);
+    }else{
+        getTreeBleNode(root->left,blefNode);
+        getTreeBleNode(root->right,blefNode);
+    }
+}
+TreeNode* getCloneTree(TreeNode* root,TreeNode* &clo){//复制树
+    if(root){
+        clo=new TreeNode(root->val);
+        getCloneTree(root->left,clo->left);
+        getCloneTree(root->right,clo->right);
+    }
+    return clo;
+}
+TreeNode* addNode(TreeNode* root,TreeNode* index){//在复制树上指定位置添加节点
+    index->left=new TreeNode(0);
+    index->right=new TreeNode(0);
+    TreeNode* clo;
+    getCloneTree(root,clo);
+    index->left=NULL;
+    index->right=NULL;
+    return clo;
+}
+bool isSameTree(TreeNode* root1,TreeNode* root2){//两棵树结构是否相同
+    if(root1&&root2){
+        return isSameTree(root1->left,root2->left)&&isSameTree(root1->right,root2->right)?true:false;
+    }else if(!root1&&!root2){
+        return true;
+    }else
+    {
+        return false;
+    }
+    
+    return true;
+}
+void removeUnNeed(vector<TreeNode*> &list){//删除两个相同的
+    int len=list.size();
+    for(int i=0;i<len-1;i++){
+        for (int j = i+1; j <len ; j++)
+        {
+            if(isSameTree(list[i],list[j])){
+                list.erase(list.begin()+j);
+                len--;
+            }
+        }
         
+    }
+
+}
+vector<TreeNode*> allPossibleFBT(int N) {
+     if(N%2==0){
+         vector<TreeNode*> result;
+         return  result;
+     }
+     if(N==1){
+         TreeNode* root=new TreeNode(0);
+         vector<TreeNode*> result;
+         result.push_back(root);
+         return result;
+     }else{
+         vector<TreeNode*> NodeList=allPossibleFBT(N-2);
+         vector<TreeNode*> result;
+         for (int i = 0; i < NodeList.size(); i++)
+         {
+             vector<TreeNode *> sdubTree;
+             getTreeBleNode(NodeList[i], sdubTree);
+             for (int j = 0; j < sdubTree.size(); j++)
+             {
+                 result.push_back(addNode(NodeList[i],sdubTree[j]));
+             }
+         }
+         removeUnNeed(result);
+         return result;
+     }   
 }
