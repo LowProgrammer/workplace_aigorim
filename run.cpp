@@ -148,6 +148,5 @@ int main()
     //print_arr(arr,5);
 
 
-    
     return 0;
 }

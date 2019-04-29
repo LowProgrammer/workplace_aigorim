@@ -1094,3 +1094,18 @@ vector<TreeNode *> allPossibleFBT_2(int N)//参考优化代码
     }
     return res;
 }
+/**
+ * leetcode 797. All Paths From Source to Target
+ * 
+ * */
+ vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+     vector<int> begin=graph[0];
+     int len=graph.size();
+     int end=len-1;
+    stack<vector<int>> stack_vec;
+    stack_vec.push(begin);
+    while(!stack_vec.empty()){
+            
+    }
+
+}
