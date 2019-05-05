@@ -1179,3 +1179,22 @@ vector<int> diStringMatch(string S) {
     return re;
 
 }
+/**
+ * leetcode 763. Partition Labels
+ * 
+ * */
+void partString(vector<int> &result,string S){
+    int len=S.length();
+
+    
+
+}
+vector<int> partitionLabels(string S) {
+    vector<int> re;
+    int len=S.length();
+
+    
+    
+
+    return re;
+}
