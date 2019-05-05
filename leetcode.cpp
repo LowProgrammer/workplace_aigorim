@@ -1149,3 +1149,33 @@ vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
 
     return result;
 }
+/**
+ * leetcode 942. DI String Match
+ * 
+ * */
+vector<int> diStringMatch(string S) {
+    vector<int> re;
+    int len=S.length();
+    int pos;
+    // for (int i = 0; i <= len; i++)
+    // {
+    //     re.push_back(i);
+    // }
+    // print_vect(re);
+    int I_begin=0;
+    int D_begin=len;
+    for (int i = 0; i < len; i++)
+    {
+        if(S[i]=='I'){
+            re.push_back(I_begin++);
+        }else
+        {
+            re.push_back(D_begin--);
+        }
+        
+    }
+    re.push_back(I_begin);
+    print_vect(re);
+    return re;
+
+}
