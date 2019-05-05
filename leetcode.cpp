@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <string>
 #include <map>
+#include <list>
 
 #include "aigorithm.cpp"
 #include "tree.cpp"
@@ -1098,14 +1099,53 @@ vector<TreeNode *> allPossibleFBT_2(int N)//参考优化代码
  * leetcode 797. All Paths From Source to Target
  * 
  * */
- vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
-     vector<int> begin=graph[0];
-     int len=graph.size();
-     int end=len-1;
-    stack<vector<int>> stack_vec;
-    stack_vec.push(begin);
-    while(!stack_vec.empty()){
+int getFirstNode(vector<int> &nextNode){
+    int tmp=nextNode[0];
+    nextNode.erase(nextNode.begin());
+    return tmp;
+}
+bool isPath(vector<int> &li,int end){
+    if(li[li.size()-1]==end){
+        return true;
+    }
+    return false;
+}
+vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+     vector<vector<int>> result;
+     int end=graph.size()-1;
+
+     stack<vector<int>> allNode;
+     vector<int> possiblePath;
+     list<int> path;
+     
+     allNode.push(graph[0]);
+     possiblePath.push_back(0);
+     //possiblePath.push_back(0);
+     path.push_back(0);
+
+    while(!allNode.empty()){
+        vector<int> nextNode=allNode.top();
+        allNode.pop();
+
+        // possiblePath.pop_back();
+        
+        if(!nextNode.empty()){
+            int nex=getFirstNode(nextNode);
+            //cout<<"  fist:  "<<nex<<" le : ";print_vect(nextNode);
+            possiblePath.push_back(nex);
+            if(isPath(possiblePath,end)){
+                //cout<<" rightPath:  ";
+                //print_vect(possiblePath);
+                result.push_back(possiblePath);
+            }
+
+            allNode.push(nextNode);
             
+            allNode.push(graph[nex]);
+        }else{
+            possiblePath.pop_back();
+        }
     }
 
+    return result;
 }

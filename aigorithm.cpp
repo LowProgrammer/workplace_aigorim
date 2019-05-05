@@ -27,6 +27,14 @@ void print_arr(int a[], int size_arr)
         /* code */
     }
 }
+void print_vect(vector<int> &li){
+    int len=li.size();
+    for (int i = 0; i< len; i++) /* code */
+    {
+        cout<<li[i]<<"  ";
+    }
+    cout<<endl;
+}
 /**
  * 二维数组打印 
  * 

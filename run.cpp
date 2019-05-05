@@ -147,6 +147,16 @@ int main()
     // cout<<len;
     //print_arr(arr,5);
 
-
+    //797
+    vector<int> a={1,2};
+    //print_vect(a);
+    vector<int> b={3};
+    vector<int> c;
+    vector<vector<int>> graph;
+    graph.push_back(a);
+    graph.push_back(b);
+    graph.push_back(b);
+    graph.push_back(c);
+    allPathsSourceTarget(graph);
     return 0;
 }
