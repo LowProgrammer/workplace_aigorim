@@ -1202,3 +1202,19 @@ vector<int> diStringMatch(string S) {
      }
      return res;
 }
+/**
+ * leetcode 617. Merge Two Binary Trees
+ * 在左树的基础上添加第二棵树，左右节点存在则相加，右节点存在左节点不存在则创造节点
+ * */
+TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {
+    if (t2)
+    {
+        if(t1)
+            t1->val = t1->val + t2->val;
+        else
+            t1=new TreeNode(t2->val);
+        t1->left=mergeTrees(t1->left,t2->left);
+        t1->right=mergeTrees(t1->right,t2->right);
+    }
+    return t1;
+}
