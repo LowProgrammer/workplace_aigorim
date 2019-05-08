@@ -1255,3 +1255,44 @@ int minAddToMakeValid(string S) {
     }
     return sta.size();
 }
+/**
+ *leetcode 1038. Binary Search Tree to Greater Sum Tree
+ * 
+ * */
+int getSumOfTree(TreeNode* root){
+    if(root)
+        return root->val+getSumOfTree(root->left)+getSumOfTree(root->right);
+    else
+        return 0;
+}
+void getMidSortTree(TreeNode* root,vector<int> &result_tree){
+    if(root){
+        getMidSortTree(root->left,result_tree);
+        result_tree.push_back(root->val);
+        getMidSortTree(root->right,result_tree);
+    }
+}
+void setTree(TreeNode* root,vector<int> &vec,vector<int>::iterator &ite,int &n,int &fir){
+    if(root)
+    {
+        setTree(root->left,vec,ite,n,fir);
+        if(fir){
+            n=(root->val=n-*ite);
+            fir=0;
+        }else{
+            n=(root->val=n-*ite++);
+        }
+        setTree(root->right,vec,ite,n,fir);
+    }
+}
+TreeNode* bstToGst(TreeNode* root) {
+    int tot=getSumOfTree(root);
+    vector<int> nodes_value;
+    getMidSortTree(root,nodes_value);
+
+    int fir=1;
+    vector<int>::iterator ite=nodes_value.begin();
+
+    setTree(root,nodes_value,ite,tot,fir);
+    return root;
+}
