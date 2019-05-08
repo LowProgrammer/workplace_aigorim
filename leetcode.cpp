@@ -1181,20 +1181,24 @@ vector<int> diStringMatch(string S) {
 }
 /**
  * leetcode 763. Partition Labels
- * 
+ * 记录每个字符出现的最右侧位置，选出最大的进行分割
  * */
-void partString(vector<int> &result,string S){
-    int len=S.length();
-
+ vector<int> partitionLabels(string S) {
+     map<char, int> d;
+     int len=S.length();
+     for (int i = 0; i < len; i++)
+         d[S[i]] = i;
     
-
-}
-vector<int> partitionLabels(string S) {
-    vector<int> re;
-    int len=S.length();
-
-    
-    
-
-    return re;
+     int start = 0, end = 0;
+     vector<int> res;
+     for (int i = 0; i < len; i++)
+     {
+         end = max(end, d[S[i]]);
+         if (i == end)
+         {
+             res.push_back(end - start + 1);
+             start = end + 1;
+         }
+     }
+     return res;
 }

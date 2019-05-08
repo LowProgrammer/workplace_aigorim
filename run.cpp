@@ -159,9 +159,10 @@ int main()
     // graph.push_back(c);
     // allPathsSourceTarget(graph);
     
-    string str="IDID";
-    int minP,maxP;
-    getPosOfMaxAndMin(str,minP,maxP);
-    diStringMatch(str);
+    // string str="IDID";
+    // int minP,maxP;
+    // diStringMatch(str);
+
+    
     return 0;
 }

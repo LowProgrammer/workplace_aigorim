@@ -7,7 +7,7 @@
  * */
 using namespace std;
 
-#define max 100 //int2string 方法定义的树组最大值
+#define max_len 100 //int2string 方法定义的树组最大值
 //forech 方法打印树组 vector
 template<typename T>
 void printer(const T& val)
@@ -159,8 +159,8 @@ void mySplitString(const string &str,vector<string> &result,const string &mark){
 
 string int2string(int n){
     int m=n;
-    char s[max];
-    char ss[max];
+    char s[max_len];
+    char ss[max_len];
     int i=0,j=0;
     if(n<0){
         m=0-m;
