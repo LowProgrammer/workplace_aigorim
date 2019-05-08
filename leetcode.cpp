@@ -1218,3 +1218,40 @@ TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {
     }
     return t1;
 }
+/**
+ * leetcode 921. Minimum Add to Make Parentheses Valid
+ * 
+ * */
+int minAddToMakeValid(string S) {
+    int len=S.length();
+    if(len==0||len==1)return len;
+    
+    std::stack<char> sta;
+    //cout<<123<<len<<endl;
+    //int count=0;
+    for (int i = 0; i < len; i++)
+    {
+        //cout<<S[i]<<" ";
+        if(S[i]=='(')
+        {
+            
+            sta.push(S[i]);
+            //count++;
+            //cout<<" top:: "<<sta.top()<<endl;
+        }
+        if(S[i]==')'){
+            if(!sta.empty()&&sta.top()=='('){
+                //cout<<" delete ";
+                sta.pop();
+                //count--;
+            }
+            else
+            {   
+                //cout<<" ++ ";
+                sta.push(S[i]);
+                //count++;
+            }
+        }
+    }
+    return sta.size();
+}

@@ -164,5 +164,9 @@ int main()
     // diStringMatch(str);
 
     
+    cout<<"asd";
+    string Str="()()()()()(()()()()()()()()()()(((((()))))))()))()()()()))))))";
+    cout<<Str;
+    cout<<minAddToMakeValid(Str);
     return 0;
 }
