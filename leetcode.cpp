@@ -1339,3 +1339,21 @@ vector<int> selfDividingNumbers(int left, int right) {
         
         return res;
 }
+/**
+ * leetcode 852. Peak Index in a Mountain Array
+ * 
+ * */
+int peakIndexInMountainArray(vector<int>& A) {
+    int len=A.size();
+    int pos=0,num=A[0];
+    for (int i = 1; i < len; i++)
+    {
+        if(A[i]>num){
+            num=A[i];
+            pos=i;
+        }else{
+            break;
+        }
+    }
+    return pos;
+}
