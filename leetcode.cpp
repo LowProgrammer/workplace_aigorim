@@ -1296,3 +1296,46 @@ TreeNode* bstToGst(TreeNode* root) {
     setTree(root,nodes_value,ite,tot,fir);
     return root;
 }
+/**
+ * leetcode 728. Self Dividing Numbers
+ * 
+ * */
+vector<int> getNumNode(int num){
+    vector<int> res;
+    while(num){
+        //cout<<num%10<<" ";
+        res.push_back(num%10);
+        num=num/10;
+    }
+    return res;
+}
+bool predDividNum(int num){
+    
+    int tmp=num;
+    //vector<int> res;
+    while(num){
+        //cout<<num%10<<" ";
+        if(num%10==0) 
+            return false;
+        else if(tmp%(num%10)!=0)
+            return false;
+        num=num/10;
+    }
+    
+    // int len=res.size();
+    // for (int i = 0; i < len; i++)
+    // {
+    //     if(res[i]==0)return false;
+    //     if(num%res[i]!=0)return false;
+    // }
+    return true;
+}    
+vector<int> selfDividingNumbers(int left, int right) {
+        vector<int> res;
+        for (int i = left; i <=right; i++)
+        {
+            if(predDividNum(i)) res.push_back(i);
+        }
+        
+        return res;
+}

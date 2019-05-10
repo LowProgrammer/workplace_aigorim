@@ -164,9 +164,11 @@ int main()
     // diStringMatch(str);
 
     
-    cout<<"asd";
-    string Str="()()()()()(()()()()()()()()()()(((((()))))))()))()()()()))))))";
-    cout<<Str;
-    cout<<minAddToMakeValid(Str);
+    // cout<<"asd";
+    // string Str="()()()()()(()()()()()()()()()()(((((()))))))()))()()()()))))))";
+    // cout<<Str;
+    // cout<<minAddToMakeValid(Str);
+
+    getNumNode(2089308900);
     return 0;
 }
