@@ -235,3 +235,14 @@ int my_str2int(string str){
     //cout<<po1;
     return sign==1?-po1:po1;
 }
+/**
+ * 计算以x为底n为指数的次方
+ * */
+int pow(int x,int n){
+    if(n==0)return 1;
+    int res=0;
+    for(int i=1;i<=n;i++){
+        res*=x;
+    }
+    return res;
+}
