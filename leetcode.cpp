@@ -1357,3 +1357,41 @@ int peakIndexInMountainArray(vector<int>& A) {
     }
     return pos;
 }
+/**
+ * leetcode  933. Number of Recent Calls
+ * 
+ * 
+ * */
+
+
+/**
+ * leetcode 861. Score After Flipping Matrix
+ * 
+ * 
+ * */
+
+
+/**
+ * leetcode 162. Find Peak Element
+ * 
+ * */
+int findPeakElement(vector<int>& nums) {
+        int len=nums.size();
+        if(len==1)return 0;
+        if(len==2){
+            if(nums[0]>nums[1])return 0;
+            return 1;
+        }
+        int res=0;
+        for (int i = 1; i < len-1; i++)
+        {
+            if(nums[i]>nums[i-1]&&nums[i]>nums[i+1])
+            {
+                res=i;
+                break;
+            }
+        }
+        if(!res&&nums[len-1]>nums[len-2])
+            return len-1;
+        return res;
+}
