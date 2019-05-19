@@ -124,7 +124,7 @@ void sort_maopao(int arr[], int size)
 /**
  * 有序数组二分查找 value代表查找的数值
  * */
-int bs(int[] arr, int t, int s, int e，int value) {
+int bs(int arr[], int t, int s, int e,int value) {
     	int lf = s;
     	int rt = e - 1;
     	// x + 3000 < t
