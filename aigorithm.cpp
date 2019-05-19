@@ -7,7 +7,7 @@
  * */
 using namespace std;
 
-#define max 100 //int2string 方法定义的树组最大值
+#define max_len1 100 //int2string 方法定义的树组最大值
 //forech 方法打印树组 vector
 template<typename T>
 void printer(const T& val)
@@ -26,6 +26,14 @@ void print_arr(int a[], int size_arr)
         cout << a[i] << "  ";
         /* code */
     }
+}
+void print_vect(vector<int> &li){
+    int len=li.size();
+    for (int i = 0; i< len; i++) /* code */
+    {
+        cout<<li[i]<<"  ";
+    }
+    cout<<endl;
 }
 /**
  * 二维数组打印 
@@ -114,6 +122,26 @@ void sort_maopao(int arr[], int size)
     }
 }
 /**
+ * 有序数组二分查找 value代表查找的数值
+ * */
+int bs(int[] arr, int t, int s, int e，int value) {
+    	int lf = s;
+    	int rt = e - 1;
+    	// x + 3000 < t
+    	while (lf < rt) {
+    		int mid = lf + (rt - lf + 1) / 2;
+    		int val =  value;
+    		if (val < t) {
+    			lf = mid;
+    		}
+    		else { // >= t
+    			rt = mid - 1;
+    		}
+    	}
+    	if (arr[lf]!=value) return -1;
+    	return lf;
+    }
+/**
  * substr 改写字符串分割 因为C++自带的分割有些麻烦
  * begin开始位置 end结束位置
  **/
@@ -151,8 +179,8 @@ void mySplitString(const string &str,vector<string> &result,const string &mark){
 
 string int2string(int n){
     int m=n;
-    char s[max];
-    char ss[max];
+    char s[max_len1];
+    char ss[max_len1];
     int i=0,j=0;
     if(n<0){
         m=0-m;
@@ -226,4 +254,15 @@ int my_str2int(string str){
     }
     //cout<<po1;
     return sign==1?-po1:po1;
+}
+/**
+ * 计算以x为底n为指数的次方
+ * */
+int pow(int x,int n){
+    if(n==0)return 1;
+    int res=0;
+    for(int i=1;i<=n;i++){
+        res*=x;
+    }
+    return res;
 }

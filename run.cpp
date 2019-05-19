@@ -1,4 +1,4 @@
-#include "test.cpp"
+#include "leetcode.cpp"
 int main()
 {
     // char test[]="1234";
@@ -78,9 +78,14 @@ int main()
     // root->right=new TreeNode(7);
     // root->left->left=new TreeNode(1);
     // root->left->right=new TreeNode(3);
-    // // root->right->left=new TreeNode(5);
-    // //root->right->right=new TreeNode(18);
+    // root->right->left=new TreeNode(5);
+    // root->right->right=new TreeNode(18);
     // getMidSort(root);cout<<endl;
+    // TreeNode* nT;
+    // getCloneTree(root,nT);
+    // root->right->right=new TreeNode(16);
+    // getMidSort(root);cout<<endl;
+    // getMidSort(nT);
     
     // getMidSort(insertIntoBST(root,5));
     //string st="1258905676";
@@ -141,5 +146,29 @@ int main()
     // int2byte(78,arr,len);
     // cout<<len;
     //print_arr(arr,5);
+
+    //797
+    // vector<int> a={1,2};
+    //print_vect(a);
+    // vector<int> b={3};
+    // vector<int> c;
+    // vector<vector<int>> graph;
+    // graph.push_back(a);
+    // graph.push_back(b);
+    // graph.push_back(b);
+    // graph.push_back(c);
+    // allPathsSourceTarget(graph);
+    
+    // string str="IDID";
+    // int minP,maxP;
+    // diStringMatch(str);
+
+    
+    // cout<<"asd";
+    // string Str="()()()()()(()()()()()()()()()()(((((()))))))()))()()()()))))))";
+    // cout<<Str;
+    // cout<<minAddToMakeValid(Str);
+
+    getNumNode(2089308900);
     return 0;
 }
