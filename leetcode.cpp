@@ -1605,3 +1605,29 @@ int findPeakElement(vector<int> &nums)
         return len - 1;
     return res;
 }
+/**
+ * leetcode 944. Delete Columns to Make Sorted
+ * 
+ * */
+int minDeletionSize(vector<string>& A) {
+    int len_arr=A.size();
+    int len_str=A[0].length();
+    int count=0;
+    for (int i = 0; i < len_str; i++)
+    {
+        int va=A[0][i];
+        for (int j = 1; j < len_arr; j++)
+        {
+           if(A[j][i]>=va){
+               va=A[j][i];
+           }else
+           {
+               count++;
+               break;
+           }
+            
+        }
+        
+    }
+    return count;
+}
