@@ -1490,7 +1490,30 @@ int peakIndexInMountainArray(vector<int> &A)
  * 
  * 
  * */
-
+class RecentCounter {
+	
+	vector<int> pq;
+    int count;
+	RecentCounter() {
+		
+	}
+    
+    int ping(int t) {
+    	while (!pq.empty()&& *(pq.begin()) + 3000 < t) {
+            pq.erase(pq.begin());
+    	}
+    	pq.push_back(t);
+        // count=0;
+        // for (int i = 0; i < pq.size(); i++)
+        // {
+        //     if(pq[i]>t-3000){
+        //         count++;
+        //     }
+        // }
+        
+    	return pq.size();
+    }
+};
 /**
  * leetcode 861. Score After Flipping Matrix
  * 
