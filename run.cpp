@@ -169,6 +169,10 @@ int main()
     // cout<<Str;
     // cout<<minAddToMakeValid(Str);
 
-    getNumNode(2089308900);
+    // getNumNode(2089308900);
+    
+    int arr[]={1,2,3,2};
+    quick_sort(arr,0,3);
+    print_arr(arr,4);
     return 0;
 }

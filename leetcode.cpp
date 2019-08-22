@@ -1631,3 +1631,46 @@ int minDeletionSize(vector<string>& A) {
     }
     return count;
 }
+/**
+ * leetcode 561. Array Partition I
+ * */
+int partition_quick(vector<int> &arr, int low, int heigh)
+{
+    int tmp = arr[low];
+    while (low < heigh)
+    {
+        while (arr[heigh] >= tmp && low < heigh)
+            heigh--;
+        arr[low] = arr[heigh];
+        while (arr[low] <= tmp && low < heigh)
+            low++;
+        arr[heigh] = arr[low];
+    }
+    arr[low] = tmp;
+    return low;
+}
+void quick_sort(vector<int> &arr, int low, int heigh)
+{
+    if (low < heigh)
+    {
+        int pos = partition_quick(arr, low, heigh);
+        quick_sort(arr, low, pos - 1);
+        quick_sort(arr, pos + 1, heigh);
+    }
+}
+int arrayPairSum(vector<int>& nums) {
+        quick_sort(nums,0,nums.size()-1);
+        for (int i = 0; i < nums.size(); i++)
+        {
+            cout<<nums[i]<<"  ";
+        }
+        
+        int res=0;
+        for (int i = 0; i < nums.size(); i+=2)
+        {
+            
+            res+=nums[i];
+        }
+        return res;
+        
+}
