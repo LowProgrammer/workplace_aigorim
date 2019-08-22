@@ -1,3 +1,5 @@
+package com.aigorim;
+
 public class test_java {
     int z = 1;
     int s;
