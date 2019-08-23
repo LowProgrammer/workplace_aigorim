@@ -173,7 +173,7 @@ public class Solution {
     /**
      * @author feifei
      * @param
-     * @param null
+     * @param words,chars
      * @Description TODO leetcode 1160 Find Words That Can Be Formed by Characters
      * @Date 2019/8/23 11:22
      * @Created by 陈群飞
@@ -198,7 +198,7 @@ public class Solution {
     /**
      * @author feifei
      * @param
-     * @param null
+     * @param word,chars,mask
      * @Description TODO 判断字符串在模板中是否包含在其中
      * @Date 2019/8/23 11:32
      * @Created by 陈群飞
@@ -232,7 +232,7 @@ public class Solution {
     /**
      * @author feifei
      * @param
-     * @param null
+     * @param len
      * @Description TODO 生成标志字符数组
      * @Date 2019/8/23 11:55
      * @Created by 陈群飞
