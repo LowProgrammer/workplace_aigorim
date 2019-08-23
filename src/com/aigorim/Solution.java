@@ -18,19 +18,26 @@ public class Solution {
 //            System.out.println(arr[i]);
 //        }
 //        System.out.println(getMostMaxNum(2));
-        List<Integer> li;
-        for (int i = 1; i < 100; i++) {
-
-            li=new Solution().pathInZigZagTree(i);
-            for (Integer l:li ) {
-                System.out.println(l);
-            }
-        }
+//        List<Integer> li;
+//        for (int i = 1; i < 100; i++) {
+//
+//            li=new Solution().pathInZigZagTree(i);
+//            for (Integer l:li ) {
+//                System.out.println(l);
+//            }
+//        }
 
 //        List<Integer> list=new Solution().pathInZigZagTree(26);
 //        for (Integer l:list ) {
 //            System.out.println(l);
 //        }
+
+
+        String []arr=new String[]{"cat","bt","hat","tree"};
+        String chars="atach";
+
+        Solution solution=new Solution();
+        System.out.println(solution.countCharacters(arr,chars));
     }
     /**
      * @author feifei
@@ -162,4 +169,81 @@ public class Solution {
         });
         return li;
     }
+
+    /**
+     * @author feifei
+     * @param
+     * @param null
+     * @Description TODO leetcode 1160 Find Words That Can Be Formed by Characters
+     * @Date 2019/8/23 11:22
+     * @Created by 陈群飞
+     * @return
+     */
+    public int countCharacters(String[] words, String chars) {
+        int count=0,wNum=words.length,ch_length=chars.length();
+        int msk[]=new int[chars.length()];
+        for (int i = 0; i < ch_length; i++) {
+            msk[i]=0;
+        }
+
+        for (String word:words) {
+            if(isConclud(word,chars,msk)){
+                count+=word.length();
+            }
+            msk=getMask(ch_length);
+        }
+        return count;
+    }
+
+    /**
+     * @author feifei
+     * @param
+     * @param null
+     * @Description TODO 判断字符串在模板中是否包含在其中
+     * @Date 2019/8/23 11:32
+     * @Created by 陈群飞
+     * @return
+     */
+    public boolean isConclud(String word,String chars,int[] mask){
+        int str_len=word.length(),arr_len=chars.length();
+
+        char []w_arr=word.toCharArray();
+        char []c_arr=chars.toCharArray();
+        int count=0;
+        //System.out.println(word);
+        for (int i = 0; i < str_len; i++) {
+            for (int j = 0; j < arr_len; j++) {
+                if(w_arr[i]==c_arr[j]&&mask[j]==0){
+                    //System.out.println(w_arr[i]+"========="+c_arr[j]);
+                    mask[j]=1;
+                    count++;
+                    break;
+                }
+            }
+        }
+        //System.out.println(count+"-----------"+str_len);
+        if(count==str_len){
+            System.out.println(word);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @author feifei
+     * @param
+     * @param null
+     * @Description TODO 生成标志字符数组
+     * @Date 2019/8/23 11:55
+     * @Created by 陈群飞
+     * @return
+     */
+    public int[] getMask(int len){
+        int msk[]=new int[len];
+        for (int i = 0; i < len; i++) {
+            msk[i]=0;
+        }
+        return msk;
+    }
+
 }
