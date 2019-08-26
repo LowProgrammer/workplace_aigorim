@@ -1,8 +1,6 @@
 package com.aigorim;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author feifei
@@ -12,6 +10,7 @@ import java.util.List;
  * @Created by 陈群飞
  */
 public class Solution {
+
     public static void main(String[] args) {
 //        int arr[]=getArr(2);
 //        for (int i = 0; i < arr.length; i++) {
@@ -33,11 +32,23 @@ public class Solution {
 //        }
 
 
-        String []arr=new String[]{"cat","bt","hat","tree"};
-        String chars="atach";
-
+//        String []arr=new String[]{"cat","bt","hat","tree"};
+//        String chars="atach";
+//
         Solution solution=new Solution();
-        System.out.println(solution.countCharacters(arr,chars));
+        //System.out.println(solution.countCharacters(arr,chars));
+
+        //1162
+        TreeNode root=new TreeNode(1);
+        root.left=new TreeNode(7);
+        root.right=new TreeNode(0);
+        root.left.left=new TreeNode(7);
+        root.left.right=new TreeNode(-8);
+        root.left.right.left=new TreeNode(-9);
+        //TreeNode root=new TreeNode(1);
+
+        int a=solution.maxLevelSum(root);
+        System.out.println(a);
     }
     /**
      * @author feifei
@@ -223,7 +234,7 @@ public class Solution {
         }
         //System.out.println(count+"-----------"+str_len);
         if(count==str_len){
-            System.out.println(word);
+            //System.out.println(word);
             return true;
         }
         return false;
@@ -245,5 +256,64 @@ public class Solution {
         }
         return msk;
     }
+
+
+
+    /**
+     * @author feifei
+     * @param 
+     * @param root
+     * @Description TODO leetcode 1161  Maximum Level Sum of a Binary Tree
+     * @Date 2019/8/26 11:33
+     * @Created by 陈群飞
+     * @return 
+     */
+    public int maxLevelSum(TreeNode root) {
+        ArrayDeque<TreeNode> li=new ArrayDeque<>();
+
+        if (root==null){
+            return 0;
+        }
+        int num=0;//每层数值
+        int result=0,reslut_le=0;//最终每层总数 最终所在层数
+        int count=0,count_le_num=1,count_le=0;//计数器 每层数目  所在层数
+        int mask=1;
+        li.add(root);
+        while(!li.isEmpty()){
+            TreeNode node=li.pop();
+            if(count<mask)
+            {
+                num+=node.val;
+                System.out.print(node.val);
+                count++;
+            }
+
+            if(node.left!=null){
+                li.add(node.left);
+                //System.out.println("====="+(++count_le_num));
+            }
+            if (node.right!=null){
+                li.add(node.right);
+                //System.out.println("====="+(++count_le_num));
+            }
+
+            if (count==mask){
+                count=0;
+                mask=li.size();
+                //System.out.print("  "+node.val);
+                System.out.println("===");
+                count_le++;
+
+                if (num>result){
+                    result=num;
+                    reslut_le=count_le;
+                }
+                num=0;
+            }
+        }
+        return reslut_le;
+    }
+
+
 
 }
