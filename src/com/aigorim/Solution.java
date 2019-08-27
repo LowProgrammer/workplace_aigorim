@@ -64,30 +64,30 @@ public class Solution {
         int arr[]=new int[num];
         int count=0,
             level=1,            //本层层数
-            level_last_count=0,//上一层数目
-            level_now_count=1;//本层节点数目
+            levelLastCount=0,//上一层数目
+            levelNowCount=1;//本层节点数目
         int index=1;
 
         while(count<num){
             if(level%2!=0) {
-                if (index <= level_now_count) {
+                if (index <= levelNowCount) {
                     arr[count] = getTotalNum(level) + index;
                     index++;
                     count++;
                 } else {
                     level++;
                     index=1;
-                    level_now_count*=2;
+                    levelNowCount*=2;
                 }
             }else{
-                if (index <= level_now_count){
-                    arr[count]=getTotalNum(level)+level_now_count+1-index;
+                if (index <= levelNowCount){
+                    arr[count]=getTotalNum(level)+levelNowCount+1-index;
                     index++;
                     count++;
                 }else {
                     level++;
                     index=1;
-                    level_now_count*=2;
+                    levelNowCount*=2;
                 }
             }
             //count++;
@@ -191,9 +191,9 @@ public class Solution {
      * @return
      */
     public int countCharacters(String[] words, String chars) {
-        int count=0,wNum=words.length,ch_length=chars.length();
+        int count=0,wNum=words.length,chLength=chars.length();
         int msk[]=new int[chars.length()];
-        for (int i = 0; i < ch_length; i++) {
+        for (int i = 0; i < chLength; i++) {
             msk[i]=0;
         }
 
@@ -201,7 +201,7 @@ public class Solution {
             if(isConclud(word,chars,msk)){
                 count+=word.length();
             }
-            msk=getMask(ch_length);
+            msk=getMask(chLength);
         }
         return count;
     }
@@ -216,15 +216,15 @@ public class Solution {
      * @return
      */
     public boolean isConclud(String word,String chars,int[] mask){
-        int str_len=word.length(),arr_len=chars.length();
+        int strLen=word.length(),arrLen=chars.length();
 
-        char []w_arr=word.toCharArray();
-        char []c_arr=chars.toCharArray();
+        char []wArr=word.toCharArray();
+        char []cArr=chars.toCharArray();
         int count=0;
         //System.out.println(word);
-        for (int i = 0; i < str_len; i++) {
-            for (int j = 0; j < arr_len; j++) {
-                if(w_arr[i]==c_arr[j]&&mask[j]==0){
+        for (int i = 0; i < strLen; i++) {
+            for (int j = 0; j < arrLen; j++) {
+                if(wArr[i]==cArr[j]&&mask[j]==0){
                     //System.out.println(w_arr[i]+"========="+c_arr[j]);
                     mask[j]=1;
                     count++;
@@ -233,7 +233,7 @@ public class Solution {
             }
         }
         //System.out.println(count+"-----------"+str_len);
-        if(count==str_len){
+        if(count==strLen){
             //System.out.println(word);
             return true;
         }
@@ -275,8 +275,8 @@ public class Solution {
             return 0;
         }
         int num=0;//每层数值
-        int result=0,reslut_le=0;//最终每层总数 最终所在层数
-        int count=0,count_le_num=1,count_le=0;//计数器 每层数目  所在层数
+        int result=0,reslutLe=0;//最终每层总数 最终所在层数
+        int count=0,countLeNnum=1,countLe=0;//计数器 每层数目  所在层数
         int mask=1;
         li.add(root);
         while(!li.isEmpty()){
@@ -302,16 +302,16 @@ public class Solution {
                 mask=li.size();
                 //System.out.print("  "+node.val);
                 System.out.println("===");
-                count_le++;
+                countLe++;
 
                 if (num>result){
                     result=num;
-                    reslut_le=count_le;
+                    reslutLe=countLe;
                 }
                 num=0;
             }
         }
-        return reslut_le;
+        return reslutLe;
     }
 
 
