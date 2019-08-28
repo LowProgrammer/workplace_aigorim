@@ -314,6 +314,30 @@ public class Solution {
         return reslutLe;
     }
 
-
+    /**
+     * @author feifei
+     * @param root
+     * @param val
+     * @Description TODO 二叉树搜索 700. Search in a Binary Search Tree
+     * @Date 2019/8/28 16:36
+     * @Created by 陈群飞
+     * @return
+     */
+    public TreeNode searchBST(TreeNode root, int val) {
+        if(root.val==val){
+            return root;
+        }
+        if (val>root.val&&root.right==null){
+            return null;
+        }
+        if (val<root.val&&root.left==null){
+            return null;
+        }
+        if (root.val<val){
+           return searchBST(root.right,val);
+        }else{
+            return searchBST(root.left,val);
+        }
+    }
 
 }
