@@ -39,16 +39,18 @@ public class Solution {
         //System.out.println(solution.countCharacters(arr,chars));
 
         //1162
-        TreeNode root=new TreeNode(1);
-        root.left=new TreeNode(7);
-        root.right=new TreeNode(0);
-        root.left.left=new TreeNode(7);
-        root.left.right=new TreeNode(-8);
-        root.left.right.left=new TreeNode(-9);
+//        TreeNode root=new TreeNode(1);
+//        root.left=new TreeNode(7);
+//        root.right=new TreeNode(0);
+//        root.left.left=new TreeNode(7);
+//        root.left.right=new TreeNode(-8);
+//        root.left.right.left=new TreeNode(-9);
         //TreeNode root=new TreeNode(1);
 
-        int a=solution.maxLevelSum(root);
-        System.out.println(a);
+//        int a=solution.maxLevelSum(root);
+//        System.out.println(a);
+
+        solution.heightChecker(new int[]{1,1,4,2,1,3});
     }
     /**
      * @author feifei
@@ -338,6 +340,20 @@ public class Solution {
         }else{
             return searchBST(root.left,val);
         }
+    }
+
+    /**
+     * @author feifei
+     * @param
+     * @param heights 1,1,4,2,1,3
+     * @Description TODO
+     * @Date 2019/8/28 16:43
+     * @Created by 陈群飞
+     * @return height
+     */
+    public int heightChecker(int[] heights) {
+
+        return 0;
     }
 
 }
