@@ -101,22 +101,6 @@ public class BasicUtils {
 
     /**
      * @author feifei
-     * @param
-     * @param str
-     * @Description TODO 判断字符串是否为空,不为空返回原值，为空返回空字符串
-     * @Date 2019/8/29 10:32
-     * @Created by 陈群飞
-     * @return boolean
-     */
-    public String strIsNull(String str){
-        if(str==null||"".equals(str.trim())||"null".equals(str.trim())){
-            return "";
-        }
-        return str;
-    }
-
-    /**
-     * @author feifei
      * @param num2
      * @param num1
      * @Description TODO 交换两个数值
