@@ -1,5 +1,8 @@
 package com.aigorim;
 
+import com.aigorim.tree.Node;
+import com.aigorim.tree.TreeNode;
+
 import java.util.*;
 
 /**
@@ -377,6 +380,31 @@ public class Solution {
         }
         System.out.println(count);
         return count;
+    }
+
+    /**
+     * @author feifei
+     * @param
+     * @param root
+     * @Description TODO 589. N-ary Tree Preorder Traversal
+     * 非二叉树的先序遍历
+     * @Date 2019/8/29 13:02
+     * @Created by 陈群飞
+     * @return
+     */
+    List<Integer> re=new ArrayList<>();
+    public List<Integer> preorder(Node root) {
+        if (root==null){
+            return null;
+        }else if (root.children==null){
+            re.add(root.val);
+        }else {
+            re.add(root.val);
+            for (Node no : root.children) {
+                preorder(no);
+            }
+        }
+        return re;
     }
 
 }
