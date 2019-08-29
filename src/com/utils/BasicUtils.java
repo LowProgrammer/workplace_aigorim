@@ -114,4 +114,19 @@ public class BasicUtils {
         }
         return str;
     }
+
+    /**
+     * @author feifei
+     * @param num2
+     * @param num1
+     * @Description TODO 交换两个数值
+     * @Date 2019/8/29 12:56
+     * @Created by 陈群飞
+     * @return
+     */
+    public void swap(int num1,int num2){
+        int te=num1;
+        num1=num2;
+        num2=te;
+    }
 }

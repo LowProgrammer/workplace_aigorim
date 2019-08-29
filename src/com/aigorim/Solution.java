@@ -316,6 +316,7 @@ public class Solution {
         return reslutLe;
     }
 
+
     /**
      * @author feifei
      * @param root
@@ -342,18 +343,40 @@ public class Solution {
         }
     }
 
+
     /**
      * @author feifei
      * @param
      * @param heights 1,1,4,2,1,3
-     * @Description TODO
+     * @Description TODO leetcode 1051. Height Checker
+     *  比较最后结果序列与开始序列作比较得到一定会修改的数据
      * @Date 2019/8/28 16:43
      * @Created by 陈群飞
      * @return height
      */
     public int heightChecker(int[] heights) {
-
-        return 0;
+        int[] he=new int[heights.length];
+        for (int i = 0; i < heights.length; i++) {
+            he[i]=heights[i];
+        }
+        for (int i = 0; i < heights.length; i++) {
+            for (int j = i; j < heights.length; j++) {
+                if(heights[i]>heights[j]){
+                    int te=heights[i];
+                    heights[i]=heights[j];
+                    heights[j]=te;
+                }
+            }
+        }
+        int count=0;
+        for (int i = 0; i < heights.length; i++) {
+            if (he[i]!=heights[i]){
+                count++;
+            }
+            System.out.println(he[i]+"======"+heights[i]);
+        }
+        System.out.println(count);
+        return count;
     }
 
 }
