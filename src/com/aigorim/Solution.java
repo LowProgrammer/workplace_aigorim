@@ -395,16 +395,43 @@ public class Solution {
     List<Integer> re=new ArrayList<>();
     public List<Integer> preorder(Node root) {
         if (root==null){
-            return null;
+            return re;
         }else if (root.children==null){
             re.add(root.val);
         }else {
-            re.add(root.val);
+
             for (Node no : root.children) {
                 preorder(no);
             }
+            re.add(root.val);
         }
         return re;
+    }
+
+    /**
+     * @author feifei
+     * @param
+     * @param root
+     * @Description TODO 590. N-ary Tree Postorder Traversal
+     * N叉树的后序遍历
+     * @Date 2019/8/30 13:30
+     * @Created by 陈群飞
+     * @return
+     */
+    List<Integer> postRe=new ArrayList<>();
+    public List<Integer> postorder(Node root) {
+        if (root==null){
+            return postRe;
+        }else if (root.children==null){
+            postRe.add(root.val);
+        }else {
+
+            for (Node no : root.children) {
+                postorder(no);
+            }
+            postRe.add(root.val);
+        }
+        return postRe;
     }
 
 }

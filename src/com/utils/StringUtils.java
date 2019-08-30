@@ -1,5 +1,9 @@
 package com.utils;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
+import java.util.Random;
+
 /**
  * @author feifei
  * @Classname StringUtils
@@ -47,6 +51,50 @@ public class StringUtils {
             return "";
         }
         return str;
+    }
+
+    /**
+     * @author feifei
+     * @param
+     * @param length
+     * @Description TODO 生成固定长度的随机字符串
+     * @Date 2019/8/29 19:16
+     * @Created by 陈群飞
+     * @return
+     */
+    public static String getRandomStr(int length){
+        String filename= RandomStringUtils.randomAlphanumeric(length);
+        System.out.println(filename);
+        return filename;
+    }
+
+    /**
+     * @author feifei
+     * @param length
+     * @param string
+     * @Description TODO 根据指定字符串生成随机字符串
+     * @Date 2019/8/29 19:22
+     * @Created by 陈群飞
+     * @return 
+     */
+    public static String getRandomStr(String string,int length){
+        String str="";
+        if (string==null||"".equals(string.trim())){
+            str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        }else {
+            str=string;
+        }
+        System.out.println(str.length());
+        Random random=new Random();
+        StringBuffer sb=new StringBuffer();
+        for(int i=0;i<length;i++){
+            int number=random.nextInt(str.length());
+            sb.append(str.charAt(number));
+        }
+        return sb.toString();
+    }
+    public static void main(String[] args) {
+        getRandomStr("",20);
     }
 }
 

@@ -1,13 +1,24 @@
 package com.aigorim;
 
-public class test_java {
-    int z = 1;
-    int s;
+import java.util.Random;
 
-    public static void main(String[] args) {
-        System.out.println(123);
-        int m = 9;
-        test_java t = new test_java();
-        System.out.println(t.z + t.s + 9);
+public class test_java {
+    private String getRandomStr(int length){
+        String str="0123456789";
+//		if (string==null||"".equals(string.trim())){
+//			str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+//		}else {
+//			str=string;
+//		}
+        //System.out.println(str.length());
+        Random random=new Random();
+        StringBuffer sb=new StringBuffer();
+        for(int i=0;i<length;i++){
+            int number=random.nextInt(str.length());
+            sb.append(str.charAt(number));
+        }
+        //System.out.println(sb);
+        return sb.toString();
     }
+
 }
