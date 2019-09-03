@@ -4,25 +4,27 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.mime.MIME;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author feifei
@@ -153,6 +155,92 @@ public class httpUtils {
             }
         }
         return result;
+
+    }
+
+
+    /**
+     * @author feifei
+     * @param
+     * @param url
+     * @Description TODO 上传文件工具
+     * @Date 2019/9/3 14:12
+     * @Created by 陈群飞
+     * @return
+     */
+    public String upload(String url,Header[] headers,String filepath,String imageName) {
+        HttpPost post = new HttpPost();
+        //post.setHeader("Authorization", "Basic " + authorization);
+        post.setHeaders(headers);
+        try {
+            post.setURI(new URI(url));
+        } catch (URISyntaxException e) {
+
+        }
+
+        HttpClient client = HttpClients.createDefault();
+        MultipartEntityBuilder builderMaster = MultipartEntityBuilder.create().setCharset(MIME.UTF8_CHARSET);
+        //String scan_time = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(new Date());
+        //String flw_code = new SimpleDateFormat("yyyyMMdd HHmmssSSS").format(new Date());
+        File file = new File(filepath);
+        FileBody fileBody = new FileBody(file);
+        builderMaster.addPart("jpg", fileBody);
+//        builderMaster.addTextBody("SCAN_TIME", scan_time);
+//        builderMaster.addTextBody("FLW_CODE", "ECIF"+flw_code);
+//        builderMaster.addTextBody("TYPE_CODE", "1");
+//        builderMaster.addTextBody("SYS_CODE", "ECIF");
+//        builderMaster.addTextBody("SYSCODE", "ECIF");
+//        builderMaster.addTextBody("ORG_CODE", "ECIF");
+//        builderMaster.addTextBody("SCAN_MAN", "ECIF");
+//        builderMaster.addTextBody("_acl", "{\"read\":{\"users\":[\"ecif\"],\"groups\":[\"WKXT_GROUP\"]},\"write\":{\"users\":[\"ecif\"],\"groups\":[]}}");
+//        builderMaster.addTextBody("IMAGE_NAME", imageName);
+//        builderMaster.addTextBody("FILE_TYPE", imageName.substring(imageName.lastIndexOf(".") + 1));
+//        builderMaster.addTextBody("IS_DELETE", "0");
+//        builderMaster.addTextBody("SCAN_INDEX", "0");
+//        builderMaster.addTextBody("SOURCE_FLAG", "ECIF");
+//        builderMaster.addTextBody("REMARK", "");
+//        builderMaster.addTextBody("IMAGE_ID", "");
+//        builderMaster.addTextBody("name", "idCard");
+//        builderMaster.addTextBody("tag","project-name-test,project-type-test");
+        HttpEntity entity = builderMaster.build();
+        post.setEntity(entity);
+        HttpResponse httpResponse;
+        try {
+            httpResponse = client.execute(post);
+            HttpEntity httpEntity = httpResponse.getEntity();
+
+            if (httpEntity != null) {
+                InputStream instreams = httpEntity.getContent();
+                String str = convertStreamToString(instreams);
+                System.out.println("Response:" + "\n" + str);
+                return str;
+            }
+
+        } catch (IOException e) {
+            System.out.println("error");
+            e.printStackTrace();
+        }
+        return "F";
+    }
+
+    public String convertStreamToString(InputStream is) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "/n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
 
     }
 }

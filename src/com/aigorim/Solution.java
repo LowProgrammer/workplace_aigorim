@@ -42,18 +42,20 @@ public class Solution {
         //System.out.println(solution.countCharacters(arr,chars));
 
         //1162
-//        TreeNode root=new TreeNode(1);
-//        root.left=new TreeNode(7);
-//        root.right=new TreeNode(0);
-//        root.left.left=new TreeNode(7);
-//        root.left.right=new TreeNode(-8);
-//        root.left.right.left=new TreeNode(-9);
+        TreeNode root=new TreeNode(1);
+        root.left=new TreeNode(2);
+        root.right=new TreeNode(0);
+        root.left.left=new TreeNode(3);
+        root.left.right=new TreeNode(0);
+        root.left.right.left=new TreeNode(0);
         //TreeNode root=new TreeNode(1);
 
 //        int a=solution.maxLevelSum(root);
 //        System.out.println(a);
 
-        solution.heightChecker(new int[]{1,1,4,2,1,3});
+        //solution.heightChecker(new int[]{1,1,4,2,1,3});
+
+        solution.distributeCoins(root);
     }
     /**
      * @author feifei
@@ -433,5 +435,48 @@ public class Solution {
         }
         return postRe;
     }
+
+    /**
+     * @author feifei
+     * @param
+     * @param root
+     * @Description TODO
+     *
+     * @Date 2019/9/2 9:37
+     * @Created by 陈群飞
+     * @return
+     */
+    int nodeNum1=0,nodeNum2=0,valNum1=0,valNum2=0;
+    public int distributeCoins(TreeNode root) {
+
+        HashMap<Integer,Integer> hashMap1=countNum(root,nodeNum1,valNum1);
+        for (Map.Entry<Integer, Integer> set:hashMap1.entrySet()){
+            System.out.println(set.getKey()+"====<>===="+set.getValue());
+        }
+//        HashMap<Integer,Integer> hashMap2=countNum(root.right,nodeNum2,valNum2);
+//        for (Map.Entry<Integer, Integer> set:hashMap2.entrySet()){
+//            System.out.println(set.getKey()+"====<>===="+set.getValue());
+//        }
+        return 0;
+    }
+
+    HashMap<Integer,Integer> hashMap=new HashMap<>();
+    public HashMap<Integer,Integer> countNum(TreeNode root,int nodeNum,int valNum){
+        if (root!=null){
+           nodeNum++;
+           valNum+=root.val;
+        }
+        if (root.left!=null){
+            countNum(root.left,nodeNum,valNum);
+        }
+        if (root.right!=null){
+            countNum(root.right,nodeNum,valNum);
+        }
+        hashMap.put(nodeNum,valNum);
+        System.out.println(nodeNum+"/<><><><><>"+valNum);
+        return hashMap;
+    }
+
+
 
 }
