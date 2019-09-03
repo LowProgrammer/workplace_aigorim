@@ -440,41 +440,46 @@ public class Solution {
      * @author feifei
      * @param
      * @param root
-     * @Description TODO
-     *
+     * @Description TODO leetcode 979 Distribute Coins in Binary Tree
+     *对每一个root进行考虑，如果以他为根的子树的硬币个数大于节点个数，也就是说他多出来了x枚硬币，那么这x枚硬币一定是要走向他的父亲的，
+     * 因为儿子不在需要了。此时就会在这条边产生x的贡献；反之就是需求硬币，是要从他父亲向他产生x的贡献。
+     * 最后返回当前节点处理完之后剩余的硬币个数(正数即为多余，负数就是需求)。
      * @Date 2019/9/2 9:37
      * @Created by 陈群飞
      * @return
      */
-    int nodeNum1=0,nodeNum2=0,valNum1=0,valNum2=0;
     public int distributeCoins(TreeNode root) {
-
-        HashMap<Integer,Integer> hashMap1=countNum(root,nodeNum1,valNum1);
-        for (Map.Entry<Integer, Integer> set:hashMap1.entrySet()){
-            System.out.println(set.getKey()+"====<>===="+set.getValue());
-        }
-//        HashMap<Integer,Integer> hashMap2=countNum(root.right,nodeNum2,valNum2);
-//        for (Map.Entry<Integer, Integer> set:hashMap2.entrySet()){
-//            System.out.println(set.getKey()+"====<>===="+set.getValue());
-//        }
-        return 0;
+        res=0;
+        dfs(root);
+        System.out.println(res);
+        return res;
     }
 
-    HashMap<Integer,Integer> hashMap=new HashMap<>();
-    public HashMap<Integer,Integer> countNum(TreeNode root,int nodeNum,int valNum){
-        if (root!=null){
-           nodeNum++;
-           valNum+=root.val;
+    int res=0;
+    private int dfs(TreeNode root){
+        if(root==null){
+            return 0;
         }
-        if (root.left!=null){
-            countNum(root.left,nodeNum,valNum);
+        int L=dfs(root.left);
+        int R=dfs(root.right);
+        res+=Math.abs(L)+Math.abs(R);
+        return root.val+L+R-1;
+    }
+    /**
+     * @author feifei
+     * @param
+     * @param root
+     * @Description TODO 根据根节点计算一共有多少个节点
+     * @Date 2019/9/3 15:38
+     * @Created by 陈群飞
+     * @return Integer
+     */
+    public int countNum(TreeNode root){
+        if(root!=null){
+            return 1+countNum(root.left)+countNum(root.right);
+        }else{
+            return 0;
         }
-        if (root.right!=null){
-            countNum(root.right,nodeNum,valNum);
-        }
-        hashMap.put(nodeNum,valNum);
-        System.out.println(nodeNum+"/<><><><><>"+valNum);
-        return hashMap;
     }
 
 
