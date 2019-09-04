@@ -465,6 +465,7 @@ public class Solution {
         res+=Math.abs(L)+Math.abs(R);
         return root.val+L+R-1;
     }
+
     /**
      * @author feifei
      * @param
@@ -482,6 +483,55 @@ public class Solution {
         }
     }
 
+    /**
+     * @author feifei
+     * @param
+     * @param A
+     * @Description TODO leetcode 922. Sort Array By Parity II
+     *
+     * @Date 2019/9/4 9:40
+     * @Created by 陈群飞
+     * @return
+     */
+    public int[] sortArrayByParityII(int[] A) {
+        int oddCount=1,evenCount=0;
+        int len=A.length;
+        int[] re=new int[len];
+        for (int i = 0; i < len; i++) {
+            if (A[i]%2==0){
+                re[evenCount]=A[i];
+                evenCount+=2;
+            }else {
+                re[oddCount]=A[i];
+                oddCount+=2;
+            }
+        }
+        return re;
+    }
 
-
+    /**
+     * @author feifei
+     * @param 
+     * @param root
+     * @Description TODO leetcode 965. Univalued Binary Tree
+     * 判断一个二叉树是否val值是否一致，
+     * @Date 2019/9/4 10:00
+     * @Created by 陈群飞
+     * @return 
+     */
+    public boolean isUnivalTree(TreeNode root) {
+        if (root==null){
+            return true;
+        }
+        if (root.right==null&&root.left!=null){
+            return root.val==root.left.val&&isUnivalTree(root.left)&&isUnivalTree(root.right);
+        }
+        if (root.left==null&&root.right!=null){
+            return  root.val==root.right.val&&isUnivalTree(root.left)&&isUnivalTree(root.right);
+        }
+        if (root.left!=null&&root.right!=null) {
+            return root.val == root.left.val && root.val == root.right.val && isUnivalTree(root.left) && isUnivalTree(root.right);
+        }
+        return true;
+    }
 }

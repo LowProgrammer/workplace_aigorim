@@ -1,5 +1,7 @@
 package com.aigorim;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.Random;
 
 public class test_java {
@@ -19,6 +21,8 @@ public class test_java {
         }
         //System.out.println(sb);
         return sb.toString();
+
     }
+
 
 }
