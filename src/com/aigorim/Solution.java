@@ -577,7 +577,6 @@ public class Solution {
      * @author feifei
      * @param board
      * @Description TODO 419. Battleships in a Board
-     *
      * @Date 2019/9/5 10:03
      */
     public int countBattleships(char[][] board) {
