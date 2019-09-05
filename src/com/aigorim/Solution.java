@@ -42,12 +42,12 @@ public class Solution {
         //System.out.println(solution.countCharacters(arr,chars));
 
         //1162
-        TreeNode root=new TreeNode(1);
-        root.left=new TreeNode(2);
-        root.right=new TreeNode(0);
-        root.left.left=new TreeNode(3);
-        root.left.right=new TreeNode(0);
-        root.left.right.left=new TreeNode(0);
+//        TreeNode root=new TreeNode(1);
+//        root.left=new TreeNode(2);
+//        root.right=new TreeNode(0);
+//        root.left.left=new TreeNode(3);
+//        root.left.right=new TreeNode(0);
+//        root.left.right.left=new TreeNode(0);
         //TreeNode root=new TreeNode(1);
 
 //        int a=solution.maxLevelSum(root);
@@ -55,7 +55,14 @@ public class Solution {
 
         //solution.heightChecker(new int[]{1,1,4,2,1,3});
 
-        solution.distributeCoins(root);
+        //solution.distributeCoins(root);
+
+        for (int i = 0; i < 20; i++) {
+
+            System.out.println(solution.fib(i));
+        }
+
+
     }
     /**
      * @author feifei
@@ -533,5 +540,47 @@ public class Solution {
             return root.val == root.left.val && root.val == root.right.val && isUnivalTree(root.left) && isUnivalTree(root.right);
         }
         return true;
+    }
+
+
+
+
+
+    /**
+     * @author feifei
+     * @param N
+     * @Description TODO 509. Fibonacci Number
+     * 斐波那契数列，循环实现，代替递归减小资源的消耗
+     * @Date 2019/9/5 10:01
+     */
+    public int fib(int N) {
+        int left=0,right=0,result=0;
+
+           for (int i = 0; i <= N; i++) {
+               if (i==0){
+                   left=0;
+                   continue;
+               }
+               if (i==1){
+                   right=1;
+                   result=left+right;
+                   continue;
+               }
+                result=left+right;
+                left=right;
+                right=result;
+           }
+        return result;
+    }
+
+    /**
+     * @author feifei
+     * @param board
+     * @Description TODO 419. Battleships in a Board
+     *
+     * @Date 2019/9/5 10:03
+     */
+    public int countBattleships(char[][] board) {
+        return 0;
     }
 }
