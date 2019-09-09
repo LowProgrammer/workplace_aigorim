@@ -57,12 +57,23 @@ public class Solution {
 
         //solution.distributeCoins(root);
 
-        for (int i = 0; i < 20; i++) {
-
-            System.out.println(solution.fib(i));
+//        for (int i = 0; i < 20; i++) {
+//
+//            System.out.println(solution.fib(i));
+//        }
+        char[][] battle=new char[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                battle[i][j]=' ';
+                if (i==0&&j==0){
+                    battle[i][j]='X';
+                }
+                if (j==3){
+                    battle[i][j]='X';
+                }
+            }
         }
-
-
+        solution.countBattleships(battle);
     }
     /**
      * @author feifei
@@ -577,9 +588,43 @@ public class Solution {
      * @author feifei
      * @param board
      * @Description TODO 419. Battleships in a Board
+     * Could you do it in one-pass, using only O(1) extra memory and without modifying the value of the board?
+     * X 。。X
+     * 。。。X
+     * 。。。X
+     * 。。。X
+     * 计算出船的数量，循环遍历数组，判断每个点可能出现的可能，是‘。’ 或者‘X’
      * @Date 2019/9/5 10:03
      */
     public int countBattleships(char[][] board) {
-        return 0;
+        int countNum=0;
+        for (int i = 0; i <board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j]=='X') {
+                    if (board[i][j] == 'X' && i == 0 && j == 0) {
+                        countNum++;
+                    }
+                    if (i==0){
+                        if (j>0&&board[i][j-1]=='.'){
+                            countNum++;
+                        }
+                    }else {
+                        if(j==0) {
+                            if (board[i - 1][j] == '.') {
+                                countNum++;
+                            }
+                        }else{
+                            if (board[i - 1][j] == '.'&&board[i][j-1]=='.') {
+                                countNum++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println(countNum);
+
+        return countNum;
     }
+
 }
