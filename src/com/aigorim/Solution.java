@@ -61,19 +61,23 @@ public class Solution {
 //
 //            System.out.println(solution.fib(i));
 //        }
-        char[][] battle=new char[4][4];
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                battle[i][j]=' ';
-                if (i==0&&j==0){
-                    battle[i][j]='X';
-                }
-                if (j==3){
-                    battle[i][j]='X';
-                }
-            }
-        }
-        solution.countBattleships(battle);
+//        char[][] battle=new char[4][4];
+//        for (int i = 0; i < 4; i++) {
+//            for (int j = 0; j < 4; j++) {
+//                battle[i][j]=' ';
+//                if (i==0&&j==0){
+//                    battle[i][j]='X';
+//                }
+//                if (j==3){
+//                    battle[i][j]='X';
+//                }
+//            }
+//        }
+//        solution.countBattleships(battle);
+
+
+        String[] arr=new String[]{"900 google.mail.com","50 yahoo.com", "1 intel.mail.com", "5 wiki.org"};
+        solution.subdomainVisits(arr);
     }
     /**
      * @author feifei
@@ -626,5 +630,69 @@ public class Solution {
 
         return countNum;
     }
+
+    /**
+     * @author feifei
+     * @param cpdomains
+     * @Description TODO leetcode 811. Subdomain Visit Count
+     * 计算网址的访问量
+     * @Date 2019/9/9 15:58
+     * ["9001 leetcode.com","9001 discuss.leetcode.com","9001 com"]
+     */
+    public List<String> subdomainVisits(String[] cpdomains) {
+        int len=cpdomains.length;
+        Set<String> countSet=new HashSet<>();
+        Map<String,Integer> count=new HashMap<>();
+        List<String> res=new ArrayList<>();
+        for (int i = 0; i < len; i++) {
+            String[] strings=cpdomains[i].split(" ");
+            Integer cou=Integer.parseInt(strings[0]);
+            List<String> getList=getDomains(strings[1]);
+
+            for (int j = 0; j < getList.size(); j++) {
+                if (countSet.contains(getList.get(j))){
+                    Integer a=count.get(getList.get(j));
+                    //System.out.println("sdasdfasf"+a);
+
+                    count.put(getList.get(j),Integer.sum(a,cou));
+                }else{
+                    count.put(getList.get(j),cou);
+                    countSet.add(getList.get(j));
+                }
+            }
+
+        }
+        for ( Map.Entry<String, Integer> se:count.entrySet()) {
+            String st=se.getValue()+" "+se.getKey();
+            //System.out.println(st);
+            res.add(st);
+        }
+
+        return res;
+    }
+    /**
+     * @author feifei
+     * @param website
+     * @Description TODO
+     * 根据"."分割字符串，生成子路径，根路径
+     * @Date 2019/9/9 16:58
+     */
+    public List<String> getDomains(String website){
+        //System.out.println(website);
+        String[] arr=website.split("\\.");
+        List<String> result=new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            String st="";
+            for (int j = i; j <arr.length ; j++) {
+                st=st+arr[j];
+                if (j<arr.length-1){
+                    st+=".";
+                }
+            }
+            result.add(st);
+        }
+        return result;
+    }
+
 
 }
