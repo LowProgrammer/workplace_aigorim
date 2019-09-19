@@ -76,8 +76,14 @@ public class Solution {
 //        solution.countBattleships(battle);
 
 
-        String[] arr=new String[]{"900 google.mail.com","50 yahoo.com", "1 intel.mail.com", "5 wiki.org"};
-        solution.subdomainVisits(arr);
+//        String[] arr=new String[]{"900 google.mail.com","50 yahoo.com", "1 intel.mail.com", "5 wiki.org"};
+//        solution.subdomainVisits(arr);
+
+        String seq="()(())()";
+        int[] re=solution.maxDepthAfterSplit(seq);
+        for (int a:re) {
+            System.out.println(a);
+        }
     }
     /**
      * @author feifei
@@ -694,5 +700,27 @@ public class Solution {
         return result;
     }
 
-
+    /**
+     * @author feifei
+     * @param seq
+     * @Description TODO 1111. Maximum Nesting Depth of Two Valid Parentheses Strings
+     * @Date 2019/9/10 14:00
+     * 奇数层为1 偶数层为0
+     * Leetcode 1111:有效括号的嵌套深度
+     */
+    public int[] maxDepthAfterSplit(String seq) {
+        int deep=0;
+        int len=seq.length();
+        int[] answer=new int[len];
+        for(int i=0;i<len;i++){
+            if(seq.charAt(i)=='('){
+                deep++;
+                answer[i]=deep%2;
+            }else{
+                answer[i]=deep%2;
+                deep--;
+            }
+        }
+        return answer;
+    }
 }

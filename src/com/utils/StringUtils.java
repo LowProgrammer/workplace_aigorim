@@ -1,5 +1,8 @@
 package com.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.Random;
@@ -93,6 +96,22 @@ public class StringUtils {
         }
         return sb.toString();
     }
+
+    /**
+     * @author feifei
+     * @param
+     * @param jsonString
+     * @Description TODO json数据格式化
+     * @Date 2019/9/17 11:49
+     * @Created by 陈群飞
+     * @return
+     */
+    public static String jsonFormat(String jsonString) {
+        JSONObject object= JSONObject.parseObject(jsonString);
+        jsonString = JSON.toJSONString(object, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+        return jsonString;
+    }
+
     public static void main(String[] args) {
         getRandomStr("",20);
     }
