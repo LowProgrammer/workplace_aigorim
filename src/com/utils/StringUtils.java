@@ -6,6 +6,8 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author feifei
@@ -15,6 +17,8 @@ import java.util.Random;
  * @Created by 陈群飞
  */
 public class StringUtils {
+
+    private static Pattern PATTERN_REMOVEESCAPECHAR=Pattern.compile("\\s*|\t|\r|\n");
 
     /**
      * @author feifei
@@ -112,8 +116,27 @@ public class StringUtils {
         return jsonString;
     }
 
+    /**
+     * @author feifei
+     * @param str
+     * @Description TODO 去除字符串中的转义字符
+     * @Date 2019/9/23 16:54
+     */
+    public static  String removeEscapeChar(String str){
+        String dest = "";
+        if (str != null) {
+            Pattern p = PATTERN_REMOVEESCAPECHAR;
+            Matcher m = p.matcher(str);
+            dest = m.replaceAll("");
+        }
+        //dest=dest.replace("\\","");
+        return dest;
+    }
+
+
+
     public static void main(String[] args) {
-        getRandomStr("",20);
+        System.out.println(removeEscapeChar("{\"success\":true,\"message\":\"{\\\"author\\\":\\\"欸非\\\",\\\"createDate\\\":1569219556000,\\\"id\\\":1,\\\"name\\\":\\\"测试问卷一\\\",\\\"questions\\\":[{\\\"id\\\":1,\\\"mask\\\":\\\"年龄\\\",\\\"name\\\":\\\"你今年多大了\\\",\\\"note\\\":\\\"问题测试备注\\\",\\\"order\\\":1,\\\"type\\\":\\\"选择\\\",\\\"value\\\":2},{\\\"id\\\":2,\\\"mask\\\":\\\"年龄\\\",\\\"name\\\":\\\"你的年龄是多少岁\\\",\\\"order\\\":2,\\\"type\\\":\\\"填空\\\",\\\"value\\\":2}]}\"}"));
     }
 }
 
