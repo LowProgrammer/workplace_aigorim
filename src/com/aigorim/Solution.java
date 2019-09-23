@@ -2,6 +2,7 @@ package com.aigorim;
 
 import com.aigorim.tree.Node;
 import com.aigorim.tree.TreeNode;
+import com.utils.Aigorim;
 
 import java.util.*;
 
@@ -79,11 +80,14 @@ public class Solution {
 //        String[] arr=new String[]{"900 google.mail.com","50 yahoo.com", "1 intel.mail.com", "5 wiki.org"};
 //        solution.subdomainVisits(arr);
 
-        String seq="()(())()";
-        int[] re=solution.maxDepthAfterSplit(seq);
-        for (int a:re) {
-            System.out.println(a);
-        }
+//        String seq="()(())()";
+//        int[] re=solution.maxDepthAfterSplit(seq);
+//        for (int a:re) {
+//            System.out.println(a);
+//        }
+
+        int[] test=new int[]{4,2,1,3};
+        solution.minimumAbsDifference(test);
     }
     /**
      * @author feifei
@@ -722,5 +726,40 @@ public class Solution {
             }
         }
         return answer;
+    }
+
+    public List<List<Integer>> minimumAbsDifference(int[] arr) {
+//        for (int i = 0; i < arr.length; i++) {
+//            for (int j = 0; j < arr.length; j++) {
+//                if (arr[i]<arr[j]){
+//                    int tmp=arr[i];
+//                    arr[i]=arr[j];
+//                    arr[j]=tmp;
+//                }
+//            }
+//        }
+        int len=arr.length-1;
+        Aigorim.quick_sort(arr,0,len);
+
+
+        int min=arr[len]-arr[0];
+        int[] re=new int[len];
+        for(int i = 0; i < len; i++) {
+            re[i]=arr[i+1]-arr[i];
+            if (re[i]<min){
+                min=re[i];
+            }
+        }
+        List<List<Integer>> list=new ArrayList<>();
+        for (int i = 0; i < len; i++) {
+            if (re[i]==min){
+                List<Integer> lis=new ArrayList<>();
+                lis.add(arr[i]);
+                lis.add(arr[i+1]);
+                list.add(lis);
+                //System.out.println(arr[i]+"===="+arr[i+1]);
+            }
+        }
+        return list;
     }
 }
