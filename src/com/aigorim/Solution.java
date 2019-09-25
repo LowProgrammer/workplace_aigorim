@@ -88,8 +88,15 @@ public class Solution {
 //            System.out.println(a);
 //        }
 
-        int[] test=new int[]{4,2,1,3};
-        solution.minimumAbsDifference(test);
+//        int[] test=new int[]{4,2,1,3};
+//        solution.minimumAbsDifference(test);
+
+        int[] arr1=new int[]{2,3,1,3,2,4,6,7,9,2,19};
+        int[] arr2=new int[]{2,1,4,3,9,6};
+        int[] re=solution.relativeSortArray(arr1,arr2);
+        for (int i = 0; i < re.length; i++) {
+            System.out.println(re[i]);
+        }
     }
     /**
      * @author feifei
@@ -770,6 +777,32 @@ public class Solution {
         }
         return list;
     }
+
+    /**
+     * @author feifei
+     * @param arr1
+     * @param arr2
+     * @Description TODO leetcode 1122. Relative Sort Array
+     * @Date 2019/9/25 14:23
+     */
+    public int[] relativeSortArray(int[] arr1, int[] arr2) {
+        int lenA=arr1.length,lenB=arr2.length,count=0;
+        for (int i = 0; i < lenB; i++) {
+            for (int j = 0; j < lenA; j++) {
+                if (arr1[j]==arr2[i]){
+                    int te=arr1[count];
+                    arr1[count]=arr1[j];
+                    arr1[j]=te;
+                    count++;
+                }
+            }
+        }
+        if (count<lenA){
+            Aigorim.quick_sort(arr1,count,lenA-1);
+        }
+        return arr1;
+    }
+
 }
 /**
  * @author feifei
