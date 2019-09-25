@@ -9,11 +9,28 @@ package com.utils;
  */
 public class Aigorim {
 
-    private static int partition(int arr[], int low, int heigh)
-    {
-        int tmp = arr[low];
-        while (low < heigh)
+
+    /**
+     * @author feifei
+     * @param arr
+     * @param low
+     * @param heigh
+     * @Description TODO 数组快排
+     * @Date 2019/9/23 18:53
+     * @Created by 陈群飞
+     * @return
+     */
+   public static void quick_sort(int arr[], int low, int heigh){
+        if (low < heigh)
         {
+            int pos = partition(arr, low, heigh);
+            quick_sort(arr, low, pos - 1);
+            quick_sort(arr, pos + 1, heigh);
+        }
+   }
+   private static int partition(int arr[], int low, int heigh){
+       int tmp = arr[low];
+       while (low < heigh){
             while (arr[heigh] >= tmp && low < heigh){
                 heigh--;
             }
@@ -22,17 +39,9 @@ public class Aigorim {
                 low++;
             }
             arr[heigh] = arr[low];
-        }
-        arr[low] = tmp;
-        return low;
-    }
-   public static void quick_sort(int arr[], int low, int heigh)
-    {
-        if (low < heigh)
-        {
-            int pos = partition(arr, low, heigh);
-            quick_sort(arr, low, pos - 1);
-            quick_sort(arr, pos + 1, heigh);
-        }
-    }
+       }
+       arr[low] = tmp;
+       return low;
+   }
+
 }

@@ -5,6 +5,8 @@ import com.aigorim.tree.TreeNode;
 import com.utils.Aigorim;
 
 import java.util.*;
+import java.util.concurrent.Semaphore;
+import java.util.function.IntConsumer;
 
 /**
  * @author feifei
@@ -727,7 +729,13 @@ public class Solution {
         }
         return answer;
     }
-
+    /**
+     * @author feifei
+     * @param arr
+     * @Description TODO 1200. Minimum Absolute Difference
+     * 找出最小的间隔
+     * @Date 2019/9/23 18:52
+     */
     public List<List<Integer>> minimumAbsDifference(int[] arr) {
 //        for (int i = 0; i < arr.length; i++) {
 //            for (int j = 0; j < arr.length; j++) {
@@ -757,9 +765,86 @@ public class Solution {
                 lis.add(arr[i]);
                 lis.add(arr[i+1]);
                 list.add(lis);
-                //System.out.println(arr[i]+"===="+arr[i+1]);
+                System.out.println(arr[i]+"===="+arr[i+1]);
             }
         }
         return list;
+    }
+}
+/**
+ * @author feifei
+ * @param
+ * @Description TODO leetcode 1195 Fizz Buzz Multithreaded
+ * @Date 2019/9/25 14:16
+ */
+class FizzBuzz {
+    private int n;
+    private int m;
+    private Semaphore number;
+    private Semaphore fizz;
+    private Semaphore buzz;
+    private Semaphore fizzBuzz;
+
+    public FizzBuzz(int n) {
+        this.n = n;
+        m = 1;
+        number = new Semaphore(1);
+        fizz = new Semaphore(0);
+        buzz = new Semaphore(0);
+        fizzBuzz = new Semaphore(0);
+    }
+
+    public void fizz(Runnable printFizz) throws InterruptedException {
+        while (m <= n) {
+            fizz.acquire();
+            if (m > n) break;
+            printFizz.run();
+            m++;
+            number.release();
+        }
+    }
+
+    public void buzz(Runnable printBuzz) throws InterruptedException {
+        while (m <= n) {
+            buzz.acquire();
+            if (m > n) break;
+            printBuzz.run();
+            m++;
+            number.release();
+        }
+    }
+
+    public void fizzbuzz(Runnable printFizzBuzz) throws InterruptedException {
+        while (m <= n) {
+            fizzBuzz.acquire();
+            if (m > n) break;
+            printFizzBuzz.run();
+            m++;
+            number.release();
+        }
+    }
+
+    public void number(IntConsumer printNumber) throws InterruptedException {
+        while (m <= n) {
+            number.acquire();
+            if (m>n){
+                break;
+            }
+
+            if (m % 15 == 0) {
+                fizzBuzz.release();
+            } else if (m % 3 == 0) {
+                fizz.release();
+            } else if (m % 5 == 0) {
+                buzz.release();
+            } else {
+                printNumber.accept(m);
+                m++;
+                number.release();
+            }
+        }
+        fizz.release();
+        buzz.release();
+        fizzBuzz.release();
     }
 }
