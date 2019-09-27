@@ -91,12 +91,15 @@ public class Solution {
 //        int[] test=new int[]{4,2,1,3};
 //        solution.minimumAbsDifference(test);
 
-        int[] arr1=new int[]{2,3,1,3,2,4,6,7,9,2,19};
-        int[] arr2=new int[]{2,1,4,3,9,6};
-        int[] re=solution.relativeSortArray(arr1,arr2);
-        for (int i = 0; i < re.length; i++) {
-            System.out.println(re[i]);
-        }
+//        int[] arr1=new int[]{2,3,1,3,2,4,6,7,9,2,19};
+//        int[] arr2=new int[]{2,1,4,3,9,6};
+//        int[] re=solution.relativeSortArray(arr1,arr2);
+//        for (int i = 0; i < re.length; i++) {
+//            System.out.println(re[i]);
+//        }
+
+        int[][] arr=new int[][]{{1,2},{3,4}};
+        System.out.println(solution.projectionArea(arr));
     }
     /**
      * @author feifei
@@ -827,6 +830,50 @@ public class Solution {
         }
     }
 
+    /**
+     * @author feifei
+     * @param
+     * @Description TODO leetcode 883. Projection Area of 3D Shapes
+     * On a N * N grid, we place some 1 * 1 * 1 cubes that are axis-aligned with the x, y, and z axes.
+     *
+     * Each value v = grid[i][j] represents a tower of v cubes placed on top of grid cell (i, j).
+     *
+     * Now we view the projection of these cubes onto the xy, yz, and zx planes.
+     *
+     * A projection is like a shadow, that maps our 3 dimensional figure to a 2 dimensional plane.
+     *
+     * Here, we are viewing the "shadow" when looking at the cubes from the top, the front, and the side.
+     *
+     * Return the total area of all three projections.
+     * [
+     *      [1,2],
+     *      [3,4]
+     * ]
+     *计算三个方向面积之和
+     * @Date 2019/9/27 15:21
+     */
+    public int projectionArea(int[][] grid) {
+        int x=0,y=0,z=0;
+        int len=grid.length;
+        for (int i = 0; i < len; i++) {
+            int x_max=grid[i][0];
+            int y_max=grid[0][i];
+            for (int j = 0; j < len; j++) {
+                if (grid[i][j]>0){
+                    z++;
+                }
+                if (grid[i][j]>x_max){
+                    x_max=grid[i][j];
+                }
+                if (grid[j][i]>y_max){
+                    y_max=grid[j][i];
+                }
+            }
+            x+=x_max;
+            y+=y_max;
+        }
+        return x+y+z;
+    }
 }
 /**
  * @author feifei
