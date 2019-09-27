@@ -803,6 +803,30 @@ public class Solution {
         return arr1;
     }
 
+
+    /**
+     * @author feifei
+     * @param root
+     * @Description TODO 559. Maximum Depth of N-ary Tree
+     * N叉树的最大深度
+     * @Date 2019/9/27 10:19
+     */
+    public int maxDepth(Node root) {
+        if(root==null){
+            return 0;
+        }else{
+            int count=0,index;
+            List<Node> ch=root.children;
+            for (int i = 0; i <ch.size() ; i++) {
+                int te=maxDepth(ch.get(i));
+                if (te>count){
+                    count=te;
+                }
+            }
+            return count+1;
+        }
+    }
+
 }
 /**
  * @author feifei
