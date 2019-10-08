@@ -98,8 +98,14 @@ public class Solution {
 //            System.out.println(re[i]);
 //        }
 
-        int[][] arr=new int[][]{{1,2},{3,4}};
-        System.out.println(solution.projectionArea(arr));
+//        int[][] arr=new int[][]{{1,2},{3,4}};
+//        System.out.println(solution.projectionArea(arr));
+
+        String a="78+-76i";
+        String b="-86+72i";
+        System.out.println(Integer.parseInt("-1"));
+        System.out.println(solution.complexNumberMultiply(a,b));
+
     }
     /**
      * @author feifei
@@ -873,6 +879,33 @@ public class Solution {
             y+=y_max;
         }
         return x+y+z;
+    }
+
+    /**
+     * @author feifei
+     * @param a
+     * @param b
+     * @Description TODO leetcoce 537. Complex Number Multiplication
+     * @Date 2019/10/8 9:52
+     * 两个复数进行相乘
+     */
+    public String complexNumberMultiply(String a, String b) {
+        String[] arr1 = new String[2],arr2=new String[2];
+        if (a.contains("+")){
+            arr1=a.split("\\+");
+        }
+        if (a.contains("+")){
+            arr2=b.split("\\+");
+        }
+        int a1=Integer.parseInt(arr1[0]);
+        int b1=Integer.parseInt(arr2[0]);
+        int a2=Integer.parseInt(arr1[1].substring(0,arr1[1].length()-1));
+        int b2=Integer.parseInt(arr2[1].substring(0,arr2[1].length()-1));
+
+        System.out.println(a1+"=="+a2+"==="+b1+"=="+b2);
+        int x=a1*b1-a2*b2;
+        int y=a1*b2+b1*a2;
+        return x+"+"+y+"i";
     }
 }
 /**
