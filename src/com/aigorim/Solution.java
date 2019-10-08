@@ -101,10 +101,20 @@ public class Solution {
 //        int[][] arr=new int[][]{{1,2},{3,4}};
 //        System.out.println(solution.projectionArea(arr));
 
-        String a="78+-76i";
-        String b="-86+72i";
-        System.out.println(Integer.parseInt("-1"));
-        System.out.println(solution.complexNumberMultiply(a,b));
+//        String a="78+-76i";
+//        String b="-86+72i";
+//        System.out.println(Integer.parseInt("-1"));
+//        System.out.println(solution.complexNumberMultiply(a,b));
+
+        TreeNode root=new TreeNode(5);
+        root.left=new TreeNode(3);
+        root.left.left=new TreeNode(2);
+        root.left.left.left=new TreeNode(1);
+        root.left.right=new TreeNode(4);
+        root.right=new TreeNode(6);
+        root.right.right=new TreeNode(8);
+        root.right.right.left=new TreeNode(7);
+        solution.increasingBST(root);
 
     }
     /**
@@ -586,9 +596,6 @@ public class Solution {
     }
 
 
-
-
-
     /**
      * @author feifei
      * @param N
@@ -907,6 +914,36 @@ public class Solution {
         int y=a1*b2+b1*a2;
         return x+"+"+y+"i";
     }
+
+    /**
+     * @author feifei
+     * @param
+     * @Description TODO leetcode 897. Increasing Order Search Tree
+     * @Date 2019/10/8 11:02
+     * 二叉树的中序遍历完成后，再建一个只有右节点的二叉树
+     */
+    TreeNode ress,head;
+    public TreeNode increasingBST(TreeNode root) {
+        if(root==null||root.left==null&&root.right==null){
+            return root;
+        }
+        ress = new TreeNode(0);
+        head = ress;
+        inOrder(root);
+        return head.right;
+    }
+
+    void inOrder(TreeNode r){
+        if(r.left!=null){
+            inOrder(r.left);
+        }
+        ress.right = new TreeNode(r.val);
+        ress=ress.right;
+        if(r.right!=null){
+            inOrder(r.right);
+        }
+    }
+
 }
 /**
  * @author feifei
