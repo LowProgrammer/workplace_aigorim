@@ -106,16 +106,21 @@ public class Solution {
 //        System.out.println(Integer.parseInt("-1"));
 //        System.out.println(solution.complexNumberMultiply(a,b));
 
-        TreeNode root=new TreeNode(5);
-        root.left=new TreeNode(3);
-        root.left.left=new TreeNode(2);
-        root.left.left.left=new TreeNode(1);
-        root.left.right=new TreeNode(4);
-        root.right=new TreeNode(6);
-        root.right.right=new TreeNode(8);
-        root.right.right.left=new TreeNode(7);
-        solution.increasingBST(root);
+//        TreeNode root=new TreeNode(5);
+//        root.left=new TreeNode(3);
+//        root.left.left=new TreeNode(2);
+//        root.left.left.left=new TreeNode(1);
+//        root.left.right=new TreeNode(4);
+//        root.right=new TreeNode(6);
+//        root.right.right=new TreeNode(8);
+//        root.right.right.left=new TreeNode(7);
+//        solution.increasingBST(root);
 
+        int[][] arr=solution.spiralMatrixIII(5,6,1,4);
+
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i][0]+"==========="+arr[i][1]);
+        }
     }
     /**
      * @author feifei
@@ -933,7 +938,7 @@ public class Solution {
         return head.right;
     }
 
-    void inOrder(TreeNode r){
+    private void inOrder(TreeNode r){
         if(r.left!=null){
             inOrder(r.left);
         }
@@ -943,6 +948,151 @@ public class Solution {
             inOrder(r.right);
         }
     }
+
+    /**
+     * @author feifei
+     * @param
+     * @Description TODO  leetcode885.SpiralMatrixIII
+     * @Date 2019/10/9 10:13
+     */
+    public int[][] spiralMatrixIII(int R, int C, int r0, int c0) {
+        int res[][] = new int[R*C][2];
+        res[0] = new int[]{r0, c0};
+        int count = 1;
+        int walk[][] = new int[][]{{0,1}, {1,0}, {0,-1},{-1,0}};
+        int step = 1;
+        // 0右 1下 2左 3上
+        int spiral = 0;
+        while(count < R * C){
+            for(int i = 0; i < step; i++){
+                r0 += walk[spiral][0];
+                c0 += walk[spiral][1];
+                if(r0 >= 0 && r0 < R && c0 >=0 && c0 < C){
+                    res[count++] = new int[]{r0, c0};
+                }
+            }
+            spiral = (spiral + 1) % 4;
+            //每次走完右下或者左上后，步长加一
+            if(spiral == 2 || spiral == 0){
+                step++;
+            }
+        }
+        return res;
+    }
+    private void add(int R, int C, int x, int y,  int[][] res,int count) {
+        if (x >= 0 && x < R && y >= 0 && y < C) {
+            res[count][0]=x;
+            res[count][1]=y;
+            System.out.println(x+"===="+y);
+        };
+    }
+
+
+    /**
+     * 递归螺旋遍历
+     */
+    int count=0;
+    private void radisVisit(int[][] arr,int R,int C,int x,int y,char direction){
+        if (count==R*C){
+            System.out.println("over");
+            return;
+        }
+        if (direction==' '){
+            arr[x][y]=1;
+            count++;
+            System.out.println(x+"------"+y);
+            radisVisit(arr,R,C,x,y,'r');
+        }
+        if(direction=='r'){
+            if(y<C-1){
+                y++;
+                if (arr[x][y]==1){
+                    radisVisit(arr,R,C,x,y,'r');
+                }
+                arr[x][y]=1;
+                count++;
+                System.out.println(x+"------"+y);
+                if(x<R-1){
+                    if(arr[x+1][y]==0){
+                        radisVisit(arr,R,C,x,y,'d');
+                    }else if(arr[x+1][y]==1){
+                        radisVisit(arr,R,C,x,y,'r');
+                    }
+                }else {
+                    radisVisit(arr,R,C,x,y,'d');
+                }
+            }else{
+                radisVisit(arr,R,C,x,y,'d');
+            }
+        }
+        if(direction=='d'){
+            if (x<R-1){
+                x++;
+                if (arr[x][y]==1){
+                    radisVisit(arr,R,C,x,y,'d');
+                }
+                arr[x][y]=1;
+                count++;
+                System.out.println(x+"------"+y);
+                if(y>0){
+                   if(arr[x][y-1]==0){
+                        radisVisit(arr,R,C,x,y,'l');
+                    }else if(arr[x][y-1]==1){
+                        radisVisit(arr,R,C,x,y,'d');
+                    }
+                }else{
+                    radisVisit(arr,R,C,x,y,'l');
+                }
+            }else{
+                radisVisit(arr,R,C,x,y,'l');
+            }
+        }
+        if(direction=='l'){
+            if(y>0){
+                y--;
+                if (arr[x][y]==1){
+                    radisVisit(arr,R,C,x,y,'l');
+                }
+                arr[x][y]=1;
+                count++;
+                System.out.println(x+"------"+y);
+                if(x>0) {
+                    if (arr[x - 1][y] == 0) {
+                        radisVisit(arr, R, C, x, y, 'u');
+                    } else if (arr[x - 1][y] == 1) {
+                        radisVisit(arr, R, C, x, y, 'l');
+                    }
+                }else {
+                    radisVisit(arr, R, C, x, y, 'u');
+                }
+            }else{
+                radisVisit(arr,R,C,x,y,'u');
+            }
+        }
+        if(direction=='u'){
+            if(x>0){
+                x--;
+                if (arr[x][y]==1){
+                    radisVisit(arr,R,C,x,y,'u');
+                }
+                arr[x][y]=1;
+                count++;
+                System.out.println(x+"------"+y);
+                if (y<C-1){
+                if(arr[x][y+1]==0){
+                    radisVisit(arr,R,C,x,y,'r');
+                }else if(arr[x][y+1]==1){
+                    radisVisit(arr,R,C,x,y,'u');
+                }
+                }else {
+                    radisVisit(arr,R,C,x,y,'r');
+                }
+            }else{
+                radisVisit(arr,R,C,x,y,'r');
+            }
+        }
+    }
+
 
 }
 /**

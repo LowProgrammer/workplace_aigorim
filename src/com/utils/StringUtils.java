@@ -121,6 +121,7 @@ public class StringUtils {
      * @param str
      * @Description TODO 去除字符串中的转义字符
      * @Date 2019/9/23 16:54
+     * PATTERN_REMOVEESCAPECHAR 定义的转义字符都有什么
      */
     public static  String removeEscapeChar(String str){
         String dest = "";
