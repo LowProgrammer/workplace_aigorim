@@ -1,5 +1,7 @@
 package com.aigorim;
 
+import java.util.*;
+
 /**
  * @author feifei
  * @Classname Solution2
@@ -11,10 +13,8 @@ public class Solution2 {
     public static void main(String[] args) {
         System.out.println(232356);
         Solution2 s=new Solution2();
-        int[] arr=s.countBits(129);
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i]+"  ");
-        }
+        String[] a=new String[]{"cool","lock","cook"};
+        s.commonChars(a);
     }
 
     /**
@@ -62,7 +62,7 @@ public class Solution2 {
     /**
      * @author feifei
      * @param board
-     * @Description TODO  leetcode 999. Available Captures for Rook
+     * @Description TODO  ·
      * @Date 2019/10/11 10:57
      * 计算一个车在四个方向上能有多少个卒子能吃，使用数组来标记四个方向
      *
@@ -97,4 +97,74 @@ public class Solution2 {
         }
         return res;
     }
+
+    /**
+     * @author feifei
+     * @param A
+     * @Description TODO leetcode 1002. Find Common Characters
+     * @Date 2019/10/11 12:32
+     * 找出字符串中重复出现的部分
+     */
+    public List<String> commonChars(String[] A) {
+        int len=A.length;
+        List<String> list=new ArrayList<>();
+        char[] arr=A[0].toCharArray();
+        for (int i = 1; i <len; i++) {
+            arr=removeLeft(arr,A[i]);
+        }
+        for (int i = 0; i < arr.length; i++) {
+            list.add(arr[i]+"");
+            System.out.println(arr[i]);
+        }
+
+//        Map<Character, Integer> maps=new HashMap<>();
+//        for (int i = 0; i < len; i++) {
+//            for (int j = 0; j < A[i].length(); j++) {
+//                if (maps.containsKey(A[i].charAt(j))){
+//                    int n=maps.get(A[i].charAt(j))+1;
+//                    maps.put(A[i].charAt(j),n);
+//                }else{
+//                    maps.put(A[i].charAt(j),1);
+//                }
+//            }
+//        }
+//        for (Map.Entry<Character, Integer> e:maps.entrySet()         ) {
+//            if (e.getValue()==len){
+//                list.add(e.getKey()+"");
+//            }
+//        }
+        return list;
+    }
+
+    /**
+     * 找出字符串b中跟arr相同的部分，并且返回重复出现的数组
+     * @param arr
+     * @param b
+     * @return
+     */
+    private char[] removeLeft(char[] arr,String b){
+        int[] m=new int[arr.length];
+        int[] m2=new int[b.length()];
+        int count=0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < b.length(); j++) {
+                if (arr[i]==b.charAt(j)&&m[i]==0&&m2[j]==0){
+                    m[i]=1;
+                    m2[j]=1;
+                    count++;
+                }
+            }
+        }
+        char[] res=new char[count];
+        count=0;
+        for (int i = 0; i < m.length; i++) {
+            if (m[i]==1){
+                res[count++]=arr[i];
+            }
+
+        }
+        return res;
+    }
+
+
 }
