@@ -13,8 +13,8 @@ public class Solution2 {
     public static void main(String[] args) {
         System.out.println(232356);
         Solution2 s=new Solution2();
-        String[] a=new String[]{"cool","lock","cook"};
-        s.commonChars(a);
+        String str="Let's take LeetCode contest";
+        System.out.println(s.reverseWords(str));
     }
 
     /**
@@ -166,5 +166,38 @@ public class Solution2 {
         return res;
     }
 
+
+    /**
+     * @author feifei
+     * @param s
+     * @Description TODO leetcode 557. Reverse Words in a String III
+     * @Date 2019/10/12 10:54
+     * 反转字符串
+     */
+    public String reverseWords(String s) {
+        String[] strings=s.split(" ");
+        int len=strings.length;
+        for (int i = 0; i < len; i++) {
+            strings[i]=getReverse(strings[i]);
+        }
+        StringBuilder str=new StringBuilder();
+        for (int i = 0; i <len ; i++) {
+            str.append(strings[i]);
+            if (i<len-1){
+                str.append(" ");
+            }
+        }
+        return str.toString();
+    }
+    private String getReverse(String str){
+        char[] chars=str.toCharArray();
+        int len=chars.length;
+        for (int i = 0; i < len/2; i++) {
+            char a=chars[i];
+            chars[i]=chars[len-1-i];
+            chars[len-1-i]=a;
+        }
+        return String.valueOf(chars);
+    }
 
 }
