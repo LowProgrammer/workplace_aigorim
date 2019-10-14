@@ -231,4 +231,13 @@ public class Solution2 {
         return tail;
     }
 
+    /**
+     * @author feifei
+     * @param N
+     * @Description TODO leetcode 1025. Divisor Game
+     * @Date 2019/10/14 10:18
+     */
+    public boolean divisorGame(int N) {
+        return N%2==0?true:false;
+    }
 }
