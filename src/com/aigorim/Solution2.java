@@ -14,7 +14,16 @@ public class Solution2 {
         System.out.println(232356);
         Solution2 s=new Solution2();
         String str="Let's take LeetCode contest";
-        System.out.println(s.reverseWords(str));
+
+
+        ListNode head=new ListNode(0);
+        head.next=new ListNode(1);
+        head.next.next=new ListNode(2);
+        head.next.next.next=new ListNode(3);
+        head.next.next.next.next=new ListNode(4);
+        head.next.next.next.next.next=new ListNode(5);
+        System.out.println(s.middleNode(head).val);
+
     }
 
     /**
@@ -198,6 +207,28 @@ public class Solution2 {
             chars[len-1-i]=a;
         }
         return String.valueOf(chars);
+    }
+
+    /**
+     * @author feifei
+     * @param head
+     * @Description TODO leetcode 876. Middle of the Linked List
+     * @Date 2019/10/14 10:13
+     * 找出链表的中间那个结点
+     */
+    public ListNode middleNode(ListNode head) {
+        ListNode first,tail;
+        first=head;
+        tail=head;
+        int count=0;
+        while(first!=null){
+            first=first.next;
+            count++;
+            if (count%2==0){
+                tail=tail.next;
+            }
+        }
+        return tail;
     }
 
 }
