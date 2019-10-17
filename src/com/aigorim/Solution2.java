@@ -10,19 +10,14 @@ import java.util.*;
  * @Created by 陈群飞
  */
 public class Solution2 {
+    private static String[] weekName={"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     public static void main(String[] args) {
         System.out.println(232356);
         Solution2 s=new Solution2();
         String str="Let's take LeetCode contest";
 
 
-        ListNode head=new ListNode(0);
-        head.next=new ListNode(1);
-        head.next.next=new ListNode(2);
-        head.next.next.next=new ListNode(3);
-        head.next.next.next.next=new ListNode(4);
-        head.next.next.next.next.next=new ListNode(5);
-        System.out.println(s.middleNode(head).val);
+        System.out.println(s.dayOfTheWeek(17,10,2019));
 
     }
 
@@ -240,4 +235,38 @@ public class Solution2 {
     public boolean divisorGame(int N) {
         return N%2==0?true:false;
     }
+
+    /**
+     * @author feifei
+     * @param day
+     * @param month
+     * @param year
+     * @Description TODO LeetCode 1185 Day of the Week
+     * @Date 2019/10/17 11:04
+     * 返回某一天是星期几
+     */
+    public String dayOfTheWeek(int day, int month, int year) {
+        //String weeks[] = {"Thursday", "Friday", "Saturday","Sunday","Monday", "Tuesday", "Wednesday"};
+        int i, days = 0, monthdays[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+        //1971-1-1 周五
+        for(i = 1971; i < year; ++i)
+        {
+            if((i%4 == 0 && i%100 != 0) || i%400 == 0) {
+                days += 366;
+            }
+            else{
+                days += 365;
+            }
+        }
+        for(i = 0; i < month-1; ++i)
+        {
+            days += monthdays[i];
+        }
+        days += day;
+        if(((year%4 == 0 && year%100 != 0) || year%400 == 0) && month > 2) {
+            ++days;
+        }
+        return weekName[days%7];
+    }
+
 }
