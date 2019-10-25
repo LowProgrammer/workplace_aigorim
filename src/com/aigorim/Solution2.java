@@ -14,10 +14,58 @@ public class Solution2 {
     public static void main(String[] args) {
         System.out.println(232356);
         Solution2 s=new Solution2();
-        String str="Let's take LeetCode contest";
+        String str="SJ\n" +
+                "KHRZQK\n" +
+                "KHSX\n" +
+                "YY\n" +
+                "EMAIL\n" +
+                "QQ\n" +
+                "WX\n" +
+                "WB\n" +
+                "MDRXM\n" +
+                "PHLXFS\n" +
+                "PHLXSJ\n" +
+                "SRLY\n" +
+                "YWMC\n" +
+                "GSWZ\n" +
+                "FRDH\n" +
+                "JYFW\n" +
+                "SSHY\n" +
+                "HYDW\n" +
+                "SNDZCGM\n" +
+                "SNDYYSR\n" +
+                "SNDFZGM\n" +
+                "JGJYXQ\n" +
+                "JGRZXQ\n";
+        String code="手机\n" +
+                "客户认证情况\n" +
+                "客户属性\n" +
+                "语言\n" +
+                "邮箱\n" +
+                "QQ\n" +
+                "微信\n" +
+                "微博\n" +
+                "免打扰\n" +
+                "偏好联系方式\n" +
+                "偏好联系时间\n" +
+                "收入来源\n" +
+                "英文名称\n" +
+                "公司网站\n" +
+                "法人电话\n" +
+                "经营范围\n" +
+                "所属行业\n" +
+                "行业地位\n" +
+                "上年度资产规模\n" +
+                "上年度营业收入\n" +
+                "上年度负债规模\n" +
+                "机构经营需求\n" +
+                "机构融资需求\n";
+        String[] strArr=str.split("\\n");
+        String[] codeArr=code.split("\\n");
+        for (int i = 0; i <strArr.length ; i++) {
+            System.out.println("\""+strArr[i]+"\":\""+codeArr[i]+"\",");
+        }
 
-
-        System.out.println(s.dayOfTheWeek(17,10,2019));
 
     }
 
@@ -268,5 +316,7 @@ public class Solution2 {
         }
         return weekName[days%7];
     }
+
+
 
 }
