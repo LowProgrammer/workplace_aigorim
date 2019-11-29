@@ -10,14 +10,46 @@ import org.apache.commons.compress.utils.IOUtils;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 public class FileUtils {
+    private static final Integer ONE = 1;
+    /**
+     * @author feifei
+     * @param path
+     * @Description TODO 逐行读取文件内容
+     * @Date 2019/11/13 9:28
+     */
+    public static Map<String,Integer> readFile(String path){
+        Map<String, Integer> map = new HashMap<String, Integer>();
 
+        /* 读取数据 */
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(path)),
+                    "UTF-8"));
+            String lineTxt = null;
+            while ((lineTxt = br.readLine()) != null) {
+                String[] names = lineTxt.split(",");
+                for (String name : names) {
+                    if (map.keySet().contains(name)) {
+                        map.put(name, (map.get(name) + ONE));
+                    } else {
+                        map.put(name, ONE);
+                    }
+                }
+            }
+            br.close();
+        } catch (Exception e) {
+            System.err.println("read errors :" + e);
+        }
+        return map;
+    }
     //private static final Logger log = LoggerFactory.getLogger(FileUtils.class);
 
     public int getFileCount(String strPath) {
