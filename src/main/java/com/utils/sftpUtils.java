@@ -33,7 +33,7 @@ public class sftpUtils {
     public List<String> downloadFile(String pathname,String localpath,String user,String password,String ip,int port,String privateKey){
         ChannelSftp sftp = SFTPConnectionFactory.getInstance(user,password,ip,port,privateKey).makeConnection();
 
-        List<String> files=new ArrayList<>();
+        List<String> files=new ArrayList<String>();
         //String zipName = "";
         Integer i = 0;
         //log.info("baiduPath:"+baiduPathname);

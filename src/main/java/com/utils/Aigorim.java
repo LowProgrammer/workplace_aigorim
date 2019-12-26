@@ -1,5 +1,8 @@
 package com.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author feifei
  * @Classname Aigorim
@@ -44,4 +47,14 @@ public class Aigorim {
        return low;
    }
 
+
+   public List<Integer> getDigit(int num){
+       List<Integer> result=new ArrayList<Integer>();
+       int n=num,i=0;
+       while (n>0){
+           result.add(n%10);
+           n=n/10;
+       }
+       return result;
+   }
 }

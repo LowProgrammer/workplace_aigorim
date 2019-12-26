@@ -219,7 +219,7 @@ public class Solution {
      */
     public List<Integer> pathInZigZagTree(int label) {
 
-        List<Integer> li=new ArrayList<>();
+        List<Integer> li=new ArrayList<Integer>();
 
         if(label==1){
             li.add(label);

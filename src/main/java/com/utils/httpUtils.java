@@ -46,7 +46,7 @@ public class httpUtils {
     public JSONObject qccHttpGet(Map<String,String> params, String url, JSONObject headers, RequestConfig config){
 
         CloseableHttpClient httpClient= HttpClients.createDefault();
-        List<NameValuePair> pairs=new ArrayList<>();
+        List<NameValuePair> pairs=new ArrayList<NameValuePair>();
         for (Map.Entry<String,String> entry:params.entrySet()) {
             pairs.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
         }

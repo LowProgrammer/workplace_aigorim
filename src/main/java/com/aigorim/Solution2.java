@@ -12,139 +12,34 @@ import java.util.*;
 public class Solution2 {
     private static String[] weekName={"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     public static void main(String[] args) {
-        System.out.println(232356);
-        Solution2 s=new Solution2();
-        String str="KHH\n" +
-                "TYSHXYDM\n" +
-                "HYFL\n" +
-                "YGRS\n" +
-                "SFSSQY\n" +
-                "WWMC\n" +
-                "ZCLB\n" +
-                "ZCZB\n" +
-                "CLSJ\n" +
-                "ZCRQ\n" +
-                "ZCDQRQ\n" +
-                "DJBH\n" +
-                "SSRQ\n" +
-                "SSD\n" +
-                "SSSC\n" +
-                "SSMC\n" +
-                "GPDM\n" +
-                "FRMC\n" +
-                "SKRMC\n" +
-                "\n" +
-                "FZJG\n" +
-                "FZJGSZD\n" +
-                "ZJYXKSRQ\n" +
-                "ZJYXJZRQ\n" +
-                "\n" +
-                "GDMC\n" +
-                "GDLX\n" +
-                "GDCGBL\n" +
-                "\n" +
-                "BBNF\n" +
-                "ZCZJ\n" +
-                "FZHJ\n" +
-                "SYZQYHJ\n" +
-                "FZQYHJ\n" +
-                "ZYYWSR\n" +
-                "YYLR\n" +
-                "LRZE\n" +
-                "JLR\n" +
-                "YYSR\n" +
-                "JYHDXJLRXJ\n" +
-                "JYHDXJLCXJ\n" +
-                "JYHDXJLLJE\n" +
-                "TZHDXJLRXJ\n" +
-                "TZHDXJLCXJ\n" +
-                "TZHDXJLLJE\n" +
-                "CZHDXJLRXJ\n" +
-                "CZHDXJLCXJ\n" +
-                "CZHDXJLLJE\n" +
-                "XJDJWJZJE\n" +
-                "QMXJDJWYE\n" +
-                "\n" +
-                "GGMC\n" +
-                "GGLX\n" +
-                "\n" +
-                "LXXXLX\n" +
-                "SF\n" +
-                "CS\n" +
-                "QX\n" +
-                "XXDZ\n" +
-                "DH1\n" +
-                "YZBM\n";
-        String code="企业客户号\n" +
-                "统一社会信用代码\n" +
-                "行业分类\n" +
-                "员工人数\n" +
-                "是否上市企业\n" +
-                "客户英文名称\n" +
-                "注册类别\n" +
-                "注册资本\n" +
-                "成立日期\n" +
-                "登记日期\n" +
-                "登记到期日期\n" +
-                "登记编号\n" +
-                "上市时间\n" +
-                "上市地\n" +
-                "上市市场\n" +
-                "上市名称\n" +
-                "股票代码\n" +
-                "法定代表人\n" +
-                "实际控制人名称\n" +
-                "\n" +
-                "发证机关\n" +
-                "证件地址\n" +
-                "证件有效开始日期\n" +
-                "证件有效截止日期\n" +
-                "\n" +
-                "股东名称\n" +
-                "股东类型\n" +
-                "股东持股比例\n" +
-                "\n" +
-                "报表年份\n" +
-                "资产总计\n" +
-                "负债合计\n" +
-                "所有者权益合计\n" +
-                "负债和所有者权益合计\n" +
-                "主营业务收入\n" +
-                "营业利润\n" +
-                "利润总额\n" +
-                "净利润\n" +
-                "营业收入\n" +
-                "经营活动现金流入小计\n" +
-                "经营活动现金流出小计\n" +
-                "经营活动产生的现金流量净额\n" +
-                "投资活动现金流入小计\n" +
-                "投资活动现金流出小计\n" +
-                "投资活动产生的现金流量净额\n" +
-                "筹资活动现金流入小计\n" +
-                "筹资活动现金流出小计\n" +
-                "筹资活动产生的现金流量净额\n" +
-                "现金及现金等价物净增加额\n" +
-                "期末现金及现金等价物余额\n" +
-                "\n" +
-                "高管名称\n" +
-                "高管类型\n" +
-                "\n" +
-                "联系信息类型\n" +
-                "省份\n" +
-                "城市\n" +
-                "区县\n" +
-                "详细地址\n" +
-                "电话1\n" +
-                "邮编\n";
-        String[] strArr=str.split("\\n");
-        String[] codeArr=code.split("\\n");
-        for (int i = 0; i <strArr.length ; i++) {
-            System.out.println("\""+strArr[i]+"\":\""+codeArr[i]+"\",");
+        int n=123546;
+        while (n>0){
+            System.out.println(n%10);
+            n=n/10;
         }
-
-
+        System.out.println(2233);
     }
 
+
+    /**
+     * 计算数组中有多少个偶数个数值INTEGER
+     * @param nums leetcode 1295. Find Numbers with Even Number of Digits
+     * @return
+     */
+    public int findNumbers(int[] nums) {
+        int n=0;
+        for (int i: nums) {
+            int count=0;
+            while (i>0){
+                count++;
+                i=i/10;
+            }
+            if (count%2==0){
+                n++;
+            }
+        }
+        return n;
+    }
     /**
      * @author feifei
      * @param num
@@ -235,7 +130,7 @@ public class Solution2 {
      */
     public List<String> commonChars(String[] A) {
         int len=A.length;
-        List<String> list=new ArrayList<>();
+        List<String> list=new ArrayList<String>();
         char[] arr=A[0].toCharArray();
         for (int i = 1; i <len; i++) {
             arr=removeLeft(arr,A[i]);

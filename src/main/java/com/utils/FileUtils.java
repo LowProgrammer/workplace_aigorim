@@ -63,7 +63,7 @@ public class FileUtils {
 
         File dir = new File(strPath);
         File[] files = dir.listFiles(); // 该文件目录下文件全部放入数组
-        List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<String>();
         if (files != null) {
             for (int i = 0; i < files.length; i++) {
                 String fileName = files[i].getName();
