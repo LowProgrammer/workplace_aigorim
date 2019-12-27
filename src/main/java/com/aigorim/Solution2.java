@@ -1,5 +1,7 @@
 package com.aigorim;
 
+import com.utils.MapperUtils;
+
 import java.util.*;
 
 /**
@@ -11,13 +13,54 @@ import java.util.*;
  */
 public class Solution2 {
     private static String[] weekName={"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-    public static void main(String[] args) {
-        int n=123546;
-        while (n>0){
-            System.out.println(n%10);
-            n=n/10;
+    public static void main(String[] args) throws Exception {
+        int []arr=new int[]{2,1,3,3,3,2};
+//        List<Integer> li=new ArrayList<>();
+//        for (int a:arr         ) {
+//            li.add(a);
+//        }
+//        for (int s:         li.subList(0,2)) {
+//            System.out.println(s);
+//        }
+
+        System.out.println("你好");
+        Solution2 solution2=new Solution2();
+        List<List<Integer>> re=solution2.groupThePeople(arr);
+        for (List<Integer> i:re) {
+            for (Integer s:i) {
+                System.out.print(s);
+            }
+            System.out.println();
         }
-        System.out.println(2233);
+    }
+
+    /**
+     *分组且每个分组的数量为分组的数字值n
+     * @param groupSizes leetcode 1282. Group the People Given the Group Size They Belong To
+     * @return
+     */
+    public  List<List<Integer>> groupThePeople(int[] groupSizes) {
+        Map<Integer,List<Integer>> map=new HashMap<>();
+        for (int i = 0; i < groupSizes.length; i++) {
+            if (map.containsKey(groupSizes[i])){
+                map.get(groupSizes[i]).add(i);
+            }else{
+                List<Integer> li=new ArrayList<>();
+                li.add(i);
+                map.put(groupSizes[i],li);
+            }
+        }
+        List<List<Integer>> re=new ArrayList<>();
+        for (Integer a: map.keySet()) {
+            if(map.get(a).size()!=a){
+                for (int i = 0; i <map.get(a).size()/a ; i++) {
+                    re.add(map.get(a).subList(i*a,(i+1)*a));
+                }
+            }else{
+                re.add(map.get(a));
+            }
+        }
+        return re;
     }
 
 
