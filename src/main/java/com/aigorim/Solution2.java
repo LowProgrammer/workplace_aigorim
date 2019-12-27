@@ -29,6 +29,30 @@ public class Solution2 {
     }
 
     /**
+     * 计算链表二进制对应的十进制数值
+     * @param head 1290. Convert Binary Number in a Linked List to Integer
+     * @return
+     */
+    public int getDecimalValue(ListNode head) {
+        List<Integer> li=new ArrayList<>();
+        while (head!=null){
+            li.add(head.val);
+            head=head.next;
+        }
+        int n=li.size();
+        int result=0;
+        for (int i:li) {
+            int pos=1;
+            for (int j = 0; j <n-1; j++) {
+                pos*=2;
+            }
+            result+=i*pos;
+            n--;
+        }
+        return result;
+    }
+
+    /**
      * 计算出整数中的每个数相乘减去相加的数值
      * @param n leetcode 1281. Subtract the Product and Sum of Digits of an Integer
      * @return
