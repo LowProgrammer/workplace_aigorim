@@ -25,13 +25,22 @@ public class Solution2 {
 
         System.out.println("你好");
         Solution2 solution2=new Solution2();
-        List<List<Integer>> re=solution2.groupThePeople(arr);
-        for (List<Integer> i:re) {
-            for (Integer s:i) {
-                System.out.print(s);
-            }
-            System.out.println();
+        System.out.println(solution2.subtractProductAndSum(234));
+    }
+
+    /**
+     * 计算出整数中的每个数相乘减去相加的数值
+     * @param n leetcode 1281. Subtract the Product and Sum of Digits of an Integer
+     * @return
+     */
+    public int subtractProductAndSum(int n) {
+        int mulNum=1,addNum=0;
+        while(n>0){
+            mulNum*=n%10;
+            addNum+=n%10;
+            n=n/10;
         }
+        return mulNum-addNum;
     }
 
     /**
