@@ -27,7 +27,30 @@ public class Solution2 {
 
         System.out.println(solution2.deepestLeavesSum(root));
     }
+    /**
+     * 把字符串分割成最多可能的组合，每个包含相等的LR
+     * @author feifei
+     * @param s
+     * @Description TODO leetcode 1221. Split a String in Balanced Strings
+     * @Date 2019/12/31 15:51
+     */
+    public int balancedStringSplit(String s) {
+        int count=0;int coutL=0;int countR=0;
+//        char[] arr=s.toCharArray();
+        int n=s.length();
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i)=='L'){
+                coutL++;
+            }else{
+                countR++;
+            }
+            if (countR==coutL){
+                count++;
+            }
+        }
+        return  count;
 
+    }
     int re=0;
     /**
      * 计算出树最大深度的叶子值之和
