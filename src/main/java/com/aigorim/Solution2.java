@@ -1,5 +1,6 @@
 package com.aigorim;
 
+import com.aigorim.tree.TreeNode;
 import com.utils.MapperUtils;
 
 import java.util.*;
@@ -14,19 +15,107 @@ import java.util.*;
 public class Solution2 {
     private static String[] weekName={"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     public static void main(String[] args) throws Exception {
-        int []arr=new int[]{2,1,3,3,3,2};
-//        List<Integer> li=new ArrayList<>();
-//        for (int a:arr         ) {
-//            li.add(a);
-//        }
-//        for (int s:         li.subList(0,2)) {
-//            System.out.println(s);
-//        }
-
-        System.out.println("你好");
         Solution2 solution2=new Solution2();
-        System.out.println(solution2.subtractProductAndSum(234));
+        TreeNode root=new TreeNode(0);
+        root.right=new TreeNode(1);
+        root.left=new TreeNode(2);
+
+        root.right.right=new TreeNode(3);
+        root.left.right=new TreeNode(4);
+//        root.left.right.right=new TreeNode(5);
+
+
+        System.out.println(solution2.deepestLeavesSum(root));
     }
+
+    int re=0;
+    /**
+     * 计算出树最大深度的叶子值之和
+     * 法1：利用递归求出最大深度，在找出符合最大深度叶子
+     * 法2：层次遍历计算出每层的之和，返回最后一个
+     * @param root
+     * @Description TODO leetcode 1302. Deepest Leaves Sum
+     */
+    public int deepestLeavesSum(TreeNode root) {
+        //方法1
+//        int maxDe=result(root);
+//        int deep=0;
+//        getMaxLeavesSum(root,deep,maxDe);
+//        return re;
+
+        //方法2
+        return getMaxLeavesSum2(root);
+    }
+    public int getMaxLeavesSum2(TreeNode node){
+        List<TreeNode> nodes=new ArrayList<>();
+        int left=0,right=0;//左右指针
+        int leveR=0;//每层节点的数量
+        if (node!=null){
+            nodes.add(node);
+            leveR++;
+            right=leveR;
+        }
+        int count=1;//深度
+        int resultNum=0;//计算出每层之和
+        leveR=0;
+        int N=0;
+        while(left<right){
+            TreeNode root=nodes.get(left);
+//            System.out.println(root.val);
+            left++;
+            resultNum+=root.val;
+
+            if (root.left!=null){
+                nodes.add(root.left);
+                leveR++;
+            }
+            if (root.right!=null){
+                nodes.add(root.right);
+                leveR++;
+            }
+
+            if (left==right){
+                count++;
+                N=resultNum;
+                resultNum=0;
+                right+=leveR;
+                leveR=0;
+            }
+        }
+//        System.out.println(N);
+        return N;
+    }
+
+
+    public void getMaxLeavesSum(TreeNode root,int deep,int max){
+        if (root!=null) {
+            deep++;
+            if (deep==max){
+                re+=root.val;
+            }
+            getMaxLeavesSum(root.left,deep,max);
+            getMaxLeavesSum(root.right,deep,max);
+        }
+    }
+
+    /**
+     * 计算树的最大深度
+     * @param root
+     * @return
+     */
+    public int result(TreeNode root){
+        if (root==null){
+            return 0;
+        }else{
+            if (result(root.right)>result(root.left)) {
+                return 1 + result(root.right);
+            }else {
+                return 1+result(root.left);
+            }
+        }
+    }
+
+
 
     /**
      * 计算链表二进制对应的十进制数值
