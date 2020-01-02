@@ -16,10 +16,39 @@ public class Solution2 {
     private static String[] weekName={"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     public static void main(String[] args) throws Exception {
         Solution2 solution2=new Solution2();
-        int [][]point={{1,1},{3,4},{-1,0}};
-        System.out.println(solution2.minTimeToVisitAllPoints(point));
+        int[] arr=solution2.sumZero(12);
+        for (int a:arr
+             ) {
+            System.out.println(a);
+        }
 
     }
+    /**
+     * @author feifei
+     * @param n
+     * @Description TODO leetcode 1304. Find N Unique Integers Sum up to Zero
+     * @Date 2020/1/2 16:57
+     * 返回任意数组中n个值相加之和为0
+     */
+    public int[] sumZero(int n) {
+        int pos=0;
+        int []re=new int[n];
+        if (n%2==0){
+            for (int i = 0; i < n/2; i++) {
+                re[i]=pos-1-i;
+                re[n-i-1]=pos+1+i;
+            }
+        }else {
+            for (int i = 0; i < n/2; i++) {
+                re[i]=pos-1-i;
+                re[n-i-1]=pos+1+i;
+            }
+            re[n/2]=pos;
+        }
+        return re;
+    }
+
+
     /**
      * 计算出二维数组中按顺序遍历需要花费的最少时间
      * @author feifei
