@@ -8,11 +8,9 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.compress.utils.IOUtils;
 
 import java.io.*;
+import java.net.URLEncoder;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -290,5 +288,219 @@ public class FileUtils {
             e.printStackTrace();
         }
         return list;
+    }
+
+
+    /**
+     * 将文件hash取模之后放到不同的小文件中
+     * @param targetFile 要去重的文件路径
+     * @param splitSize 将目标文件切割成多少份hash取模的小文件个数
+     * @return
+     */
+    public static File[] splitFile(String targetFile,String code,int splitSize){
+        File file = new File(targetFile);
+        BufferedReader reader = null;
+        PrintWriter[] pws = new PrintWriter[splitSize];
+        File[] littleFiles = new File[splitSize];
+        String parentPath = file.getParent();
+        File tempFolder = new File(parentPath + File.separator + "test");
+        if(!tempFolder.exists()){
+            tempFolder.mkdir();
+        }
+        for(int i=0;i<splitSize;i++){
+            littleFiles[i] = new File(tempFolder.getAbsolutePath() + File.separator + i + ".txt");
+            if(littleFiles[i].exists()){
+                littleFiles[i].delete();
+            }
+            try {
+                pws[i] = new PrintWriter(littleFiles[i]);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+//            File file = new File(path);
+//            new InputStreamReader(fis,"GB2312")
+//            reader = new BufferedReader(new FileReader(file));
+            BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file));
+            reader = new BufferedReader(new InputStreamReader(fis,code));
+            String tempString = null;
+            while ((tempString = reader.readLine()) != null) {
+                tempString = tempString.trim();
+                if(tempString != ""){
+                    //关键是将每行数据hash取模之后放到对应取模值的文件中，确保hash值相同的字符串都在同一个文件里面
+                    int index = Math.abs(tempString.hashCode() % splitSize);
+                    pws[index].println(tempString);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            for(int i=0;i<splitSize;i++){
+                if(pws[i] != null){
+                    pws[i].close();
+                }
+            }
+        }
+        return littleFiles;
+    }
+
+    /**
+     * 对小文件进行去重合并
+     * @param littleFiles 切割之后的小文件数组
+     * @param distinctFilePath 去重之后的文件路径
+     * @param splitSize 小文件大小
+     */
+    public static void distinct(File[] littleFiles,String distinctFilePath,int splitSize){
+        File distinctedFile = new File(distinctFilePath);
+        FileReader[] frs = new FileReader[splitSize];
+        BufferedReader[] brs = new BufferedReader[splitSize];
+        PrintWriter pw = null;
+        try {
+            if(distinctedFile.exists()){
+                distinctedFile.delete();
+            }
+            distinctedFile.createNewFile();
+            pw = new PrintWriter(distinctedFile);
+            Set<String> unicSet = new HashSet<String>();
+            for(int i=0;i<splitSize;i++){
+                if(littleFiles[i].exists()){
+//                    System.out.println("开始对小文件：" + littleFiles[i].getName() + "去重");
+                    frs[i] = new FileReader(littleFiles[i]);
+                    brs[i] = new BufferedReader(frs[i]);
+                    String line = null;
+                    while((line = brs[i].readLine())!=null){
+                        if(line != ""){
+                            unicSet.add(line);
+                        }
+                    }
+                    for(String s:unicSet){
+                        pw.println(s);
+                    }
+                    unicSet.clear();
+                    System.gc();
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e1){
+            e1.printStackTrace();
+        } finally {
+            File parent=littleFiles[0].getParentFile();
+            for(int i=0;i<splitSize;i++){
+                try {
+                    if(null != brs[i]){
+                        brs[i].close();
+                    }
+                    if(null != frs[i]){
+                        frs[i].close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //合并完成之后删除临时小文件
+                if(littleFiles[i].exists()){
+                    littleFiles[i].delete();
+                }
+            }
+            if (parent.exists()){
+                parent.delete();
+            }
+            if(null != pw){
+                pw.close();
+            }
+        }
+    }
+
+
+
+    public static String utf8Togb2312(String str){
+
+        StringBuffer sb = new StringBuffer();
+
+        for ( int i=0; i<str.length(); i++) {
+
+            char c = str.charAt(i);
+
+            switch (c) {
+
+                case '+' :
+
+                    sb.append( ' ');
+
+                    break ;
+
+                case '%':
+
+                    try {
+
+                        sb.append(( char )Integer.parseInt (
+
+                                str.substring(i+1,i+3),16));
+
+                    }
+
+                    catch (NumberFormatException e) {
+
+                        throw new IllegalArgumentException();
+
+                    }
+
+                    i += 2;
+
+                    break ;
+
+                default :
+
+                    sb.append(c);
+
+                    break ;
+
+            }
+
+        }
+
+        String result = sb.toString();
+
+        String res= null ;
+
+        try {
+
+            byte [] inputBytes = result.getBytes( "8859_1" );
+
+            res= new String(inputBytes, "UTF-8" );
+
+        }
+
+        catch (Exception e){}
+
+        return res;
+
+    }
+
+    public static String gb2312ToUtf8(String str) {
+
+        String urlEncode = "" ;
+
+        try {
+
+            urlEncode = URLEncoder.encode (str,"UTF-8");
+
+        } catch (UnsupportedEncodingException e) {
+
+            e.printStackTrace();
+
+        }
+
+        return urlEncode;
+
     }
 }
