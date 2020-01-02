@@ -16,17 +16,36 @@ public class Solution2 {
     private static String[] weekName={"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     public static void main(String[] args) throws Exception {
         Solution2 solution2=new Solution2();
-        TreeNode root=new TreeNode(0);
-        root.right=new TreeNode(1);
-        root.left=new TreeNode(2);
+        int [][]point={{1,1},{3,4},{-1,0}};
+        System.out.println(solution2.minTimeToVisitAllPoints(point));
 
-        root.right.right=new TreeNode(3);
-        root.left.right=new TreeNode(4);
-//        root.left.right.right=new TreeNode(5);
-
-
-        System.out.println(solution2.deepestLeavesSum(root));
     }
+    /**
+     * 计算出二维数组中按顺序遍历需要花费的最少时间
+     * @author feifei
+     * @param points
+     * @Description TODO leetcode 1266. Minimum Time Visiting All Points
+     * @Date 2020/1/2 16:22
+     */
+    public int minTimeToVisitAllPoints(int[][] points) {
+        int n=points.length;
+        if (n==1){
+            return 0;
+        }
+        int result=0;
+        for (int i = 1; i < n; i++) {
+            int x=Math.abs(points[i][0]-points[i-1][0]);
+            int y=Math.abs(points[i][1]-points[i-1][1]);
+            if (y>x){
+                result+=y;
+            }else{
+                result+=x;
+            }
+
+        }
+        return result;
+    }
+
     /**
      * 把字符串分割成最多可能的组合，每个包含相等的LR
      * @author feifei
