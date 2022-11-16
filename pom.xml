@@ -23,7 +23,7 @@
     <url>http://www.funtl.com</url>
     <inceptionYear>2018-Now</inceptionYear>
     <properties>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.12.7.1</jackson.version>
     </properties>
 
     <dependencies>
